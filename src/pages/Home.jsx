@@ -71,17 +71,6 @@ export default function Home() {
     display: 'block',
   }}
 />
-
-              <p style={{
-                fontSize: '1rem',
-                color: 'var(--gris-texte)',
-                maxWidth: '400px',
-                lineHeight: 1.8,
-                fontWeight: 300,
-                marginBottom: '2rem',
-              }}>
-                La mercerie rose du Quartier Latin.
-              </p>
               
               <p style={{
                 fontSize: '1rem',
@@ -91,7 +80,7 @@ export default function Home() {
                 fontWeight: 300,
                 marginBottom: '2rem',
               }}>
-                Fils, laines, tissus, boutons et accessoires couture. Plus de 4 000 références sélectionnées avec soin.
+                La mercerie rose du Quartier latin. Fils, laines, tissus, boutons et accessoires couture. Plus de 4 000 références sélectionnées avec soin.
               </p>
 
               <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
