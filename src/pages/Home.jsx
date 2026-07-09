@@ -303,12 +303,19 @@ export default function Home() {
               scrolling="no" frameBorder="0" allowFullScreen={true} allow="encrypted-media"
             />
           </div>
-          <div style={{ textAlign: 'center' }}>
-            <a href="https://www.facebook.com/LagrandeMercerieNoumea" target="_blank" rel="noopener noreferrer"
-              className="btn-primary" style={{ background: '#1877F2' }}>
-              📘 Voir la page complète
-            </a>
-          </div>
+          <div style={{
+  display: 'flex', justifyContent: 'center', overflow: 'hidden',
+  borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-card)',
+  maxWidth: '500px', height: '500px', margin: '0 auto 1.5rem',
+}}>
+  <iframe
+    title="Page Facebook La Grande Mercerie"
+    src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FLagrandeMercerieNoumea&tabs=timeline&width=500&height=570&small_header=true&hide_cover=false&show_facepile=false"
+    width="500" height="570"
+    style={{ border: 'none', overflow: 'hidden', maxWidth: '100%', marginTop: '-70px' }}
+    scrolling="no" frameBorder="0" allowFullScreen={true} allow="encrypted-media"
+  />
+</div>
         </div>
       </section>
 
