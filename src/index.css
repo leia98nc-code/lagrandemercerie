@@ -1,0 +1,159 @@
+/* ============================================
+   LA GRANDE MERCERIE — Design System
+   ============================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+:root {
+  /* Palette */
+  --rose-poudre:   #F0B8CC;
+  --rose-profond:  #C86B8A;
+  --noir:          #1A1A1A;
+  --blush:         #FDF0F4;
+  --blanc:         #FFFFFF;
+  --gris-doux:     #F5F5F5;
+  --gris-texte:    #6B6B6B;
+  --rose-hover:    #b85c7a;
+
+  /* Typographie */
+  --font-titre:  'Rubik', system-ui, sans-serif;
+--font-corps: 'Inter', system-ui, sans-serif;
+  /* Espacements */
+  --radius:      8px;
+  --radius-lg:   16px;
+  --shadow-soft: 0 4px 24px rgba(200, 107, 138, 0.10);
+  --shadow-card: 0 2px 12px rgba(26, 26, 26, 0.08);
+
+  /* Transitions */
+  --transition: 0.25s ease;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-corps);
+  background-color: var(--blush);
+  color: var(--noir);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---- Utilitaires ---- */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.btn-primary {
+  display: inline-block;
+  background: var(--rose-profond);
+  color: var(--blanc);
+  padding: 0.75rem 1.75rem;
+  border-radius: 50px;
+  border: none;
+  font-family: var(--font-corps);
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+}
+
+.btn-primary:hover {
+  background: var(--rose-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(200, 107, 138, 0.35);
+}
+
+.btn-outline {
+  display: inline-block;
+  background: transparent;
+  color: var(--rose-profond);
+  padding: 0.75rem 1.75rem;
+  border-radius: 50px;
+  border: 2px solid var(--rose-profond);
+  font-family: var(--font-corps);
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all var(--transition);
+}
+
+.btn-outline:hover {
+  background: var(--rose-profond);
+  color: var(--blanc);
+  transform: translateY(-2px);
+}
+
+/* ---- Titres ---- */
+h1, h2, h3 {
+  font-family: var(--font-titre);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+/* ---- Page wrapper ---- */
+.page {
+  min-height: 100vh;
+  padding-top: 80px; /* Hauteur navbar */
+}
+
+/* ---- Section titre ---- */
+.section-titre {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.section-titre h2 {
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  color: var(--noir);
+  margin-bottom: 0.5rem;
+}
+
+.section-titre p {
+  color: var(--gris-texte);
+  font-weight: 300;
+  font-size: 1.05rem;
+}
+
+.section-titre .trait {
+  display: block;
+  width: 50px;
+  height: 3px;
+  background: var(--rose-profond);
+  margin: 0.75rem auto 0;
+  border-radius: 2px;
+}
+
+/* ---- Animations ---- */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.animate-fade-up {
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 768px) {
+  .container { padding: 0 1rem; }
+}
