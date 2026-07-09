@@ -103,7 +103,7 @@ export default function Home() {
                   Horaires d'ouverture
                 </span>
                 Lun–Ven : 8h – 12h · 13h – 17h30<br />
-                Samedi : 8h – 12h · 13h – 16h30<br />
+                Samedi : 8h – 12h · <br />
                 <span style={{ color: 'var(--rose-profond)', fontWeight: 600 }}>Fermé le dimanche</span>
               </div>
             </div>
