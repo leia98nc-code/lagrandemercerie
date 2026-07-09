@@ -16,6 +16,12 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  // Sur la page d'accueil, le hero affiche déjà un gros logo :
+// on cache celui de la navbar tant qu'on n'a pas commencé à scroller.
+// Sur les autres pages, il reste toujours visible.
+const isHome = location.pathname === '/'
+const showLogo = !isHome || scrolled
+
   return (
     <header style={{
       position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
@@ -30,7 +36,12 @@ export default function Navbar() {
         height: '80px',
       }}>
         {/* Logo */}
-        <Link to="/" style={{ textDecoration: 'none' }}>
+<Link to="/" style={{
+  textDecoration: 'none',
+  opacity: showLogo ? 1 : 0,
+  pointerEvents: showLogo ? 'auto' : 'none',
+  transition: 'opacity 0.3s ease',
+}}>
   <img
     src="/logo.jpg"
     alt="La Grande Mercerie"

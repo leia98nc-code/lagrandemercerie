@@ -46,7 +46,7 @@ export default function Home() {
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
             gap: '3rem',
-            alignItems: 'center',
+            alignItems: 'start',
           }}>
             <div>
               <p style={{
@@ -60,17 +60,17 @@ export default function Home() {
                 Nouméa · Nouvelle-Calédonie 
               </p>
 
-              <h1 style={{
-                fontFamily: 'var(--font-titre)',
-                fontSize: 'clamp(2.8rem, 6vw, 4.5rem)',
-                fontWeight: 600,
-                color: 'var(--noir)',
-                lineHeight: 1.05,
-                marginBottom: '1.25rem',
-              }}>
-                La Grande<br />
-                <span style={{ color: 'var(--rose-profond)', fontStyle: 'italic' }}>Mercerie</span>
-              </h1>
+              <img
+  src="/logo.jpg"
+  alt="La Grande Mercerie"
+  style={{
+    maxWidth: '480px',
+    width: '100%',
+    height: 'auto',
+    marginBottom: '1.25rem',
+    display: 'block',
+  }}
+/>
 
               <p style={{
                 fontSize: '1rem',
@@ -109,16 +109,25 @@ export default function Home() {
             </div>
 
             <div style={{
-              borderRadius: 'var(--radius-lg)',
-              overflow: 'hidden',
-              boxShadow: '0 12px 40px rgba(200,107,138,0.18)',
-              aspectRatio: '4/3',
-            }}>
-              <img
-  src="/logo.jpg"
-  alt="La Grande Mercerie"
-  style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block', padding: '2rem', background: 'var(--blush)' }}
-/>
+  borderRadius: 'var(--radius-lg)',
+  overflow: 'hidden',
+  boxShadow: '0 12px 40px rgba(200,107,138,0.18)',
+  aspectRatio: '4/3',
+  marginTop: '2rem',
+}}>
+              <div style={{
+  aspectRatio: '4/3',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  marginBottom: '1.25rem',
+}}>
+  <img
+    src="/images/shop/home-rose.jpg"
+    alt="La Grande Mercerie"
+    style={{ maxWidth: '90%', maxHeight: '90%', width: 'auto', height: 'auto', objectFit: 'contain' }}
+  />
+</div>
             </div>
           </div>
         </div>
