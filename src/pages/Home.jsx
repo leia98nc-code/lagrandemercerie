@@ -301,7 +301,7 @@ export default function Home() {
     title="Page Facebook La Grande Mercerie"
     src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FLagrandeMercerieNoumea&tabs=timeline&width=500&height=570&small_header=true&hide_cover=false&show_facepile=false"
     width="500" height="570"
-    style={{ border: 'none', overflow: 'hidden', maxWidth: '100%', marginTop: '-70px' }}
+    style={{ border: 'none', overflow: 'hidden', maxWidth: '100%', marginTop: '-80px' }}
     scrolling="no" frameBorder="0" allowFullScreen={true} allow="encrypted-media"
   />
 </div>
