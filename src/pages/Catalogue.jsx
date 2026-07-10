@@ -25,6 +25,8 @@ function surlignerTexte(texte, terme) {
 
 const SEUIL_EMPILEMENT = 8
 const ELEMENTS_PAR_PAGE = 48
+const PRIX_MIN_TOTAL = 0
+const PRIX_MAX_TOTAL = 50000
 
 function CarteEmpilee({ groupe, onClick }) {
   return (
@@ -83,70 +85,47 @@ function Pagination({ pageActive, totalPages, onChange }) {
   )
 }
 
-// Sidebar filtres
-function Sidebar({ categories, marques, categorieActive, setCategorieActive, marqueActive, setMarqueActive, totalResultats }) {
-  const [catOuverte, setCatOuverte] = useState(true)
-  const [marqueOuverte, setMarqueOuverte] = useState(true)
+function Sidebar({ categories, marques, categorieActive, setCategorieActive, marqueActive, setMarqueActive, prixMin, prixMax, setPrixMin, setPrixMax, avecPhoto, setAvecPhoto, totalResultats, reinitialiserFiltres }) {
+  const [catOuverte, setCatOuverte] = useState(false)
+  const [marqueOuverte, setMarqueOuverte] = useState(false)
+  const [prixOuvert, setPrixOuvert] = useState(false)
 
-  const itemStyle = (actif) => ({
+  const itemStyle = actif => ({
     display: 'flex', alignItems: 'center', gap: '0.6rem',
-    padding: '0.3rem 0',
-    cursor: 'pointer',
-    fontSize: '0.85rem',
+    padding: '0.3rem 0', cursor: 'pointer', fontSize: '0.85rem',
     color: actif ? 'var(--rose-profond)' : 'var(--gris-texte)',
-    fontWeight: actif ? 600 : 400,
-    transition: 'color 0.15s',
+    fontWeight: actif ? 600 : 400, transition: 'color 0.15s',
   })
 
-  const radioStyle = (actif) => ({
+  const radioStyle = actif => ({
     width: '14px', height: '14px', borderRadius: '50%',
     border: `2px solid ${actif ? 'var(--rose-profond)' : '#ccc'}`,
     background: actif ? 'var(--rose-profond)' : 'white',
     flexShrink: 0, transition: 'all 0.15s',
   })
 
-  const titreSection = {
-    fontSize: '0.72rem',
-    fontWeight: 700,
-    textTransform: 'uppercase',
-    letterSpacing: '0.1em',
-    color: 'var(--noir)',
-    marginBottom: '0.75rem',
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    cursor: 'pointer',
-    userSelect: 'none',
-  }
+  const filtreActif = categorieActive !== 'Tous' || marqueActive !== 'Toutes' || prixMin > 0 || prixMax < PRIX_MAX_TOTAL || avecPhoto
 
   return (
     <aside style={{
-      width: '210px',
-      flexShrink: 0,
-      position: 'sticky',
-      top: '1.5rem',
-      alignSelf: 'flex-start',
-      maxHeight: 'calc(100vh - 3rem)',
-      overflowY: 'auto',
-      paddingRight: '1rem',
-      scrollbarWidth: 'thin',
+      width: '220px', flexShrink: 0, position: 'sticky', top: '1.5rem',
+      alignSelf: 'flex-start', maxHeight: 'calc(100vh - 3rem)', overflowY: 'auto',
+      scrollbarWidth: 'thin', background: 'var(--blanc)', borderRadius: 'var(--radius-lg)',
+      padding: '1.25rem', boxShadow: 'var(--shadow-card)',
+      borderTop: '3px solid var(--rose-poudre)', boxSizing: 'border-box',
     }}>
-
-      {/* Résultats */}
-      <p style={{ fontSize: '0.78rem', color: 'var(--gris-texte)', marginBottom: '1.5rem' }}>
-        <strong style={{ color: 'var(--noir)' }}>{totalResultats}</strong> produit{totalResultats !== 1 ? 's' : ''}
-      </p>
 
       
 
       {/* Marque */}
       {marques.length > 1 && (
-        <div style={{ marginBottom: '1.5rem' }}>
-          <p style={titreSection} onClick={() => setMarqueOuverte(o => !o)}>
-            Marque <span style={{ fontSize: '0.9rem', color: 'var(--gris-texte)' }}>{marqueOuverte ? '−' : '+'}</span>
-          </p>
+        <div style={{ borderBottom: '1px solid var(--rose-poudre)', paddingBottom: '1rem', marginBottom: '1rem' }}>
+          <div onClick={() => setMarqueOuverte(o => !o)} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer', userSelect: 'none' }}>
+            <span style={{ fontSize: '0.72rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--noir)' }}>Marque</span>
+            <span style={{ fontSize: '1rem', color: 'var(--gris-texte)', lineHeight: 1 }}>{marqueOuverte ? '−' : '+'}</span>
+          </div>
           {marqueOuverte && (
-            <div>
+            <div style={{ marginTop: '0.75rem' }}>
               {marques.map(mq => (
                 <div key={mq} style={itemStyle(marqueActive === mq)}
                   onClick={() => setMarqueActive(marqueActive === mq && mq !== 'Toutes' ? 'Toutes' : mq)}>
@@ -160,12 +139,13 @@ function Sidebar({ categories, marques, categorieActive, setCategorieActive, mar
       )}
 
       {/* Famille */}
-      <div style={{ marginBottom: '1.5rem', borderBottom: '1px solid var(--rose-poudre)', paddingBottom: '1.5rem' }}>
-        <p style={titreSection} onClick={() => setCatOuverte(o => !o)}>
-          Famille <span style={{ fontSize: '0.9rem', color: 'var(--gris-texte)' }}>{catOuverte ? '−' : '+'}</span>
-        </p>
+      <div style={{ borderBottom: '1px solid var(--rose-poudre)', paddingBottom: '1rem', marginBottom: '1rem' }}>
+        <div onClick={() => setCatOuverte(o => !o)} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer', userSelect: 'none' }}>
+          <span style={{ fontSize: '0.72rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--noir)' }}>Famille</span>
+          <span style={{ fontSize: '1rem', color: 'var(--gris-texte)', lineHeight: 1 }}>{catOuverte ? '−' : '+'}</span>
+        </div>
         {catOuverte && (
-          <div>
+          <div style={{ marginTop: '0.75rem' }}>
             {categories.map(cat => (
               <div key={cat} style={itemStyle(categorieActive === cat)}
                 onClick={() => setCategorieActive(categorieActive === cat && cat !== 'Tous' ? 'Tous' : cat)}>
@@ -177,18 +157,63 @@ function Sidebar({ categories, marques, categorieActive, setCategorieActive, mar
         )}
       </div>
 
-      {/* Réinitialiser */}
-      {(categorieActive !== 'Tous' || marqueActive !== 'Toutes') && (
+      {/* Prix */}
+      <div style={{ borderBottom: '1px solid var(--rose-poudre)', paddingBottom: '1rem', marginBottom: '1rem' }}>
+        <div onClick={() => setPrixOuvert(o => !o)} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer', userSelect: 'none' }}>
+          <span style={{ fontSize: '0.72rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--noir)' }}>Prix</span>
+          <span style={{ fontSize: '1rem', color: 'var(--gris-texte)', lineHeight: 1 }}>{prixOuvert ? '−' : '+'}</span>
+        </div>
+        {prixOuvert && (
+          <div style={{ marginTop: '0.75rem' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.78rem', color: 'var(--gris-texte)', marginBottom: '0.5rem' }}>
+              <span>{prixMin.toLocaleString('fr-FR')} F</span>
+              <span>{prixMax.toLocaleString('fr-FR')} F</span>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+              <input type="range" min={PRIX_MIN_TOTAL} max={PRIX_MAX_TOTAL} value={prixMin}
+                onChange={e => setPrixMin(parseInt(e.target.value))}
+                style={{ width: '100%', accentColor: 'var(--rose-profond)' }}
+              />
+              <input type="range" min={PRIX_MIN_TOTAL} max={PRIX_MAX_TOTAL} value={prixMax}
+                onChange={e => setPrixMax(parseInt(e.target.value))}
+                style={{ width: '100%', accentColor: 'var(--rose-profond)' }}
+              />
+            </div>
+            <div style={{ display: 'flex', gap: '0.4rem', marginTop: '0.75rem' }}>
+              <input type="number" value={prixMin}
+                onChange={e => setPrixMin(parseInt(e.target.value) || 0)}
+                style={{ width: '50%', padding: '0.3rem 0.5rem', fontSize: '0.78rem', border: '1px solid var(--rose-poudre)', borderRadius: 'var(--radius)', fontFamily: 'var(--font-corps)', outline: 'none', boxSizing: 'border-box' }}
+                onFocus={e => e.target.style.borderColor = 'var(--rose-profond)'}
+                onBlur={e => e.target.style.borderColor = 'var(--rose-poudre)'}
+              />
+              <input type="number" value={prixMax}
+                onChange={e => setPrixMax(parseInt(e.target.value) || PRIX_MAX_TOTAL)}
+                style={{ width: '50%', padding: '0.3rem 0.5rem', fontSize: '0.78rem', border: '1px solid var(--rose-poudre)', borderRadius: 'var(--radius)', fontFamily: 'var(--font-corps)', outline: 'none', boxSizing: 'border-box' }}
+                onFocus={e => e.target.style.borderColor = 'var(--rose-profond)'}
+                onBlur={e => e.target.style.borderColor = 'var(--rose-poudre)'}
+              />
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Avec photo */}
+      <div style={{ borderBottom: '1px solid var(--rose-poudre)', paddingBottom: '1rem', marginBottom: '1rem' }}>
+        <div onClick={() => setAvecPhoto(!avecPhoto)} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer' }}>
+          <span style={{ fontSize: '0.72rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: avecPhoto ? 'var(--rose-profond)' : 'var(--noir)' }}>
+            Avec photo
+          </span>
+          <div style={{ width: '36px', height: '20px', borderRadius: '20px', flexShrink: 0, background: avecPhoto ? 'var(--rose-profond)' : '#ddd', position: 'relative', transition: 'background 0.2s' }}>
+            <div style={{ position: 'absolute', top: '3px', left: avecPhoto ? '19px' : '3px', width: '14px', height: '14px', borderRadius: '50%', background: 'white', transition: 'left 0.2s', boxShadow: '0 1px 3px rgba(0,0,0,0.2)' }} />
+          </div>
+        </div>
+      </div>
+
+      {/* Effacer */}
+      {filtreActif && (
         <button
-          onClick={() => { setCategorieActive('Tous'); setMarqueActive('Toutes') }}
-          style={{
-            width: '100%', padding: '0.5rem',
-            background: 'none', border: '1px solid var(--rose-poudre)',
-            borderRadius: 'var(--radius)', cursor: 'pointer',
-            fontSize: '0.78rem', color: 'var(--gris-texte)',
-            fontFamily: 'var(--font-corps)',
-            transition: 'border-color 0.2s',
-          }}
+          onClick={reinitialiserFiltres}
+          style={{ width: '100%', padding: '0.5rem', background: 'none', border: '1px solid var(--rose-poudre)', borderRadius: 'var(--radius)', cursor: 'pointer', fontSize: '0.78rem', color: 'var(--gris-texte)', fontFamily: 'var(--font-corps)', transition: 'border-color 0.2s', boxSizing: 'border-box' }}
           onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--rose-profond)'}
           onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--rose-poudre)'}
         >
@@ -218,20 +243,15 @@ export default function Catalogue() {
   const categorieActive = searchParams.get('cat') || 'Tous'
   const marqueActive    = searchParams.get('marque') || 'Toutes'
   const triPrix         = searchParams.get('tri') || 'popularite'
+  const prixMin         = parseInt(searchParams.get('pmin') || '0', 10)
+  const prixMax         = parseInt(searchParams.get('pmax') || String(PRIX_MAX_TOTAL), 10)
+  const avecPhoto       = searchParams.get('photo') === '1'
 
   const setRecherche = val => {
     const p = new URLSearchParams(searchParams)
     val ? p.set('q', val) : p.delete('q')
     setSearchParams(p, { replace: true })
   }
-
-  const [rechercheInput, setRechercheInput] = useState(recherche)
-  useEffect(() => { setRechercheInput(recherche) }, [recherche])
-  useEffect(() => {
-    const timer = setTimeout(() => { if (rechercheInput !== recherche) setRecherche(rechercheInput) }, 300)
-    return () => clearTimeout(timer)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [rechercheInput])
 
   const setCategorieActive = val => {
     const p = new URLSearchParams(searchParams)
@@ -251,6 +271,35 @@ export default function Catalogue() {
     setSearchParams(p, { replace: true })
   }
 
+  const setPrixMin = val => {
+    const p = new URLSearchParams(searchParams)
+    val > 0 ? p.set('pmin', val) : p.delete('pmin')
+    setSearchParams(p, { replace: true })
+  }
+
+  const setPrixMax = val => {
+    const p = new URLSearchParams(searchParams)
+    val < PRIX_MAX_TOTAL ? p.set('pmax', val) : p.delete('pmax')
+    setSearchParams(p, { replace: true })
+  }
+
+  const setAvecPhoto = val => {
+    const p = new URLSearchParams(searchParams)
+    val ? p.set('photo', '1') : p.delete('photo')
+    setSearchParams(p, { replace: true })
+  }
+
+  const reinitialiserFiltres = () => {
+    const p = new URLSearchParams(searchParams)
+    p.delete('cat')
+    p.delete('marque')
+    p.delete('pmin')
+    p.delete('pmax')
+    p.delete('photo')
+    p.delete('page')
+    setSearchParams(p, { replace: true })
+  }
+
   const pageActive = Math.max(1, parseInt(searchParams.get('page') || '1', 10) || 1)
   const setPageActive = val => {
     const p = new URLSearchParams(searchParams)
@@ -258,6 +307,14 @@ export default function Catalogue() {
     setSearchParams(p, { replace: true })
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
+
+  const [rechercheInput, setRechercheInput] = useState(recherche)
+  useEffect(() => { setRechercheInput(recherche) }, [recherche])
+  useEffect(() => {
+    const timer = setTimeout(() => { if (rechercheInput !== recherche) setRecherche(rechercheInput) }, 300)
+    return () => clearTimeout(timer)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [rechercheInput])
 
   const categories = useMemo(() => {
     const cats = [...new Set(products.map(p => p.categorie).filter(Boolean))]
@@ -295,11 +352,13 @@ export default function Catalogue() {
         }
       }
     }
+    liste = liste.filter(p => p.prix >= prixMin && p.prix <= prixMax)
+    if (avecPhoto) liste = liste.filter(p => p.image && p.image.trim() !== '')
     if (triPrix === 'asc')        liste.sort((a, b) => a.prix - b.prix)
     if (triPrix === 'desc')       liste.sort((a, b) => b.prix - a.prix)
     if (triPrix === 'popularite') liste.sort((a, b) => (a.popularite || 99999) - (b.popularite || 99999))
     return liste
-  }, [products, categorieActive, marqueActive, recherche, triPrix])
+  }, [products, categorieActive, marqueActive, recherche, triPrix, prixMin, prixMax, avecPhoto])
 
   const elementsAffiches = useMemo(() => {
     if (recherche.trim()) {
@@ -314,7 +373,7 @@ export default function Catalogue() {
     })
     const refsAEmpiler = new Set()
     const elements = []
-    Object.entries(parNom).forEach(([nomKey, items]) => {
+    Object.entries(parNom).forEach(([, items]) => {
       if (items.length >= SEUIL_EMPILEMENT) {
         items.forEach(p => refsAEmpiler.add(p.id))
         const prix = items.map(p => p.prix)
@@ -324,19 +383,18 @@ export default function Catalogue() {
         })
       }
     })
-    produitsFiltres.filter(p => !refsAEmpiler.has(p.id)).forEach(p => elements.push({ type: 'produit', data: p, nom: p.nom || '' }))
-    if (triPrix === 'default') {
-      elements.sort((a, b) => a.nom.localeCompare(b.nom, 'fr'))
-    } else if (triPrix === 'popularite') {
-      elements.sort((a, b) => (a.data.popularite || 99999) - (b.data.popularite || 99999))
-    }
+    produitsFiltres.filter(p => !refsAEmpiler.has(p.id)).forEach(p =>
+      elements.push({ type: 'produit', data: p, nom: p.nom || '' })
+    )
+    if (triPrix === 'default') elements.sort((a, b) => a.nom.localeCompare(b.nom, 'fr'))
+    else if (triPrix === 'popularite') elements.sort((a, b) => (a.data.popularite || 99999) - (b.data.popularite || 99999))
     return elements
   }, [produitsFiltres, recherche, triPrix])
 
   const totalResultats = elementsAffiches.reduce((sum, el) => sum + (el.type === 'groupe' ? el.data.count : 1), 0)
   const totalPages = Math.max(1, Math.ceil(elementsAffiches.length / ELEMENTS_PAR_PAGE))
 
-  useEffect(() => { setPageActive(1) }, [categorieActive, marqueActive, recherche, triPrix]) // eslint-disable-line
+  useEffect(() => { setPageActive(1) }, [categorieActive, marqueActive, recherche, triPrix, prixMin, prixMax, avecPhoto]) // eslint-disable-line
   useEffect(() => { if (pageActive > totalPages) setPageActive(1) }, [totalPages]) // eslint-disable-line
 
   const elementsPage = useMemo(() => {
@@ -344,8 +402,17 @@ export default function Catalogue() {
     return elementsAffiches.slice(debut, debut + ELEMENTS_PAR_PAGE)
   }, [elementsAffiches, pageActive])
 
+  const sidebarProps = {
+    categories, marques,
+    categorieActive, setCategorieActive,
+    marqueActive, setMarqueActive,
+    prixMin, prixMax, setPrixMin, setPrixMax,
+    avecPhoto, setAvecPhoto,
+    totalResultats, reinitialiserFiltres,
+  }
+
   return (
-    <main className="page" style={{ paddingBottom: '5rem' }}>
+    <main className="page" style={{ paddingBottom: '5rem', background: 'var(--blush)' }}>
       <div className="container">
 
         {/* Titre */}
@@ -356,20 +423,11 @@ export default function Catalogue() {
         </div>
 
         {/* Barre recherche + tri */}
-        <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', alignItems: 'center', marginBottom: '2rem' }}>
+        <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', alignItems: 'center', marginBottom: '1.5rem',  }}>
 
-          {/* Bouton filtres mobile */}
           {isMobile && (
-            <button
-              onClick={() => setFiltresMobile(o => !o)}
-              style={{
-                padding: '0.6rem 1rem', borderRadius: '50px',
-                border: '1.5px solid var(--rose-poudre)', background: 'var(--blanc)',
-                fontFamily: 'var(--font-corps)', fontSize: '0.85rem',
-                cursor: 'pointer', color: 'var(--noir)', display: 'flex', gap: '0.4rem', alignItems: 'center',
-              }}
-            >
-              ⚙ Filtres {(categorieActive !== 'Tous' || marqueActive !== 'Toutes') && '·'}
+            <button onClick={() => setFiltresMobile(o => !o)} style={{ padding: '0.6rem 1rem', borderRadius: '50px', border: '1.5px solid var(--rose-poudre)', background: 'var(--blanc)', fontFamily: 'var(--font-corps)', fontSize: '0.85rem', cursor: 'pointer', color: 'var(--noir)', display: 'flex', gap: '0.4rem', alignItems: 'center' }}>
+              ⚙ Filtres {(categorieActive !== 'Tous' || marqueActive !== 'Toutes' || prixMin > 0 || prixMax < PRIX_MAX_TOTAL || avecPhoto) && '·'}
             </button>
           )}
 
@@ -379,12 +437,7 @@ export default function Catalogue() {
               placeholder="🔍 Rechercher un produit..."
               value={rechercheInput}
               onChange={e => setRechercheInput(e.target.value)}
-              style={{
-                width: '100%', padding: '0.65rem 2.2rem 0.65rem 1rem',
-                border: '1.5px solid var(--rose-poudre)', borderRadius: '50px',
-                fontFamily: 'var(--font-corps)', fontSize: '0.88rem',
-                background: 'var(--blanc)', outline: 'none', transition: 'border-color 0.2s',
-              }}
+              style={{ width: '100%', padding: '0.65rem 2.2rem 0.65rem 1rem', border: '1.5px solid var(--rose-poudre)', borderRadius: '50px', fontFamily: 'var(--font-corps)', fontSize: '0.88rem', background: 'var(--blanc)', outline: 'none', transition: 'border-color 0.2s' }}
               onFocus={e => e.target.style.borderColor = 'var(--rose-profond)'}
               onBlur={e => e.target.style.borderColor = 'var(--rose-poudre)'}
             />
@@ -404,7 +457,6 @@ export default function Catalogue() {
             <option value="desc">Prix décroissant</option>
           </select>
 
-          {/* Toggle vue */}
           <div style={{ display: 'flex', gap: '0.3rem', marginLeft: 'auto' }}>
             {['grille', 'liste'].map(mode => (
               <button key={mode} onClick={() => setVueMode(mode)}
@@ -418,30 +470,20 @@ export default function Catalogue() {
           </div>
         </div>
 
-        {/* Filtres mobile (drawer) */}
+        {/* Filtres mobile */}
         {isMobile && filtresMobile && (
           <div style={{ background: 'var(--blanc)', border: '1px solid var(--rose-poudre)', borderRadius: 'var(--radius-lg)', padding: '1.25rem', marginBottom: '1.5rem' }}>
-            <Sidebar
-              categories={categories} marques={marques}
-              categorieActive={categorieActive} setCategorieActive={val => { setCategorieActive(val); setFiltresMobile(false) }}
-              marqueActive={marqueActive} setMarqueActive={val => { setMarqueActive(val); setFiltresMobile(false) }}
-              totalResultats={totalResultats}
+            <Sidebar {...sidebarProps}
+              setCategorieActive={val => { setCategorieActive(val); setFiltresMobile(false) }}
+              setMarqueActive={val => { setMarqueActive(val); setFiltresMobile(false) }}
             />
           </div>
         )}
 
-        {/* Layout desktop : sidebar + grille */}
+        {/* Layout desktop */}
         <div style={{ display: 'flex', gap: '2.5rem', alignItems: 'flex-start' }}>
 
-          {/* Sidebar desktop */}
-          {!isMobile && (
-            <Sidebar
-              categories={categories} marques={marques}
-              categorieActive={categorieActive} setCategorieActive={setCategorieActive}
-              marqueActive={marqueActive} setMarqueActive={setMarqueActive}
-              totalResultats={totalResultats}
-            />
-          )}
+          {!isMobile && <Sidebar {...sidebarProps} />}
 
           {/* Zone produits */}
           <div style={{ flex: 1, minWidth: 0 }}>
@@ -462,11 +504,7 @@ export default function Catalogue() {
 
             {!loading && !error && (
               <>
-                {totalPages > 1 && (
-                  <p style={{ color: 'var(--gris-texte)', fontSize: '0.8rem', marginBottom: '1.25rem' }}>
-                    Page {pageActive}/{totalPages}
-                  </p>
-                )}
+                
 
                 {totalResultats === 0 ? (
                   <div style={{ textAlign: 'center', padding: '3rem', background: 'var(--blanc)', borderRadius: 'var(--radius-lg)' }}>
@@ -486,9 +524,11 @@ export default function Catalogue() {
                       const p = el.data
                       return (
                         <Link key={p.id} to={`/produit/${p.id}`} style={{ textDecoration: 'none' }}>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', background: 'var(--blanc)', borderRadius: 'var(--radius)', padding: '0.65rem 1rem', boxShadow: 'var(--shadow-card)', transition: 'transform 0.15s ease' }}
+                          <div
+                            style={{ display: 'flex', alignItems: 'center', gap: '1rem', background: 'var(--blanc)', borderRadius: 'var(--radius)', padding: '0.65rem 1rem', boxShadow: 'var(--shadow-card)', transition: 'transform 0.15s ease' }}
                             onMouseEnter={e => e.currentTarget.style.transform = 'translateX(3px)'}
-                            onMouseLeave={e => e.currentTarget.style.transform = 'translateX(0)'}>
+                            onMouseLeave={e => e.currentTarget.style.transform = 'translateX(0)'}
+                          >
                             <div style={{ width: '52px', height: '52px', borderRadius: 'var(--radius)', background: 'var(--blush)', overflow: 'hidden', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                               {p.image
                                 ? <img src={`/images/products/${p.image}`} alt={p.nom} loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover' }} onError={e => { e.target.style.display = 'none' }} />
@@ -527,11 +567,13 @@ export default function Catalogue() {
       </div>
 
       {/* Retour en haut */}
-      <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+      <button
+        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
         style={{ position: 'fixed', bottom: '2rem', right: '2rem', width: '44px', height: '44px', borderRadius: '50%', background: 'var(--rose-profond)', color: 'white', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 16px rgba(200,107,138,0.4)', transition: 'transform 0.2s', zIndex: 50 }}
         onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-3px)'}
         onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}
-        title="Retour en haut">
+        title="Retour en haut"
+      >
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
           <polyline points="18 15 12 9 6 15" />
         </svg>
