@@ -359,7 +359,7 @@ export default function Home() {
             color: 'white',
             marginBottom: '0.75rem',
           }}>
-            Restez informées
+            Restez informés
           </h2>
           <p style={{ color: 'white', opacity: 0.9, marginBottom: '1.75rem', fontSize: '0.95rem', lineHeight: 1.6 }}>
             Nouveautés, promotions et actualités — directement dans votre boîte mail.
