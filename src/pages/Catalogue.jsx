@@ -108,8 +108,8 @@ function Sidebar({ categories, marques, categorieActive, setCategorieActive, mar
 
   return (
     <aside style={{
-      width: '220px', flexShrink: 0, position: 'sticky', top: '1.5rem',
-      alignSelf: 'flex-start', maxHeight: 'calc(100vh - 3rem)', overflowY: 'auto',
+      width: '220px', flexShrink: 0, position: 'sticky', top: '5.5rem',
+      alignSelf: 'flex-start', maxHeight: 'calc(100vh - 6.5rem)', overflowY: 'auto',
       scrollbarWidth: 'thin', background: 'var(--blanc)', borderRadius: 'var(--radius-lg)',
       padding: '1.25rem', boxShadow: 'var(--shadow-card)',
       borderTop: '3px solid var(--rose-poudre)', boxSizing: 'border-box',
