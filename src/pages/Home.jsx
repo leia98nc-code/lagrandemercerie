@@ -71,7 +71,7 @@ export default function Home() {
     display: 'block',
   }}
 />
-              
+
               <p style={{
                 fontSize: '1rem',
                 color: 'var(--gris-texte)',
@@ -80,8 +80,10 @@ export default function Home() {
                 fontWeight: 300,
                 marginBottom: '2rem',
               }}>
-                La mercerie rose du Quartier latin. Fils, laines, tissus, boutons et accessoires couture. Plus de 4 000 références sélectionnées avec soin.
-              </p>
+                Votre mercerie rose du Quartier latin.<br />
+  Fils, laines, tissus, boutons et accessoires couture.<br />
+  Plus de 4 000 références sélectionnées avec soin.
+</p>
 
               <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
                 <Link to="/catalogue" className="btn-primary">Voir le catalogue</Link>
@@ -291,19 +293,6 @@ export default function Home() {
             <span className="trait" />
           </div>
           <div style={{
-            display: 'flex', justifyContent: 'center', overflow: 'hidden',
-            borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-card)',
-            maxWidth: '500px', margin: '0 auto 1.5rem',
-          }}>
-            <iframe
-              title="Page Facebook La Grande Mercerie"
-              src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FLagrandeMercerieNoumea&tabs=timeline&width=500&height=500&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=false"
-              width="500" height="500"
-              style={{ border: 'none', overflow: 'hidden', maxWidth: '100%' }}
-              scrolling="no" frameBorder="0" allowFullScreen={true} allow="encrypted-media"
-            />
-          </div>
-          <div style={{
   display: 'flex', justifyContent: 'center', overflow: 'hidden',
   borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-card)',
   maxWidth: '500px', height: '500px', margin: '0 auto 1.5rem',
@@ -316,6 +305,12 @@ export default function Home() {
     scrolling="no" frameBorder="0" allowFullScreen={true} allow="encrypted-media"
   />
 </div>
+          <div style={{ textAlign: 'center' }}>
+            <a href="https://www.facebook.com/LagrandeMercerieNoumea" target="_blank" rel="noopener noreferrer"
+              className="btn-primary" style={{ background: '#1877F2' }}>
+              📘 Voir la page complète
+            </a>
+          </div>
         </div>
       </section>
 
