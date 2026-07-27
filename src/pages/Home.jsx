@@ -4,12 +4,12 @@ import ProductCard from '../components/ProductCard'
 import { useMemo, useState } from 'react'
 
 const UNIVERS = [
-  { nom: 'Pelote',              lien: '/catalogue?cat=Pelote',                  photo: '/images/products/BAMBI_K.jpg' },
-  { nom: 'Broderie',            lien: '/catalogue?cat=Broderie',                photo: '/images/products/MOULINE_DMC.webp' },
-  { nom: 'Velcros', lien: '/catalogue?cat=Velcros', photo: '/images/products/460001.jpg' },
-  { nom: 'Fils',                lien: '/catalogue?cat=Fils',                    photo: '/images/products/1004-BLANC.webp' },
-  { nom: 'Laine',               lien: '/catalogue?cat=Laine',                   photo: '/images/products/8143ASS.jpg' },
-  { nom: 'Aiguilles & épingles',lien: '/catalogue?cat=Aiguilles+%26+%C3%A9pingles', photo: '/images/products/18099.jpeg' },
+  { nom: 'Pelote',                lien: '/catalogue?cat=Pelote',                      photo: '/images/products/BAMBI_K.jpg' },
+  { nom: 'Broderie',              lien: '/catalogue?cat=Broderie',                    photo: '/images/products/MOULINE_DMC.webp' },
+  { nom: 'Velcros',               lien: '/catalogue?cat=Velcros',                     photo: '/images/products/460001.jpg' },
+  { nom: 'Fils',                  lien: '/catalogue?cat=Fils',                        photo: '/images/products/1004-BLANC.webp' },
+  { nom: 'Laine',                 lien: '/catalogue?cat=Laine',                       photo: '/images/products/8143ASS.jpg' },
+  { nom: 'Aiguilles & épingles',  lien: '/catalogue?cat=Aiguilles+%26+%C3%A9pingles', photo: '/images/products/18099.jpeg' },
 ]
 
 export default function Home() {
@@ -29,169 +29,87 @@ export default function Home() {
 
       {/* ── Hero ── */}
       <section style={{
-        background: 'linear-gradient(160deg, var(--blush) 0%, #fff 55%, var(--rose-poudre) 100%)',
-        padding: '3rem 0 4rem',
-        overflow: 'hidden',
-        position: 'relative',
-      }}>
-        <div style={{
-          position: 'absolute', top: '-60px', right: '-60px',
-          width: '360px', height: '360px', borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(240,184,204,0.25) 0%, transparent 70%)',
-          pointerEvents: 'none',
-        }} />
-
-        <div className="container">
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-            gap: '3rem',
-            alignItems: 'start',
-          }}>
-            <div>
-              <p style={{
-                fontSize: '0.85rem',
-                color: 'var(--rose-profond)',
-                marginBottom: '0.75rem',
-                letterSpacing: '0.12em',
-                textTransform: 'uppercase',
-                fontWeight: 500,
-              }}>
-                Nouméa · Nouvelle-Calédonie 
-              </p>
-
-              <img
-  src="/logo.jpg"
-  alt="La Grande Mercerie"
-  style={{
-    maxWidth: '480px',
-    width: '100%',
-    height: 'auto',
-    marginBottom: '1.25rem',
-    display: 'block',
-  }}
-/>
-
-              <p style={{
-                fontSize: '1rem',
-                color: 'var(--gris-texte)',
-                maxWidth: '400px',
-                lineHeight: 1.8,
-                fontWeight: 300,
-                marginBottom: '2rem',
-              }}>
-                Fils, laines, tissus, boutons et accessoires couture. Plus de 4 000 références sélectionnées avec soin.
-              </p>
-
-              <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
-                <Link to="/catalogue" className="btn-primary">Voir le catalogue</Link>
-                <Link to="/contact" className="btn-outline">Nous trouver</Link>
-              </div>
-
-              <div style={{
-                marginTop: '2rem',
-                padding: '1rem 1.25rem',
-                background: 'rgba(255,255,255,0.8)',
-                borderRadius: 'var(--radius)',
-                borderLeft: '3px solid var(--rose-profond)',
-                fontSize: '0.82rem',
-                color: 'var(--gris-texte)',
-                maxWidth: '340px',
-                lineHeight: 1.7,
-              }}>
-                <span style={{ fontWeight: 700, color: 'var(--noir)', display: 'block', marginBottom: '0.3rem' }}>
-                  Horaires d'ouverture
-                </span>
-                Lun–Ven : 8h – 12h · 13h – 17h30<br />
-                Samedi : 8h – 12h · 13h – 16h30<br />
-                <span style={{ color: 'var(--rose-profond)', fontWeight: 600 }}>Fermé le dimanche</span>
-              </div>
-            </div>
-
-            <div style={{
-  borderRadius: 'var(--radius-lg)',
+  background: '#F3D9E1',
+  padding: '3rem 0 4rem',
   overflow: 'hidden',
-  boxShadow: '0 12px 40px rgba(200,107,138,0.18)',
-  aspectRatio: '4/3',
-  marginTop: '2rem',
+  position: 'relative',
 }}>
-              <div style={{
-  aspectRatio: '4/3',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  marginBottom: '1.25rem',
-}}>
-  <img
-    src="/images/shop/home-rose.jpg"
-    alt="La Grande Mercerie"
-    style={{ maxWidth: '90%', maxHeight: '90%', width: 'auto', height: 'auto', objectFit: 'contain' }}
-  />
+        <div style={{ position: 'absolute', top: '-60px', right: '-60px', width: '360px', height: '360px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(160,48,74,0.07) 0%, transparent 70%)', pointerEvents: 'none' }} />
+        <div className="container">
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '3rem', alignItems: 'start' }}>
+
+  {/* Colonne gauche */}
+  <div>
+    <p style={{ fontSize: '0.75rem', color: 'var(--rose-profond)', marginBottom: '0.75rem', letterSpacing: '0.14em', textTransform: 'uppercase', fontWeight: 600 }}>
+      {'Nouméa · Nouvelle-Calédonie'}
+    </p>
+    <img src="/logo.jpg" alt="La Grande Mercerie" style={{ maxWidth: '480px', width: '100%', height: 'auto', marginBottom: '1.25rem', display: 'block' }} />
+    <h1>Votre mercerie du <span style={{color: 'var(--rose-profond)'}}>Quartier latin</span> <br />à Nouméa</h1>
+    <p style={{ fontSize: '1rem', color: 'var(--gris-texte)', maxWidth: '400px', lineHeight: 1.8, fontWeight: 300, marginBottom: '2rem' }}>
+      {'Fils, laines, tissus, boutons et accessoires couture —'}<br />
+      {'Plus de 4 000 références sélectionnées avec soin.'}<br />
+      
+    </p>
+
+    <div style={{ display: 'flex', gap: '1.75rem', flexWrap: 'wrap', alignItems: 'center' }}>
+      <Link
+        to="/catalogue"
+        style={{ display: 'inline-block', padding: '0.85rem 2rem', background: 'var(--rose-profond)', color: 'white', textDecoration: 'none', fontSize: '0.85rem', fontFamily: 'var(--font-corps)', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', borderRadius: '4px', transition: 'background 0.2s' }}
+        onMouseEnter={e => { e.currentTarget.style.background = '#7a2038' }}
+        onMouseLeave={e => { e.currentTarget.style.background = 'var(--rose-profond)' }}
+      >
+        {'Voir le catalogue'}
+      </Link>
+      <Link
+        to="/contact"
+        style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', color: 'var(--noir)', textDecoration: 'none', fontSize: '0.88rem', fontFamily: 'var(--font-corps)', fontWeight: 400, borderBottom: '1.5px solid rgba(26,26,26,0.3)', paddingBottom: '2px', transition: 'border-color 0.2s' }}
+        onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--rose-profond)' }}
+        onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(26,26,26,0.3)' }}
+      >
+        {'Nous trouver →'}
+      </Link>
+    </div>
+  </div>
+
+  {/* Colonne droite — juste la photo */}
+  <div style={{ position: 'relative', aspectRatio: '4 / 3.1', overflow: 'hidden', borderRadius: 'var(--radius-lg)', boxShadow: '0 12px 40px rgba(200,107,138,0.18)', marginTop: '2rem' }}>
+    <img
+      src="/images/shop/home-rose.jpg"
+      alt="La Grande Mercerie"
+      style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', display: 'block' }}
+    />
+  </div>
+
 </div>
-            </div>
-          </div>
         </div>
       </section>
 
       {/* ── Nos univers ── */}
       <section style={{ padding: '4rem 0', background: 'var(--blanc)' }}>
         <div className="container">
-          <div className="section-titre" style={{ marginBottom: '2.5rem' }}>
-            <h2 style={{ fontFamily: 'var(--font-titre)', fontStyle: 'italic', fontWeight: 600 }}>
-              Nos univers
-            </h2>
-            <p>Explorez nos produits par catégorie </p>
-            <span className="trait" />
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '2rem', flexWrap: 'wrap', gap: '1rem' }}>
+            <div>
+              <p style={{ fontSize: '0.72rem', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--rose-profond)', fontWeight: 600, marginBottom: '0.3rem' }}>{'Collections'}</p>
+              <h2 style={{ fontFamily: 'var(--font-titre)', fontStyle: 'italic', fontWeight: 600, fontSize: 'clamp(1.5rem, 2.6vw, 2rem)', margin: 0 }}>{'Par où commencer ?'}</h2>
+            </div>
+            <Link to="/catalogue" style={{ fontSize: '0.88rem', color: 'var(--noir)', textDecoration: 'none', borderBottom: '1.5px solid rgba(26,26,26,0.3)', paddingBottom: '2px' }}>
+              {'Tout voir →'}
+            </Link>
           </div>
-
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))',
-            gap: '1rem',
-          }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)', gap: '1rem' }}>
             {UNIVERS.map(({ nom, lien, photo }) => (
-              <Link key={nom} to={lien} style={{ textDecoration: 'none' }}>
-                <div style={{
-                  borderRadius: 'var(--radius-lg)',
-                  overflow: 'hidden',
-                  position: 'relative',
-                  aspectRatio: '1 / 1',
-                  boxShadow: '0 2px 12px rgba(0,0,0,0.08)',
-                  transition: 'transform 0.25s ease, box-shadow 0.25s ease',
-                }}
-                  onMouseEnter={e => {
-                    e.currentTarget.style.transform = 'translateY(-4px)'
-                    e.currentTarget.style.boxShadow = '0 8px 24px rgba(200,107,138,0.22)'
-                  }}
-                  onMouseLeave={e => {
-                    e.currentTarget.style.transform = 'translateY(0)'
-                    e.currentTarget.style.boxShadow = '0 2px 12px rgba(0,0,0,0.08)'
-                  }}
+              <Link key={nom} to={lien} style={{ textDecoration: 'none', color: 'var(--noir)', display: 'block' }}>
+                <div
+                  style={{ transition: 'transform 0.25s ease' }}
+                  onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)' }}
+                  onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)' }}
                 >
-                  {/* Photo */}
-                  <img
-                    src={photo}
-                    alt={nom}
-                    style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-                  />
-                  {/* Overlay dégradé */}
-                  <div style={{
-                    position: 'absolute', inset: 0,
-                    background: 'linear-gradient(to top, rgba(26,26,26,0.65) 0%, transparent 55%)',
-                  }} />
-                  {/* Nom */}
-                  <p style={{
-                    position: 'absolute', bottom: '0.75rem', left: '0.75rem', right: '0.75rem',
-                    fontFamily: 'var(--font-titre)',
-                    fontSize: '1.05rem',
-                    fontWeight: 600,
-                    color: 'white',
-                    letterSpacing: '0.02em',
-                    margin: 0,
-                    textShadow: '0 1px 4px rgba(0,0,0,0.3)',
-                  }}>
+                  <div style={{ position: 'relative', aspectRatio: '1 / 1', overflow: 'hidden', border: '2px solid var(--noir)' }}>
+                    <img src={photo} alt={nom} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', transition: 'transform 0.3s ease' }} />
+                  </div>
+                  <div style={{ background: 'var(--rose-profond)', color: 'white', textAlign: 'center', fontFamily: 'var(--font-titre)', fontWeight: 600, fontSize: '0.88rem', letterSpacing: '0.02em', padding: '0.5rem 0.3rem' }}>
                     {nom}
-                  </p>
+                  </div>
                 </div>
               </Link>
             ))}
@@ -199,173 +117,202 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Meilleures ventes ── */}
+      {/* ── Coups de coeur ── */}
       {!loading && top20.length > 0 && (
-        <section style={{ padding: '4rem 0', background: '#FDF8F5' }}>
+        <section style={{ padding: '4rem 0', background: 'var(--blush)' }}>
           <div className="container">
-            <div className="section-titre" style={{ marginBottom: '2.5rem' }}>
-              <h2 style={{ fontFamily: 'var(--font-titre)', fontStyle: 'italic', fontWeight: 600 }}>
-                Vos coups de coeur
+            <div style={{ marginBottom: '2.2rem' }}>
+              <p style={{ fontSize: '0.72rem', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--rose-profond)', fontWeight: 600, marginBottom: '0.3rem' }}>{'Popularité'}</p>
+              <h2 style={{ fontFamily: 'var(--font-titre)', fontStyle: 'italic', fontWeight: 600, fontSize: 'clamp(1.6rem, 2.8vw, 2.3rem)', margin: 0 }}>
+                {'Vos préférés du moment'}
               </h2>
-              <p>Les produits les plus populaires</p>
-              <span className="trait" />
             </div>
-
             <div style={{ position: 'relative' }}>
               <button
                 onClick={() => setCarrouselIndex(i => (i - 4 + top20.length) % top20.length)}
-                style={{
-                  position: 'absolute', left: '-1.25rem', top: '50%',
-                  transform: 'translateY(-50%)', zIndex: 10,
-                  width: '40px', height: '40px', borderRadius: '50%',
-                  background: 'white', color: 'var(--rose-profond)',
-                  border: '1.5px solid var(--rose-poudre)',
-                  cursor: 'pointer', fontSize: '1.4rem',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
-                  transition: 'border-color 0.2s, box-shadow 0.2s',
-                }}
-                onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--rose-profond)'; e.currentTarget.style.boxShadow = '0 4px 12px rgba(200,107,138,0.2)' }}
-                onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--rose-poudre)'; e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.08)' }}
-              >‹</button>
-
-              <div style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))',
-                gap: '1.25rem',
-              }}>
+                style={{ position: 'absolute', left: '-1.25rem', top: '50%', transform: 'translateY(-50%)', zIndex: 10, width: '40px', height: '40px', borderRadius: '50%', background: 'var(--blanc)', color: 'var(--rose-profond)', border: '1.5px solid var(--rose-poudre)', cursor: 'pointer', fontSize: '1.4rem', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 2px 8px rgba(0,0,0,0.08)', transition: 'all 0.2s' }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--rose-profond)' }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--rose-poudre)' }}
+              >
+                {'‹'}
+              </button>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '1.25rem' }}>
                 {[0, 1, 2, 3].map(offset => {
                   const p = top20[(carrouselIndex + offset) % top20.length]
                   return <ProductCard key={`${p.id}-${offset}`} product={p} />
                 })}
               </div>
-
               <button
                 onClick={() => setCarrouselIndex(i => (i + 4) % top20.length)}
-                style={{
-                  position: 'absolute', right: '-1.25rem', top: '50%',
-                  transform: 'translateY(-50%)', zIndex: 10,
-                  width: '40px', height: '40px', borderRadius: '50%',
-                  background: 'white', color: 'var(--rose-profond)',
-                  border: '1.5px solid var(--rose-poudre)',
-                  cursor: 'pointer', fontSize: '1.4rem',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
-                  transition: 'border-color 0.2s, box-shadow 0.2s',
-                }}
-                onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--rose-profond)'; e.currentTarget.style.boxShadow = '0 4px 12px rgba(200,107,138,0.2)' }}
-                onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--rose-poudre)'; e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.08)' }}
-              >›</button>
+                style={{ position: 'absolute', right: '-1.25rem', top: '50%', transform: 'translateY(-50%)', zIndex: 10, width: '40px', height: '40px', borderRadius: '50%', background: 'var(--blanc)', color: 'var(--rose-profond)', border: '1.5px solid var(--rose-poudre)', cursor: 'pointer', fontSize: '1.4rem', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 2px 8px rgba(0,0,0,0.08)', transition: 'all 0.2s' }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--rose-profond)' }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--rose-poudre)' }}
+              >
+                {'›'}
+              </button>
             </div>
-
             <div style={{ display: 'flex', justifyContent: 'center', gap: '0.4rem', marginTop: '1.5rem' }}>
               {Array.from({ length: 5 }).map((_, i) => (
-                <button key={i} onClick={() => setCarrouselIndex(i * 4)}
-                  style={{
-                    width: carrouselIndex >= i * 4 && carrouselIndex < (i + 1) * 4 ? '20px' : '7px',
-                    height: '7px', borderRadius: '50px', border: 'none', cursor: 'pointer',
-                    background: carrouselIndex >= i * 4 && carrouselIndex < (i + 1) * 4 ? 'var(--rose-profond)' : 'var(--rose-poudre)',
-                    transition: 'all 0.3s ease', padding: 0,
-                  }}
+                <button
+                  key={i}
+                  onClick={() => setCarrouselIndex(i * 4)}
+                  style={{ width: carrouselIndex >= i * 4 && carrouselIndex < (i + 1) * 4 ? '20px' : '7px', height: '7px', borderRadius: '50px', border: 'none', cursor: 'pointer', background: carrouselIndex >= i * 4 && carrouselIndex < (i + 1) * 4 ? 'var(--rose-profond)' : 'var(--rose-poudre)', transition: 'all 0.3s ease', padding: 0 }}
                 />
               ))}
             </div>
-
             <div style={{ textAlign: 'center', marginTop: '2rem' }}>
-              <Link to="/catalogue" className="btn-outline">Voir tous les produits</Link>
+              <Link
+                to="/catalogue"
+                style={{ textDecoration: 'none', color: 'var(--noir)', fontSize: '0.9rem', borderBottom: '1.5px solid rgba(26,26,26,0.3)', paddingBottom: '3px', transition: 'border-color 0.15s' }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--rose-profond)' }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(26,26,26,0.3)' }}
+              >
+                {'Voir tous les produits'}
+              </Link>
             </div>
           </div>
         </section>
       )}
 
-      
-
-      {/* ── Facebook ── */}
-      <section style={{ padding: '4rem 0', background: 'var(--blanc)' }}>
+      {/* ── Reassurance crantee ── */}
+      <section style={{ background: 'var(--rose-profond)', color: 'white', padding: '3rem 0 4rem', clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 93.75% 92%, 87.5% 100%, 81.25% 92%, 75% 100%, 68.75% 92%, 62.5% 100%, 56.25% 92%, 50% 100%, 43.75% 92%, 37.5% 100%, 31.25% 92%, 25% 100%, 18.75% 92%, 12.5% 100%, 6.25% 92%, 0% 100%)' }}>
         <div className="container">
-          <div className="section-titre" style={{ marginBottom: '2rem' }}>
-            <h2 style={{ fontFamily: 'var(--font-titre)', fontStyle: 'italic', fontWeight: 600 }}>
-              Nos dernières nouvelles
-            </h2>
-            <p>Retrouvez-nous sur Facebook</p>
-            <span className="trait" />
-          </div>
-          <div style={{
-            display: 'flex', justifyContent: 'center', overflow: 'hidden',
-            borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-card)',
-            maxWidth: '500px', margin: '0 auto 1.5rem',
-          }}>
-            <iframe
-              title="Page Facebook La Grande Mercerie"
-              src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FLagrandeMercerieNoumea&tabs=timeline&width=500&height=500&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=false"
-              width="500" height="500"
-              style={{ border: 'none', overflow: 'hidden', maxWidth: '100%' }}
-              scrolling="no" frameBorder="0" allowFullScreen={true} allow="encrypted-media"
-            />
-          </div>
-          <div style={{ textAlign: 'center' }}>
-            <a href="https://www.facebook.com/LagrandeMercerieNoumea" target="_blank" rel="noopener noreferrer"
-              className="btn-primary" style={{ background: '#1877F2' }}>
-              📘 Voir la page complète
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* ── Réassurance ── */}
-      <section style={{ padding: '2.5rem 0', background: '#FDF8F5' }}>
-        <div className="container">
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
-            gap: '1rem',
-          }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '1.6rem' }}>
             {[
-              { icon: '🧵', titre: '+4 000 références', texte: 'Fils, laines, tissus, boutons et accessoires' },
-              { icon: '💌', titre: 'Conseil expert',    texte: 'Une équipe passionnée à votre écoute' },
-              { icon: '✨', titre: 'Grandes marques',   texte: 'DMC, Cheval Blanc, Bohin, Katia...' },
-              { icon: '📍', titre: 'Boutique à Nouméa', texte: 'Ouverte du lundi au samedi' },
-            ].map(({ icon, titre, texte }) => (
-              <div key={titre} style={{
-                display: 'flex', gap: '0.75rem', alignItems: 'flex-start',
-                padding: '1.1rem 1.25rem',
-                background: 'var(--blush)',
-                borderRadius: 'var(--radius)',
-              }}>
-                <span style={{ fontSize: '1.3rem', flexShrink: 0, marginTop: '2px' }}>{icon}</span>
-                <div>
-                  <p style={{ fontWeight: 700, fontSize: '0.85rem', color: 'var(--noir)', marginBottom: '0.15rem' }}>{titre}</p>
-                  <p style={{ fontSize: '0.76rem', color: 'var(--gris-texte)', lineHeight: 1.5 }}>{texte}</p>
-                </div>
-              </div>
+              { titre: '+4 000 références',     texte: 'Fils, laines, tissus, boutons et accessoires réunis sous un même toit' },
+              { titre: 'Conseil personnalisé',   texte: 'Une équipe qui connaît ses produits et prend le temps de vous orienter' },
+              { titre: 'Les meilleures marques', texte: 'DMC, Katia, Cheval Blanc, Bohin, Prym — rigoureusement choisis' },
+              { titre: 'À Nouméa, en vrai',      texte: 'Une boutique physique, du lundi au samedi, avec des personnes disponibles' },
+            ].map(({ titre, texte }) => (
+              <div key={titre} style={{ textAlign: 'center' }}>
+  <p style={{ fontFamily: 'var(--font-corps)', fontWeight: 700, fontSize: '0.88rem', margin: '0 0 0.3rem', color: 'white' }}>{titre}</p>
+  <p style={{ fontFamily: 'var(--font-corps)', fontSize: '0.78rem', lineHeight: 1.6, opacity: 0.85, margin: 0 }}>{texte}</p>
+</div>
             ))}
           </div>
         </div>
       </section>
 
+{/* ── Nous trouver + Facebook ── */}
+      <section style={{ padding: '4.5rem 0', background: 'var(--blanc)' }}>
+        <div className="container">
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '3rem' }}>
+
+            {/* Colonne gauche — Nous trouver */}
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              <p style={{ fontSize: '0.72rem', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--rose-profond)', fontWeight: 600, marginBottom: '0.4rem' }}>{'Boutique'}</p>
+              <h2 style={{ fontFamily: 'var(--font-titre)', fontStyle: 'italic', fontWeight: 600, fontSize: 'clamp(1.3rem, 2.2vw, 1.6rem)', margin: '0 0 1.1rem' }}>{'Nous rendre visite'}</h2>
+              <p style={{ fontSize: '0.92rem', color: 'var(--gris-texte)', maxWidth: '38ch', marginBottom: '1rem' }}>
+                {'Quartier latin — Nouméa, Nouvelle-Calédonie.'}
+              </p>
+              <div style={{ fontSize: '0.84rem', lineHeight: 1.8 }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '0.2rem 1.2rem' }}>
+                  <span style={{ color: 'var(--gris-texte)' }}>{'Adresse'}</span>
+                  <span>{"16 Route de l'Anse Vata, Nouméa"}</span>
+                  <span style={{ color: 'var(--gris-texte)' }}>{'Lundi — vendredi'}</span>
+                  <span>{'8h–12h / 13h–17h30'}</span>
+                  <span style={{ color: 'var(--gris-texte)' }}>{'Samedi'}</span>
+                  <span>{'8h–12h'}</span>
+                  <span style={{ color: 'var(--gris-texte)' }}>{'Dimanche'}</span>
+                  <span style={{ color: 'var(--rose-profond)', fontWeight: 700 }}>{'Fermé'}</span>
+                </div>
+              </div>
+              <div style={{ marginTop: '1.5rem' }}>
+                <Link
+                  to="/contact"
+                  style={{ display: 'inline-block', padding: '0.75rem 1.6rem', background: 'var(--rose-profond)', color: 'white', textDecoration: 'none', fontSize: '0.82rem', fontFamily: 'var(--font-corps)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', borderRadius: '4px', transition: 'background 0.2s' }}
+                  onMouseEnter={e => { e.currentTarget.style.background = '#7a2038' }}
+                  onMouseLeave={e => { e.currentTarget.style.background = 'var(--rose-profond)' }}
+                >
+                  {'Nous contacter'}
+                </Link>
+              </div>
+
+              {/* Google Maps — prend tout l'espace restant */}
+              <div style={{ overflow: 'hidden', border: '2px solid var(--noir)', marginTop: '2rem', height: '450px' }}>
+                <iframe
+                  title="Localisation La Grande Mercerie"
+                  src="https://maps.google.com/maps?q=-22.276753,166.447583&z=15&t=m&output=embed&hl=fr"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 'none', display: 'block' }}
+                  loading="lazy"
+                  allowFullScreen={false}
+                />
+              </div>
+            </div>
+
+            {/* Colonne droite — Facebook */}
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              <p style={{ fontSize: '0.72rem', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--rose-profond)', fontWeight: 600, marginBottom: '0.4rem' }}>{'Actualités'}</p>
+              <h2 style={{ fontFamily: 'var(--font-titre)', fontStyle: 'italic', fontWeight: 600, fontSize: 'clamp(1.3rem, 2.2vw, 1.6rem)', margin: '0 0 1.1rem' }}>{'Suivez nous sur les réseaux'}</h2>
+              <p style={{ fontSize: '0.92rem', color: 'var(--gris-texte)', maxWidth: '38ch', marginBottom: '1.25rem' }}>
+                {'Nouveautés, arrivages et inspirations — retrouvez-nous sur Facebook entre deux visites.'}
+              </p>
+
+              {/* Facebook — prend tout l'espace restant */}
+              <div style={{ overflow: 'hidden', border: '2px solid var(--noir)', position: 'relative', height: '590px' }}>
+                <iframe
+                  ref={el => {
+                    if (el) {
+                      const w = el.parentElement.offsetWidth
+                      el.style.transform = `scaleX(${w / 500})`
+                      el.style.transformOrigin = 'left top'
+                      el.style.width = '500px'
+                    }
+                  }}
+                  title="Page Facebook La Grande Mercerie"
+                  src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FLagrandeMercerieNoumea&tabs=timeline&width=500&height=1000&small_header=true&hide_cover=false&show_facepile=false"
+                  height="1000"
+                  style={{ border: 'none', overflow: 'hidden', marginTop: '-80px', display: 'block' }}
+                  scrolling="no"
+                  frameBorder="0"
+                  allowFullScreen={true}
+                  allow="encrypted-media"
+                />
+              </div>
+
+              <div style={{ marginTop: '1rem' }}>
+                <a
+                  href="https://www.facebook.com/LagrandeMercerieNoumea"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ textDecoration: 'none', color: 'var(--noir)', fontSize: '0.88rem', borderBottom: '1.5px solid rgba(26,26,26,0.3)', paddingBottom: '2px', transition: 'border-color 0.15s' }}
+                  onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--rose-profond)' }}
+                  onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(26,26,26,0.3)' }}
+                >
+                  {'Voir la page complète →'}
+                </a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
       {/* ── Newsletter ── */}
-      <section style={{
-        padding: '4rem 0',
-        background: 'linear-gradient(135deg, var(--rose-poudre) 0%, var(--rose-profond) 100%)',
-      }}>
-        <div className="container" style={{ textAlign: 'center', maxWidth: '520px' }}>
-          <h2 style={{
-            fontFamily: 'var(--font-titre)',
-            fontSize: 'clamp(1.8rem, 3vw, 2.4rem)',
-            fontStyle: 'italic',
-            fontWeight: 600,
-            color: 'white',
-            marginBottom: '0.75rem',
-          }}>
-            Restez informées
+      <section style={{ background: 'var(--blush)', padding: '1.5rem 0 0.2rem' }}>
+        <div className="container" style={{ maxWidth: '640px' }}>
+          <p style={{ fontSize: '0.72rem', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--rose-profond)', fontWeight: 600, marginBottom: '0.4rem' }}>{'Newsletter'}</p>
+          <h2 style={{ fontFamily: 'var(--font-titre)', fontStyle: 'italic', fontWeight: 600, fontSize: 'clamp(1.3rem, 2.2vw, 1.6rem)', margin: '0 0 0.6rem' }}>
+            {"Restez dans la boucle"}
           </h2>
-          <p style={{ color: 'white', opacity: 0.9, marginBottom: '1.75rem', fontSize: '0.95rem', lineHeight: 1.6 }}>
-            Nouveautés, promotions et actualités — directement dans votre boîte mail.
+          <p style={{ color: 'var(--gris-texte)', marginBottom: '1.4rem', fontSize: '0.95rem' }}>
+            {'Nouveautés, arrivages et bons plans directement dans votre boîte mail. Sans excès.'}
           </p>
-          <a href="https://app.zenkai.nc/lagrandemercerie/form-nl.html" target="_blank" rel="noopener noreferrer"
-            className="btn-primary" style={{ background: 'white', color: 'var(--rose-profond)', display: 'inline-block' }}>
-            Je m'inscris à la newsletter
-          </a>
+          <div style={{ display: 'flex', maxWidth: '440px' }}>
+            
+            <a
+              href="https://app.zenkai.nc/lagrandemercerie/form-nl.html"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ padding: '0.75rem 1.3rem', background: 'var(--rose-profond)', color: 'white', border: '2px solid var(--rose-profond)', fontFamily: 'var(--font-corps)', fontWeight: 700, fontSize: '0.75rem', letterSpacing: '0.06em', textTransform: 'uppercase', cursor: 'pointer', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', transition: 'background 0.15s' }}
+              onMouseEnter={e => { e.currentTarget.style.background = '#7a2038' }}
+              onMouseLeave={e => { e.currentTarget.style.background = 'var(--rose-profond)' }}
+            >
+              {"Je m'inscris"}
+            </a>
+          </div>
         </div>
       </section>
 

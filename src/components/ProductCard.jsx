@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 
 export default function ProductCard({ product }) {
-  const { id, nom, categorie, prix, description, dispo, image } = product
+  const { id, nom, categorie, prix, description, dispo, image, marque } = product
 
   return (
     <Link to={`/produit/${id}`} style={{ textDecoration: 'none' }}>
@@ -28,45 +28,35 @@ export default function ProductCard({ product }) {
       >
         {/* Image */}
         <div style={{
-          width: '100%',
-          aspectRatio: '1 / 1',
-          background: 'var(--blush)',
-          overflow: 'hidden',
-          position: 'relative',
-        }}>
-          {image ? (
+  width: '100%',
+  aspectRatio: '1 / 1',
+  background: 'var(--blanc)',
+  overflow: 'hidden',
+  position: 'relative',
+  backgroundImage: 'url(/logo.jpg)',
+  backgroundRepeat: 'no-repeat',
+  backgroundPosition: 'center',
+  backgroundSize: '30%',
+}}>
+          {image && (
             <img
               src={`/images/products/${image}`}
-              alt={nom}
+              alt=""
               style={{
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: '84%',
-    height: '84%',
-    objectFit: 'contain',
-    objectPosition: 'center',
-    transition: 'transform 0.4s ease',
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                width: '84%',
+                height: '84%',
+                objectFit: 'contain',
+                objectPosition: 'center',
+                transition: 'transform 0.4s ease',
               }}
-                onMouseEnter={e => e.target.style.transform = 'translate(-50%, -50%) scale(1.05)'}
-  onMouseLeave={e => e.target.style.transform = 'translate(-50%, -50%)'}
+              onMouseEnter={e => e.target.style.transform = 'translate(-50%, -50%) scale(1.05)'}
+              onMouseLeave={e => e.target.style.transform = 'translate(-50%, -50%)'}
               onError={e => { e.target.style.display = 'none' }}
             />
-          ) : (
-            <div style={{
-              width: '100%',
-              height: '100%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}>
-              <img
-                src="/logo.jpg"
-                alt="La Grande Mercerie"
-                style={{ width: '35%', height: '35%', objectFit: 'contain', opacity: 0.85 }}
-              />
-            </div>
           )}
 
           {/* Badge dispo */}
@@ -88,53 +78,59 @@ export default function ProductCard({ product }) {
         </div>
 
         {/* Infos */}
-        <div style={{ padding: '1rem 1.25rem 1.25rem', flex: 1, display: 'flex', flexDirection: 'column' }}>
-          <span style={{
-            fontSize: '0.7rem',
-            textTransform: 'uppercase',
-            letterSpacing: '0.1em',
-            color: 'var(--rose-profond)',
-            fontWeight: 700,
-            marginBottom: '0.35rem',
-          }}>
-            {categorie}
-          </span>
+<div style={{ padding: '0.75rem 1rem 1rem', flex: 1, display: 'flex', flexDirection: 'column' }}>
+  
+  <span style={{
+    fontSize: '0.68rem',
+    textTransform: 'uppercase',
+    letterSpacing: '0.1em',
+    color: 'var(--rose-profond)',
+    fontWeight: 600,
+    marginBottom: '0.3rem',
+  }}>
+    {categorie}
+  </span>
 
-          <h3 style={{
-            fontFamily: 'var(--font-titre)',
-            fontSize: '1rem',
-            fontWeight: 600,
-            color: 'var(--noir)',
-            marginBottom: '0.5rem',
-            flex: 1,
-          }}>
-            {nom}
-          </h3>
+  <h3 style={{
+    fontFamily: 'var(--font-corps)',
+    fontSize: '0.85rem',
+    fontWeight: 500,
+    color: 'var(--noir)',
+    marginBottom: '0.25rem',
+    flex: 1,
+    display: '-webkit-box',
+    WebkitLineClamp: 2,
+    WebkitBoxOrient: 'vertical',
+    overflow: 'hidden',
+    lineHeight: 1.4,
+  }}>
+    {nom}
+  </h3>
 
-          {description && (
-            <p style={{
-              fontSize: '0.8rem',
-              color: 'var(--gris-texte)',
-              marginBottom: '0.75rem',
-              lineHeight: 1.5,
-              display: '-webkit-box',
-              WebkitLineClamp: 2,
-              WebkitBoxOrient: 'vertical',
-              overflow: 'hidden',
-            }}>
-              {description}
-            </p>
-          )}
+  {product?.marque && (
+    <span style={{
+      fontSize: '0.7rem',
+      color: 'var(--gris-texte)',
+      marginBottom: '0.5rem',
+    }}>
+      {product.marque}
+    </span>
+  )}
 
-          <div style={{
-            fontFamily: 'var(--font-titre)',
-            fontSize: '1.15rem',
-            fontWeight: 700,
-            color: 'var(--rose-profond)',
-          }}>
-            {prix > 0 ? `${prix.toLocaleString('fr-FR')} F CFP` : 'Prix sur demande'}
-          </div>
-        </div>
+  
+
+  <div style={{
+    fontFamily: 'var(--font-titre)',
+    fontSize: '0.95rem',
+    fontWeight: 600,
+    color: 'var(--rose-profond)',
+    textAlign: 'right',
+    marginTop: 'auto',
+  }}>
+    {prix > 0 ? `${prix.toLocaleString('fr-FR')} F` : 'Prix sur demande'}
+  </div>
+
+</div>
       </div>
     </Link>
   )

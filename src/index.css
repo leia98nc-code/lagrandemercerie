@@ -5,10 +5,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
 :root {
   /* Palette */
-  --rose-poudre:   #F0B8CC;
-  --rose-profond:  #C86B8A;
+  --rose-profond: #A0304A;
+--rose-poudre: #EDAABB;
   --noir:          #1A1A1A;
-  --blush:         #FDF0F4;
+  --blush:         #FDF0F2;
   --blanc:         #FFFFFF;
   --gris-doux:     #F5F5F5;
   --gris-texte:    #6B6B6B;
@@ -108,7 +108,7 @@ h1, h2, h3 {
 /* ---- Page wrapper ---- */
 .page {
   min-height: 100vh;
-  padding-top: 80px; /* Hauteur navbar */
+  padding-top: 140px; /* Hauteur navbar */
 }
 
 /* ---- Section titre ---- */
