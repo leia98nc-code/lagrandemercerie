@@ -15,8 +15,7 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  const isHome = location.pathname === '/'
-  const showLogo = !isHome || scrolled
+  const showLogo = true
   const compact = scrolled && !hovered
 
   const liens = [
@@ -81,16 +80,24 @@ export default function Navbar() {
             transition: 'opacity 0.25s ease, max-width 0.35s ease',
             whiteSpace: 'nowrap',
           }}>
-            <img
-              src="/logo.jpg"
-              alt="La Grande Mercerie"
-              style={{
-                height: '38px', width: '38px',
-                objectFit: 'cover', borderRadius: '50%',
-                boxShadow: '0 0 0 2px var(--rose-poudre)',
-                flexShrink: 0,
-              }}
-            />
+            <div style={{
+  height: '38px', width: '38px',
+  borderRadius: '50%',
+  overflow: 'hidden',
+  border: '2px solid var(--rose-poudre)',
+  boxSizing: 'border-box',
+  flexShrink: 0,
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  background: 'white',
+}}>
+  <img
+    src="/favicon.jpg"
+    alt="La Grande Mercerie"
+    style={{ width: '71%', height: '71%', objectFit: 'contain', display: 'block' }}
+  />
+</div>
             <span style={{
               fontFamily: 'var(--font-titre)',
               fontWeight: 600,

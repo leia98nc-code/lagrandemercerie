@@ -89,7 +89,7 @@ export default function Home() {
         <div className="container">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '2rem', flexWrap: 'wrap', gap: '1rem' }}>
             <div>
-              <p style={{ fontSize: '0.72rem', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--rose-profond)', fontWeight: 600, marginBottom: '0.3rem' }}>{'Collections'}</p>
+              <p style={{ fontSize: '0.72rem', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--rose-profond)', fontWeight: 600, marginBottom: '0.3rem' }}>{'Nos rayons'}</p>
               <h2 style={{ fontFamily: 'var(--font-titre)', fontStyle: 'italic', fontWeight: 600, fontSize: 'clamp(1.5rem, 2.6vw, 2rem)', margin: 0 }}>{'Par où commencer ?'}</h2>
             </div>
             <Link to="/catalogue" style={{ fontSize: '0.88rem', color: 'var(--noir)', textDecoration: 'none', borderBottom: '1.5px solid rgba(26,26,26,0.3)', paddingBottom: '2px' }}>
@@ -122,7 +122,7 @@ export default function Home() {
         <section style={{ padding: '4rem 0', background: 'var(--blush)' }}>
           <div className="container">
             <div style={{ marginBottom: '2.2rem' }}>
-              <p style={{ fontSize: '0.72rem', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--rose-profond)', fontWeight: 600, marginBottom: '0.3rem' }}>{'Popularité'}</p>
+              <p style={{ fontSize: '0.72rem', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--rose-profond)', fontWeight: 600, marginBottom: '0.3rem' }}>{'Les usual suspects'}</p>
               <h2 style={{ fontFamily: 'var(--font-titre)', fontStyle: 'italic', fontWeight: 600, fontSize: 'clamp(1.6rem, 2.8vw, 2.3rem)', margin: 0 }}>
                 {'Vos préférés du moment'}
               </h2>

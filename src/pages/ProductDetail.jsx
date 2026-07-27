@@ -64,6 +64,35 @@ function VisualiseurZoom({ src, alt, onClose }) {
   )
 }
 
+function MiniatureGamme({ productId, gamme, imageFallback }) {
+  const [extIndex, setExtIndex] = useState(0)
+  const EXTENSIONS = ['jpg', 'webp', 'jpeg', 'png']
+
+  const suffixe = gamme.trim()
+    .replace(/\s*-\s*/g, '-')
+    .replace(/\s+/g, '-')
+    .replace(/[^a-zA-Z0-9_-]/g, '')
+
+  const src = `/images/products/${productId}_${suffixe}.${EXTENSIONS[extIndex]}`
+
+  return (
+    <img
+      src={src}
+      alt={gamme}
+      style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+      onError={e => {
+        if (extIndex < EXTENSIONS.length - 1) {
+          setExtIndex(i => i + 1)
+        } else if (imageFallback) {
+          e.target.src = `/images/products/${imageFallback}`
+        } else {
+          e.target.style.display = 'none'
+        }
+      }}
+    />
+  )
+}
+
 export default function ProductDetail() {
   const { id } = useParams()
   const { products, loading } = useProducts()
@@ -73,9 +102,10 @@ export default function ProductDetail() {
   const [zoomOuvert, setZoomOuvert] = useState(false)
   const EXTENSIONS = ['jpg', 'webp', 'jpeg', 'png']
   const [extensionIndex, setExtensionIndex] = useState(0)
+  const [gammeCarrouselIndex, setGammeCarrouselIndex] = useState(0)
 
   useEffect(() => { setZoomOuvert(false) }, [id])
-  useEffect(() => { setExtensionIndex(0) }, [gammeActive])
+  useEffect(() => { setZoomOuvert(false); setGammeCarrouselIndex(0) }, [id])
 
   const product = products.find(p => p.id === id)
 
@@ -115,20 +145,22 @@ export default function ProductDetail() {
     .slice(0, 4)
 
   return (
-    <main className="page" style={{ padding: '2rem 0 4rem', background: 'var(--blush)' }}>
+    <main className="page" style={{ paddingTop: '9rem', paddingBottom: '4rem', background: 'var(--blush)' }}>
       <div className="container">
 
         {/* Fil d'Ariane */}
         <nav style={{
-          fontSize: '0.82rem', color: 'var(--gris-texte)',
-          marginBottom: '2rem', display: 'flex', gap: '0.5rem', flexWrap: 'wrap',
-        }}>
-          <Link to="/" style={{ color: 'var(--rose-profond)', textDecoration: 'none' }}>Accueil</Link>
-          <span>›</span>
-          <Link to="/catalogue" style={{ color: 'var(--rose-profond)', textDecoration: 'none' }}>Catalogue</Link>
-          <span>›</span>
-          <span>{nom}</span>
-        </nav>
+  fontSize: '0.82rem', color: 'var(--gris-texte)',
+  marginBottom: '2rem', display: 'flex', gap: '0.5rem', flexWrap: 'wrap',
+}}>
+  <Link to="/" style={{ color: 'var(--rose-profond)', textDecoration: 'none' }}>Accueil</Link>
+  <span>›</span>
+  <Link to="/catalogue" style={{ color: 'var(--rose-profond)', textDecoration: 'none' }}>Catalogue</Link>
+  <span>›</span>
+  <Link to={`/catalogue?cat=${encodeURIComponent(categorie)}`} style={{ color: 'var(--rose-profond)', textDecoration: 'none' }}>{categorie}</Link>
+  <span>›</span>
+  <span>{nom}</span>
+</nav>
 
         {/* Fiche produit */}
         <div style={{
@@ -259,62 +291,112 @@ export default function ProductDetail() {
               </div>
             )}
 
-            {/* Gammes */}
-            {product.gammes && product.gammes.trim() !== '' && (
-              <div>
-                <h3 style={{
-                  fontFamily: 'var(--font-corps)', fontSize: '0.75rem',
-                  textTransform: 'uppercase', letterSpacing: '0.1em',
-                  color: 'var(--rose-profond)', marginBottom: '0.75rem',
-                }}>
-                  Gammes disponibles
-                </h3>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
-                  {product.gammes.split('|').map((gamme, i) => {
-                    const gTrim = gamme.trim()
-                    const actif = gammeActive === gTrim
-                    return (
-                      <button
-                        key={i}
-                        onClick={() => setGammeActive(actif ? null : gTrim)}
-                        style={{
-                          padding: '0.35rem 0.85rem',
-                          borderRadius: '4px',
-                          border: `1.5px solid ${actif ? 'var(--rose-profond)' : 'var(--rose-poudre)'}`,
-                          background: actif ? 'var(--rose-profond)' : 'var(--blanc)',
-                          color: actif ? 'white' : 'var(--noir)',
-                          fontSize: '0.78rem',
-                          fontFamily: 'var(--font-corps)',
-                          fontWeight: actif ? 600 : 400,
-                          cursor: 'pointer',
-                          transition: 'all 0.15s ease',
-                          letterSpacing: '0.02em',
-                        }}
-                        onMouseEnter={e => {
-                          if (!actif) {
-                            e.currentTarget.style.borderColor = 'var(--rose-profond)'
-                            e.currentTarget.style.color = 'var(--rose-profond)'
-                          }
-                        }}
-                        onMouseLeave={e => {
-                          if (!actif) {
-                            e.currentTarget.style.borderColor = 'var(--rose-poudre)'
-                            e.currentTarget.style.color = 'var(--noir)'
-                          }
-                        }}
-                      >
-                        {gTrim}
-                      </button>
-                    )
-                  })}
-                </div>
-              </div>
-            )}
+{/* Gammes */}
+{product.gammes && product.gammes.trim() !== '' && (() => {
+  const toutesLesGammes = product.gammes.split('|').map(g => g.trim())
+  const PAR_PAGE = 4
+  const nbPages = Math.ceil(toutesLesGammes.length / PAR_PAGE)
+  const gammesVisibles = toutesLesGammes.slice(
+    gammeCarrouselIndex * PAR_PAGE,
+    gammeCarrouselIndex * PAR_PAGE + PAR_PAGE
+  )
 
-            <div style={{ marginTop: '0.5rem', display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-              <Link to="/contact" className="btn-primary">Nous contacter</Link>
-              <button onClick={() => navigate(-1)} className="btn-outline">← Retour</button>
-            </div>
+  return (
+    <div>
+      <h3 style={{
+  fontFamily: 'var(--font-corps)', fontSize: '0.75rem',
+  textTransform: 'uppercase', letterSpacing: '0.1em',
+  color: 'var(--rose-profond)', marginBottom: '0.75rem',
+}}>
+  {`Gammes disponibles (${toutesLesGammes.length})`}
+</h3>
+
+      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+        {nbPages > 1 && (
+          <button
+            onClick={() => setGammeCarrouselIndex(i => (i - 1 + nbPages) % nbPages)}
+            style={{
+              flexShrink: 0, width: '32px', height: '32px', borderRadius: '50%',
+              background: 'var(--blanc)', border: '1.5px solid var(--rose-poudre)',
+              color: 'var(--rose-profond)', cursor: 'pointer', fontSize: '1.1rem',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+            }}
+          >‹</button>
+        )}
+
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(4, 1fr)',
+          gap: '0.75rem',
+          flex: 1,
+        }}>
+          {gammesVisibles.map((gTrim, i) => {
+  const actif = gammeActive === gTrim
+  return (
+    <button
+      key={`${gammeCarrouselIndex}-${gTrim}`}
+                onClick={() => setGammeActive(actif ? null : gTrim)}
+                style={{
+                  display: 'flex', flexDirection: 'column', alignItems: 'center',
+                  background: 'none', border: 'none', padding: 0, cursor: 'pointer',
+                  gap: '0.35rem',
+                }}
+              >
+                <div style={{
+                  width: '100%', aspectRatio: '1 / 1',
+                  borderRadius: 'var(--radius)', overflow: 'hidden',
+                  border: `2px solid ${actif ? 'var(--rose-profond)' : 'var(--rose-poudre)'}`,
+                  background: 'var(--blush)',
+                  transition: 'border-color 0.15s ease',
+                }}>
+                  <MiniatureGamme productId={product.id} gamme={gTrim} imageFallback={image} />
+                </div>
+                <span style={{
+                  fontSize: '0.72rem', textAlign: 'center', lineHeight: 1.3,
+                  color: actif ? 'var(--rose-profond)' : 'var(--noir)',
+                  fontWeight: actif ? 600 : 400,
+                }}>
+                  {gTrim}
+                </span>
+              </button>
+            )
+          })}
+        </div>
+
+        {nbPages > 1 && (
+          <button
+            onClick={() => setGammeCarrouselIndex(i => (i + 1) % nbPages)}
+            style={{
+              flexShrink: 0, width: '32px', height: '32px', borderRadius: '50%',
+              background: 'var(--blanc)', border: '1.5px solid var(--rose-poudre)',
+              color: 'var(--rose-profond)', cursor: 'pointer', fontSize: '1.1rem',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+            }}
+          >›</button>
+        )}
+      </div>
+    </div>
+  )
+})()}
+
+            <div style={{ marginTop: '0.5rem', display: 'flex', gap: '1.75rem', flexWrap: 'wrap', alignItems: 'center' }}>
+  <Link
+    to="/contact"
+    style={{ display: 'inline-block', padding: '0.85rem 2rem', background: 'var(--rose-profond)', color: 'white', textDecoration: 'none', fontSize: '0.85rem', fontFamily: 'var(--font-corps)', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', borderRadius: '4px', transition: 'background 0.2s' }}
+    onMouseEnter={e => { e.currentTarget.style.background = '#7a2038' }}
+    onMouseLeave={e => { e.currentTarget.style.background = 'var(--rose-profond)' }}
+  >
+    {'Nous contacter'}
+  </Link>
+  <button
+    onClick={() => navigate(-1)}
+    style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', background: 'none', border: 'none', padding: 0, color: 'var(--noir)', textDecoration: 'none', fontSize: '0.88rem', fontFamily: 'var(--font-corps)', fontWeight: 400, borderBottom: '1.5px solid rgba(26,26,26,0.3)', paddingBottom: '2px', cursor: 'pointer', transition: 'border-color 0.2s' }}
+    onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--rose-profond)' }}
+    onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(26,26,26,0.3)' }}
+  >
+    {'← Retour'}
+  </button>
+</div>
           </div>
         </div>
 
