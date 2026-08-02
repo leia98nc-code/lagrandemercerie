@@ -52,7 +52,7 @@ export default function Navbar() {
         transition: 'max-height 0.35s ease, opacity 0.25s ease',
       }}>
         <span>{'NOUMÉA · QUARTIER LATIN'}</span>
-        <span>{'LUN–VEN 8H–12H / 13H–17H30 · SAM 8H–12H'}</span>
+        <span>{'LUN–VEN 8H–17H30 · SAM 8H–12H'}</span>
       </div>
 
       {/* ── Barre principale ── */}

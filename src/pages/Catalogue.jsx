@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from 'react'
+import { useState, useMemo, useEffect, useRef } from 'react'
 import { useProducts } from '../hooks/useProducts'
 import ProductCard from '../components/ProductCard'
 import { useSearchParams, Link } from 'react-router-dom'
@@ -24,7 +24,6 @@ function surlignerTexte(texte, terme) {
 }
 
 const SEUIL_EMPILEMENT = 8
-const ELEMENTS_PAR_PAGE = 48
 const PRIX_MIN_TOTAL = 0
 const PRIX_MAX_TOTAL = 50000
 
@@ -326,6 +325,26 @@ export default function Catalogue() {
     return ['Toutes', ...mqs.sort()]
   }, [products])
 
+  const grilleRef = useRef(null)
+const [nombreColonnes, setNombreColonnes] = useState(5)
+const LIGNES_PAR_PAGE = 10
+
+useEffect(() => {
+  const LARGEUR_CARTE = 190
+  const GAP = 20
+  const calculer = () => {
+    if (!grilleRef.current) return
+    const largeurDispo = grilleRef.current.offsetWidth
+    const n = Math.max(1, Math.floor((largeurDispo + GAP) / (LARGEUR_CARTE + GAP)))
+    setNombreColonnes(n)
+  }
+  calculer()
+  window.addEventListener('resize', calculer)
+  return () => window.removeEventListener('resize', calculer)
+}, [])
+
+const ELEMENTS_PAR_PAGE = nombreColonnes * LIGNES_PAR_PAGE
+
   const produitsFiltres = useMemo(() => {
     let liste = [...products]
     if (categorieActive !== 'Tous') liste = liste.filter(p => p.categorie === categorieActive)
@@ -398,9 +417,9 @@ export default function Catalogue() {
   useEffect(() => { if (pageActive > totalPages) setPageActive(1) }, [totalPages]) // eslint-disable-line
 
   const elementsPage = useMemo(() => {
-    const debut = (pageActive - 1) * ELEMENTS_PAR_PAGE
-    return elementsAffiches.slice(debut, debut + ELEMENTS_PAR_PAGE)
-  }, [elementsAffiches, pageActive])
+  const debut = (pageActive - 1) * ELEMENTS_PAR_PAGE
+  return elementsAffiches.slice(debut, debut + ELEMENTS_PAR_PAGE)
+}, [elementsAffiches, pageActive, ELEMENTS_PAR_PAGE])
 
   const sidebarProps = {
     categories, marques,
@@ -486,8 +505,7 @@ export default function Catalogue() {
           {!isMobile && <Sidebar {...sidebarProps} />}
 
           {/* Zone produits */}
-          <div style={{ flex: 1, minWidth: 0 }}>
-
+<div ref={grilleRef} style={{ flex: 1, minWidth: 0 }}>
             {loading && (
               <div style={{ textAlign: 'center', padding: '4rem', color: 'var(--gris-texte)' }}>
                 <img src="/logo.jpg" alt="" style={{ width: '48px', height: '48px', objectFit: 'contain', marginBottom: '1rem', opacity: 0.5 }} />
@@ -511,8 +529,8 @@ export default function Catalogue() {
                     <p style={{ color: 'var(--gris-texte)' }}>Aucun produit ne correspond à votre recherche.</p>
                   </div>
                 ) : vueMode === 'grille' ? (
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(190px, 1fr))', gap: '1.25rem' }}>
-                    {elementsPage.map(el =>
+<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(190px, 1fr))', gap: '1.25rem' }}>
+                      {elementsPage.map(el =>
                       el.type === 'groupe'
                         ? <CarteEmpilee key={el.nom} groupe={el.data} onClick={() => setRecherche(`=${el.nom}`)} />
                         : <ProductCard key={el.data.id} product={el.data} />

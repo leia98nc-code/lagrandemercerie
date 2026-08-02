@@ -5,15 +5,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
 :root {
   /* Palette */
-  --rose-profond: #A0304A;
---rose-poudre: #EDAABB;
-  --noir:          #1A1A1A;
-  --blush:         #FDF0F2;
+  --rose-profond: #CC5C80;
+  --rose-poudre: #FFB5AB;
+  --ocre:          #DBB06B;
+  --noir:          #2B2420;
+  --blush:         #FFF3E4;
   --blanc:         #FFFFFF;
   --gris-doux:     #F5F5F5;
-  --gris-texte:    #6B6B6B;
-  --rose-hover:    #b85c7a;
-
+  --gris-texte:    #7A6F5C;
+--rose-hover:    #A34F2C;
+--rose-prix: #9A2F5C;
   /* Typographie */
   --font-titre:  'Rubik', system-ui, sans-serif;
 --font-corps: 'Inter', system-ui, sans-serif;
@@ -47,7 +48,7 @@ body {
 
 /* ---- Utilitaires ---- */
 .container {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 0 1.5rem;
 }
@@ -108,7 +109,7 @@ h1, h2, h3 {
 /* ---- Page wrapper ---- */
 .page {
   min-height: 100vh;
-  padding-top: 140px; /* Hauteur navbar */
+  padding-top: 140px;
 }
 
 /* ---- Section titre ---- */
@@ -156,4 +157,18 @@ h1, h2, h3 {
 /* ---- Responsive ---- */
 @media (max-width: 768px) {
   .container { padding: 0 1rem; }
+}
+
+@media (max-height: 800px) {
+  .hero {
+    padding: 100px 0 1.75rem !important;
+  }
+  .hero-logo {
+    max-width: 320px !important;
+    margin-bottom: 0.75rem !important;
+  }
+  .hero-titre {
+    font-size: 1.5rem !important;
+    margin-bottom: 0.5rem !important;
+  }
 }

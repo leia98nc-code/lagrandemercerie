@@ -123,7 +123,7 @@ export default function ProductCard({ product }) {
     fontFamily: 'var(--font-titre)',
     fontSize: '0.95rem',
     fontWeight: 600,
-    color: 'var(--rose-profond)',
+    color: 'var(--rose-prix)',
     textAlign: 'right',
     marginTop: 'auto',
   }}>

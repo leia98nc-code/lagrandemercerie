@@ -1,5 +1,5 @@
 import { useParams, Link, useNavigate } from 'react-router-dom'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useProducts } from '../hooks/useProducts'
 
 function VisualiseurZoom({ src, alt, onClose }) {
@@ -64,6 +64,7 @@ function VisualiseurZoom({ src, alt, onClose }) {
   )
 }
 
+
 function MiniatureGamme({ productId, gamme, imageFallback }) {
   const [extIndex, setExtIndex] = useState(0)
   const EXTENSIONS = ['jpg', 'webp', 'jpeg', 'png']
@@ -103,11 +104,48 @@ export default function ProductDetail() {
   const EXTENSIONS = ['jpg', 'webp', 'jpeg', 'png']
   const [extensionIndex, setExtensionIndex] = useState(0)
   const [gammeCarrouselIndex, setGammeCarrouselIndex] = useState(0)
+  const [toutesGammesVisibles, setToutesGammesVisibles] = useState(false)
+  const [similairesIndex, setSimilairesIndex] = useState(0)
+  const similairesRef = useRef(null)
+  const [nombreVisibleSimilaires, setNombreVisibleSimilaires] = useState(4)
+  const mesureGammesRef = useRef(null)
+const [nbAffichesReduit, setNbAffichesReduit] = useState(null)
+const [depasseDeuxLignes, setDepasseDeuxLignes] = useState(false)
+
+  useEffect(() => {
+    const LARGEUR_CARTE = 200
+    const GAP = 20
+    const calculer = () => {
+      if (!similairesRef.current) return
+      const largeurDispo = similairesRef.current.offsetWidth
+      const n = Math.max(1, Math.floor((largeurDispo + GAP) / (LARGEUR_CARTE + GAP)))
+      setNombreVisibleSimilaires(n)
+    }
+    calculer()
+    window.addEventListener('resize', calculer)
+    return () => window.removeEventListener('resize', calculer)
+  }, [])
 
   useEffect(() => { setZoomOuvert(false) }, [id])
   useEffect(() => { setZoomOuvert(false); setGammeCarrouselIndex(0) }, [id])
+  useEffect(() => { setZoomOuvert(false); setGammeCarrouselIndex(0); setToutesGammesVisibles(false) }, [id])
+  useEffect(() => { setZoomOuvert(false); setGammeCarrouselIndex(0); setToutesGammesVisibles(false); setSimilairesIndex(0) }, [id])
+  
 
   const product = products.find(p => p.id === id)
+useEffect(() => {
+  if (!mesureGammesRef.current) return
+  const enfants = Array.from(mesureGammesRef.current.children)
+  if (enfants.length === 0) { setDepasseDeuxLignes(false); return }
+  const tops = enfants.map(e => Math.round(e.getBoundingClientRect().top))
+  const topsUniques = [...new Set(tops)]
+  if (topsUniques.length <= 2) { setDepasseDeuxLignes(false); return }
+  const deuxPremieresLignes = topsUniques.slice(0, 2)
+  const nbVisible = tops.filter(t => deuxPremieresLignes.includes(t)).length
+  setDepasseDeuxLignes(true)
+  setNbAffichesReduit(Math.max(1, nbVisible - 1))
+}, [product?.id, product?.gammes])
+  
 
   if (loading) return (
     <main className="page" style={{ textAlign: 'center', padding: '5rem' }}>
@@ -140,9 +178,9 @@ export default function ProductDetail() {
     : image
 
   const similaires = products
-    .filter(p => p.id !== id && p.categorie === categorie)
-    .sort((a, b) => (a.popularite || 99999) - (b.popularite || 99999))
-    .slice(0, 4)
+  .filter(p => p.id !== id && p.categorie === categorie)
+  .sort((a, b) => (a.popularite || 99999) - (b.popularite || 99999))
+  .slice(0, 10)
 
   return (
     <main className="page" style={{ paddingTop: '9rem', paddingBottom: '4rem', background: 'var(--blush)' }}>
@@ -163,29 +201,31 @@ export default function ProductDetail() {
 </nav>
 
         {/* Fiche produit */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-          gap: '3rem',
-          background: 'var(--blanc)',
-          borderRadius: 'var(--radius-lg)',
-          padding: '2.5rem',
-          boxShadow: 'var(--shadow-card)',
-          marginBottom: '3rem',
-        }}>
+        <div className="fiche-grid" style={{
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+  gap: '3rem',
+  background: 'var(--blanc)',
+  borderRadius: 'var(--radius-lg)',
+  padding: '2.5rem',
+  boxShadow: 'var(--shadow-card)',
+  marginBottom: '3rem',
+}}>
 
           {/* Image */}
-          <div style={{
-            aspectRatio: '1 / 1',
-            background: 'var(--blush)',
-            borderRadius: 'var(--radius-lg)',
-            overflow: 'hidden',
-            position: 'relative',
-            backgroundImage: 'url(/logo.jpg)',
-            backgroundRepeat: 'no-repeat',
-            backgroundPosition: 'center',
-            backgroundSize: '30%',
-          }}>
+<div className="photo-produit" style={{
+  aspectRatio: '1 / 1',
+  background: 'var(--blanc)',
+  borderRadius: 'var(--radius-lg)',
+  overflow: 'hidden',
+  position: 'sticky',
+  top: '90px',
+  alignSelf: 'start',
+  backgroundImage: 'url(/logo.jpg)',
+  backgroundRepeat: 'no-repeat',
+  backgroundPosition: 'center',
+  backgroundSize: '30%',
+}}>
             {imageAffichee && (
               <img
                 src={`/images/products/${imageAffichee}`}
@@ -233,7 +273,7 @@ export default function ProductDetail() {
 
             <div style={{
               fontFamily: 'var(--font-titre)',
-              fontSize: '2rem', fontWeight: 700, color: 'var(--rose-profond)',
+              fontSize: '2rem', fontWeight: 700, color: 'var(--rose-prix)',
             }}>
               {prix > 0 ? `${prix.toLocaleString('fr-FR')} F` : 'Prix sur demande'}
             </div>
@@ -294,87 +334,172 @@ export default function ProductDetail() {
 {/* Gammes */}
 {product.gammes && product.gammes.trim() !== '' && (() => {
   const toutesLesGammes = product.gammes.split('|').map(g => g.trim())
+  const avecPhotos = product.gammes_photos === 'oui'
+  const LIMITE = avecPhotos ? 4 : 10
   const PAR_PAGE = 4
   const nbPages = Math.ceil(toutesLesGammes.length / PAR_PAGE)
-  const gammesVisibles = toutesLesGammes.slice(
-    gammeCarrouselIndex * PAR_PAGE,
-    gammeCarrouselIndex * PAR_PAGE + PAR_PAGE
-  )
+  const gammesVisiblesCarrousel = toutesGammesVisibles
+    ? toutesLesGammes
+    : toutesLesGammes.slice(gammeCarrouselIndex * PAR_PAGE, gammeCarrouselIndex * PAR_PAGE + PAR_PAGE)
+  const gammesVisiblesListe = toutesGammesVisibles ? toutesLesGammes : toutesLesGammes.slice(0, LIMITE)
 
   return (
     <div>
-      <h3 style={{
-  fontFamily: 'var(--font-corps)', fontSize: '0.75rem',
-  textTransform: 'uppercase', letterSpacing: '0.1em',
-  color: 'var(--rose-profond)', marginBottom: '0.75rem',
-}}>
-  {`Gammes disponibles (${toutesLesGammes.length})`}
-</h3>
-
-      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-        {nbPages > 1 && (
-          <button
-            onClick={() => setGammeCarrouselIndex(i => (i - 1 + nbPages) % nbPages)}
-            style={{
-              flexShrink: 0, width: '32px', height: '32px', borderRadius: '50%',
-              background: 'var(--blanc)', border: '1.5px solid var(--rose-poudre)',
-              color: 'var(--rose-profond)', cursor: 'pointer', fontSize: '1.1rem',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-            }}
-          >‹</button>
-        )}
-
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(4, 1fr)',
-          gap: '0.75rem',
-          flex: 1,
+      <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: '0.75rem', flexWrap: 'wrap', gap: '0.5rem' }}>
+        <h3 style={{
+          fontFamily: 'var(--font-corps)', fontSize: '0.75rem',
+          textTransform: 'uppercase', letterSpacing: '0.1em',
+          color: 'var(--rose-profond)', margin: 0,
         }}>
-          {gammesVisibles.map((gTrim, i) => {
-  const actif = gammeActive === gTrim
-  return (
-    <button
-      key={`${gammeCarrouselIndex}-${gTrim}`}
-                onClick={() => setGammeActive(actif ? null : gTrim)}
-                style={{
-                  display: 'flex', flexDirection: 'column', alignItems: 'center',
-                  background: 'none', border: 'none', padding: 0, cursor: 'pointer',
-                  gap: '0.35rem',
-                }}
-              >
-                <div style={{
-                  width: '100%', aspectRatio: '1 / 1',
-                  borderRadius: 'var(--radius)', overflow: 'hidden',
-                  border: `2px solid ${actif ? 'var(--rose-profond)' : 'var(--rose-poudre)'}`,
-                  background: 'var(--blush)',
-                  transition: 'border-color 0.15s ease',
-                }}>
-                  <MiniatureGamme productId={product.id} gamme={gTrim} imageFallback={image} />
-                </div>
-                <span style={{
-                  fontSize: '0.72rem', textAlign: 'center', lineHeight: 1.3,
-                  color: actif ? 'var(--rose-profond)' : 'var(--noir)',
-                  fontWeight: actif ? 600 : 400,
-                }}>
-                  {gTrim}
-                </span>
-              </button>
-            )
-          })}
-        </div>
+          {`Gammes disponibles (${toutesLesGammes.length})`}
+        </h3>
 
-        {nbPages > 1 && (
+        {(avecPhotos ? toutesLesGammes.length > PAR_PAGE : depasseDeuxLignes) && (
           <button
-            onClick={() => setGammeCarrouselIndex(i => (i + 1) % nbPages)}
+            onClick={() => setToutesGammesVisibles(v => !v)}
             style={{
-              flexShrink: 0, width: '32px', height: '32px', borderRadius: '50%',
-              background: 'var(--blanc)', border: '1.5px solid var(--rose-poudre)',
-              color: 'var(--rose-profond)', cursor: 'pointer', fontSize: '1.1rem',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              background: 'none', border: 'none', padding: 0, cursor: 'pointer',
+              fontSize: '0.78rem', color: 'var(--noir)', fontFamily: 'var(--font-corps)',
+              borderBottom: '1.5px solid rgba(26,26,26,0.3)', paddingBottom: '2px',
+              transition: 'border-color 0.15s',
             }}
-          >›</button>
+            onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--rose-profond)' }}
+            onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(26,26,26,0.3)' }}
+          >
+            {toutesGammesVisibles ? 'Réduire' : 'Tout voir'}
+          </button>
         )}
       </div>
+
+      {avecPhotos ? (
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          {!toutesGammesVisibles && nbPages > 1 && (
+            <button
+              onClick={() => setGammeCarrouselIndex(i => (i - 1 + nbPages) % nbPages)}
+              style={{
+                flexShrink: 0, width: '32px', height: '32px', borderRadius: '50%',
+                background: 'var(--blanc)', border: '1.5px solid var(--rose-poudre)',
+                color: 'var(--rose-profond)', cursor: 'pointer', fontSize: '1.1rem',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+              }}
+            >‹</button>
+          )}
+
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: toutesGammesVisibles ? 'repeat(auto-fill, minmax(80px, 1fr))' : 'repeat(4, 1fr)',
+            gap: '0.75rem',
+            flex: 1,
+          }}>
+            {gammesVisiblesCarrousel.map((gTrim, i) => {
+              const actif = gammeActive === gTrim
+              return (
+                <button
+                  key={`${toutesGammesVisibles ? 'tout' : gammeCarrouselIndex}-${gTrim}`}
+                  onClick={() => setGammeActive(actif ? null : gTrim)}
+                  style={{
+                    display: 'flex', flexDirection: 'column', alignItems: 'center',
+                    background: 'none', border: 'none', padding: 0, cursor: 'pointer',
+                    gap: '0.35rem',
+                  }}
+                >
+                  <div style={{
+                    width: '100%', aspectRatio: '1 / 1',
+                    borderRadius: 'var(--radius)', overflow: 'hidden',
+                    border: `2px solid ${actif ? 'var(--rose-profond)' : 'var(--rose-poudre)'}`,
+                    background: 'var(--blush)',
+                    transition: 'border-color 0.15s ease',
+                  }}>
+                    <MiniatureGamme productId={product.id} gamme={gTrim} imageFallback={image} />
+                  </div>
+                  <span style={{
+                    fontSize: '0.72rem', textAlign: 'center', lineHeight: 1.3,
+                    color: actif ? 'var(--rose-profond)' : 'var(--noir)',
+                    fontWeight: actif ? 600 : 400,
+                  }}>
+                    {gTrim}
+                  </span>
+                </button>
+              )
+            })}
+          </div>
+
+          {!toutesGammesVisibles && nbPages > 1 && (
+            <button
+              onClick={() => setGammeCarrouselIndex(i => (i + 1) % nbPages)}
+              style={{
+                flexShrink: 0, width: '32px', height: '32px', borderRadius: '50%',
+                background: 'var(--blanc)', border: '1.5px solid var(--rose-poudre)',
+                color: 'var(--rose-profond)', cursor: 'pointer', fontSize: '1.1rem',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+              }}
+            >›</button>
+          )}
+        </div>
+      ) : (
+        <div style={{ position: 'relative' }}>
+  {/* Copie invisible, uniquement pour mesurer combien tient sur 2 lignes */}
+  <div
+    ref={mesureGammesRef}
+    aria-hidden="true"
+    style={{
+      position: 'absolute', top: 0, left: 0, right: 0,
+      visibility: 'hidden', pointerEvents: 'none', zIndex: -1,
+      display: 'flex', flexWrap: 'wrap', gap: '0.4rem',
+    }}
+  >
+    {toutesLesGammes.map((g, i) => (
+      <span key={i} style={{ padding: '0.35rem 0.85rem', borderRadius: '4px', border: '1.5px solid transparent', fontSize: '0.78rem', fontFamily: 'var(--font-corps)' }}>
+        {g}
+      </span>
+    ))}
+  </div>
+
+  {/* Liste réellement affichée */}
+  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
+    {(() => {
+      const enModeReduit = !toutesGammesVisibles && depasseDeuxLignes && nbAffichesReduit !== null
+      const aAfficher = enModeReduit ? toutesLesGammes.slice(0, nbAffichesReduit) : toutesLesGammes
+      return aAfficher.map((gTrim, i) => {
+        const actif = gammeActive === gTrim
+        return (
+          <button
+            key={i}
+            onClick={() => setGammeActive(actif ? null : gTrim)}
+            style={{
+              padding: '0.35rem 0.85rem', borderRadius: '4px',
+              border: `1.5px solid ${actif ? 'var(--rose-profond)' : 'var(--rose-poudre)'}`,
+              background: actif ? 'var(--rose-profond)' : 'var(--blanc)',
+              color: actif ? 'white' : 'var(--noir)',
+              fontSize: '0.78rem', fontFamily: 'var(--font-corps)',
+              fontWeight: actif ? 600 : 400, cursor: 'pointer', letterSpacing: '0.02em',
+            }}
+            onMouseEnter={e => { if (!actif) { e.currentTarget.style.borderColor = 'var(--rose-profond)'; e.currentTarget.style.color = 'var(--rose-profond)' } }}
+            onMouseLeave={e => { if (!actif) { e.currentTarget.style.borderColor = 'var(--rose-poudre)'; e.currentTarget.style.color = 'var(--noir)' } }}
+          >
+            {gTrim}
+          </button>
+        )
+      })
+    })()}
+
+    {!toutesGammesVisibles && depasseDeuxLignes && nbAffichesReduit !== null && (
+      <button
+        onClick={() => setToutesGammesVisibles(true)}
+        style={{
+          padding: '0.35rem 0.85rem', borderRadius: '4px',
+          border: '1.5px dashed var(--rose-profond)',
+          background: 'var(--blanc)', color: 'var(--rose-profond)',
+          fontSize: '0.78rem', fontFamily: 'var(--font-corps)',
+          fontWeight: 600, cursor: 'pointer', letterSpacing: '0.02em',
+        }}
+      >
+        {`+${toutesLesGammes.length - nbAffichesReduit}`}
+      </button>
+    )}
+  </div>
+</div>
+      )}
     </div>
   )
 })()}
@@ -401,37 +526,103 @@ export default function ProductDetail() {
         </div>
 
         {/* Produits similaires */}
-        {similaires.length > 0 && (
-          <div>
-            <h2 style={{
-              fontFamily: 'var(--font-titre)', fontSize: '1.5rem',
-              marginBottom: '1.5rem', color: 'var(--noir)',
-            }}>
-              Dans la même catégorie
-            </h2>
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
-              gap: '1.25rem',
-            }}>
-              {similaires.map(p => (
-                <Link key={p.id} to={`/produit/${p.id}`} style={{ textDecoration: 'none' }}>
-                  <div
-                    style={{
-                      background: 'var(--blanc)', borderRadius: 'var(--radius)',
-                      padding: '1rem', boxShadow: 'var(--shadow-card)', transition: 'transform 0.2s',
-                    }}
-                    onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-4px)'}
-                    onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}
-                  >
-                    <p style={{ fontFamily: 'var(--font-titre)', fontSize: '0.95rem', marginBottom: '0.4rem', color: 'var(--noir)' }}>{p.nom}</p>
-                    <p style={{ color: 'var(--rose-profond)', fontWeight: 700 }}>{p.prix.toLocaleString('fr-FR')} F</p>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </div>
-        )}
+{similaires.length > 0 && (
+  <div>
+    <h2 style={{
+      fontFamily: 'var(--font-titre)', fontSize: '1.5rem',
+      marginBottom: '1.5rem', color: 'var(--noir)',
+    }}>
+      Dans la même catégorie
+    </h2>
+
+    <div style={{ position: 'relative' }}>
+      {similaires.length > 4 && (
+        <button
+          onClick={() => setSimilairesIndex(i => (i - nombreVisibleSimilaires + similaires.length) % similaires.length)}
+          style={{
+            position: 'absolute', left: '-1.25rem', top: '50%',
+            transform: 'translateY(-50%)', zIndex: 10,
+            width: '40px', height: '40px', borderRadius: '50%',
+            background: 'var(--blanc)', color: 'var(--rose-profond)',
+            border: '1.5px solid var(--rose-poudre)',
+            cursor: 'pointer', fontSize: '1.4rem',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+          }}
+        >‹</button>
+      )}
+
+      <div ref={similairesRef} style={{
+  display: 'grid',
+  gridTemplateColumns: `repeat(${nombreVisibleSimilaires}, 1fr)`,
+  gap: '1.25rem',
+}}>
+  {Array.from({ length: nombreVisibleSimilaires }).map((_, offset) => {
+    const p = similaires[(similairesIndex + offset) % similaires.length]
+          return (
+            <Link key={`${p.id}-${offset}`} to={`/produit/${p.id}`} style={{ textDecoration: 'none' }}>
+              <div
+                style={{
+                  background: 'var(--blanc)', borderRadius: 'var(--radius)',
+                  overflow: 'hidden', boxShadow: 'var(--shadow-card)', transition: 'transform 0.2s',
+                }}
+                onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-4px)'}
+                onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}
+              >
+                <div style={{
+                  width: '100%',
+                  aspectRatio: '1 / 1',
+                  background: 'var(--blanc)',
+                  position: 'relative',
+                  overflow: 'hidden',
+                  backgroundImage: 'url(/logo.jpg)',
+                  backgroundRepeat: 'no-repeat',
+                  backgroundPosition: 'center',
+                  backgroundSize: '25%',
+                }}>
+                  {p.image && (
+                    <img
+                      src={`/images/products/${p.image}`}
+                      alt=""
+                      style={{
+                        position: 'absolute',
+                        top: '50%', left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                        width: '84%', height: '84%',
+                        objectFit: 'contain', objectPosition: 'center',
+                      }}
+                      onError={e => { e.target.style.display = 'none' }}
+                    />
+                  )}
+                </div>
+                <div style={{ padding: '1rem' }}>
+                  <p style={{ fontFamily: 'var(--font-titre)', fontSize: '0.95rem', marginBottom: '0.4rem', color: 'var(--noir)' }}>{p.nom}</p>
+                  <p style={{ color: 'var(--rose-profond)', fontWeight: 700 }}>{p.prix.toLocaleString('fr-FR')} F</p>
+                </div>
+              </div>
+            </Link>
+          )
+        })}
+      </div>
+
+      {similaires.length > 4 && (
+        <button
+          onClick={() => setSimilairesIndex(i => (i + nombreVisibleSimilaires) % similaires.length)}
+          style={{
+            position: 'absolute', right: '-1.25rem', top: '50%',
+            transform: 'translateY(-50%)', zIndex: 10,
+            width: '40px', height: '40px', borderRadius: '50%',
+            background: 'var(--blanc)', color: 'var(--rose-profond)',
+            border: '1.5px solid var(--rose-poudre)',
+            cursor: 'pointer', fontSize: '1.4rem',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+          }}
+        >›</button>
+      )}
+    </div>
+  </div>
+)}
       </div>
 
       {zoomOuvert && (
@@ -441,6 +632,12 @@ export default function ProductDetail() {
           onClose={() => setZoomOuvert(false)}
         />
       )}
+      <style>{`
+  @media (max-width: 900px) {
+    .fiche-grid { grid-template-columns: 1fr !important; }
+    .photo-produit { position: static !important; top: auto !important; }
+  }
+`}</style>
     </main>
   )
 }
