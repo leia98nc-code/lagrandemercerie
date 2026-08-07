@@ -529,7 +529,7 @@ const ELEMENTS_PAR_PAGE = nombreColonnes * LIGNES_PAR_PAGE
                     <p style={{ color: 'var(--gris-texte)' }}>Aucun produit ne correspond à votre recherche.</p>
                   </div>
                 ) : vueMode === 'grille' ? (
-<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(190px, 1fr))', gap: '1.25rem' }}>
+<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(190px, 1fr))', gap: '1.25rem' }}>
                       {elementsPage.map(el =>
                       el.type === 'groupe'
                         ? <CarteEmpilee key={el.nom} groupe={el.data} onClick={() => setRecherche(`=${el.nom}`)} />

@@ -65,14 +65,36 @@ function VisualiseurZoom({ src, alt, onClose }) {
 }
 
 
-function MiniatureGamme({ productId, gamme, imageFallback }) {
+function MiniatureGamme({ productId, gamme }) {
   const [extIndex, setExtIndex] = useState(0)
+  const [aucunePhoto, setAucunePhoto] = useState(false)
   const EXTENSIONS = ['jpg', 'webp', 'jpeg', 'png']
 
   const suffixe = gamme.trim()
     .replace(/\s*-\s*/g, '-')
     .replace(/\s+/g, '-')
     .replace(/[^a-zA-Z0-9_-]/g, '')
+
+  useEffect(() => {
+    setExtIndex(0)
+    setAucunePhoto(false)
+  }, [productId, gamme])
+
+  if (aucunePhoto) {
+    return (
+      <div style={{
+        width: '100%', height: '100%',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        background: 'var(--blush)',
+      }}>
+        <img
+          src="/logo.jpg"
+          alt=""
+          style={{ width: '55%', height: '55%', objectFit: 'contain', opacity: 0.6 }}
+        />
+      </div>
+    )
+  }
 
   const src = `/images/products/${productId}_${suffixe}.${EXTENSIONS[extIndex]}`
 
@@ -81,13 +103,11 @@ function MiniatureGamme({ productId, gamme, imageFallback }) {
       src={src}
       alt={gamme}
       style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-      onError={e => {
+      onError={() => {
         if (extIndex < EXTENSIONS.length - 1) {
           setExtIndex(i => i + 1)
-        } else if (imageFallback) {
-          e.target.src = `/images/products/${imageFallback}`
         } else {
-          e.target.style.display = 'none'
+          setAucunePhoto(true)
         }
       }}
     />
@@ -111,7 +131,14 @@ export default function ProductDetail() {
   const mesureGammesRef = useRef(null)
 const [nbAffichesReduit, setNbAffichesReduit] = useState(null)
 const [depasseDeuxLignes, setDepasseDeuxLignes] = useState(false)
+const [imagePrincipaleCachee, setImagePrincipaleCachee] = useState(false)
+const [utiliserImageParDefaut, setUtiliserImageParDefaut] = useState(false)
 
+useEffect(() => {
+  setImagePrincipaleCachee(false)
+  setUtiliserImageParDefaut(false)
+  setExtensionIndex(0)
+}, [gammeActive])
   useEffect(() => {
     const LARGEUR_CARTE = 200
     const GAP = 20
@@ -226,31 +253,32 @@ useEffect(() => {
   backgroundPosition: 'center',
   backgroundSize: '30%',
 }}>
-            {imageAffichee && (
-              <img
-                src={`/images/products/${imageAffichee}`}
-                alt=""
-                onClick={() => setZoomOuvert(true)}
-                style={{
-                  position: 'absolute',
-                  top: '50%', left: '50%',
-                  transform: 'translate(-50%, -50%)',
-                  width: '84%', height: '84%',
-                  objectFit: 'contain', objectPosition: 'center',
-                  transition: 'opacity 0.3s ease',
-                  cursor: 'zoom-in',
-                }}
-                onError={e => {
-                  if (suffixGamme && extensionIndex < EXTENSIONS.length - 1) {
-                    setExtensionIndex(i => i + 1)
-                  } else if (image) {
-                    e.target.src = `/images/products/${image}`
-                  } else {
-                    e.target.style.display = 'none'
-                  }
-                }}
-              />
-            )}
+            {imageAffichee && !imagePrincipaleCachee && (
+  <img
+    key={imageAffichee}
+    src={`/images/products/${imageAffichee}`}
+    alt=""
+    onClick={() => setZoomOuvert(true)}
+    style={{
+      position: 'absolute',
+      top: '50%', left: '50%',
+      transform: 'translate(-50%, -50%)',
+      width: '84%', height: '84%',
+      objectFit: 'contain', objectPosition: 'center',
+      transition: 'opacity 0.3s ease',
+      cursor: 'zoom-in',
+    }}
+    onError={() => {
+      if (suffixGamme && extensionIndex < EXTENSIONS.length - 1) {
+        setExtensionIndex(i => i + 1)
+      } else if (image && imageAffichee !== image) {
+        setUtiliserImageParDefaut(true)
+      } else {
+        setImagePrincipaleCachee(true)
+      }
+    }}
+  />
+)}
           </div>
 
           {/* Infos */}
