@@ -6,18 +6,31 @@ export default function Contact() {
 
   const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value })
 
-  const handleSubmit = () => {
-    if (!form.nom || !form.email || !form.message) {
-      alert('Merci de remplir tous les champs obligatoires.')
-      return
-    }
-    const subject = encodeURIComponent(form.sujet || 'Demande depuis le site')
-    const body = encodeURIComponent(
-      `Nom : ${form.nom}\nEmail : ${form.email}\n\n${form.message}`
-    )
-    window.location.href = `mailto:lagrandemercerie.nc@gmail.com?subject=${subject}&body=${body}`
-    setEnvoye(true)
+  const [envoiEnCours, setEnvoiEnCours] = useState(false)
+const [erreur, setErreur] = useState(false)
+
+const encoderFormData = data =>
+  Object.keys(data)
+    .map(cle => encodeURIComponent(cle) + '=' + encodeURIComponent(data[cle]))
+    .join('&')
+
+const handleSubmit = () => {
+  if (!form.nom || !form.email || !form.message) {
+    alert('Merci de remplir tous les champs obligatoires.')
+    return
   }
+  setEnvoiEnCours(true)
+  setErreur(false)
+
+  fetch('/', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: encoderFormData({ 'form-name': 'contact', ...form }),
+  })
+    .then(() => setEnvoye(true))
+    .catch(() => setErreur(true))
+    .finally(() => setEnvoiEnCours(false))
+}
 
   return (
     <main className="page" style={{ paddingBottom: '5rem' }}>
@@ -113,8 +126,8 @@ export default function Contact() {
                   Merci !
                 </h3>
                 <p style={{ color: 'var(--gris-texte)' }}>
-                  Votre messagerie s'est ouverte. Nous vous répondrons dans les plus brefs délais.
-                </p>
+  Votre message a bien été envoyé. Nous vous répondrons dans les plus brefs délais.
+</p>
               </div>
             ) : (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1.1rem' }}>
@@ -177,9 +190,14 @@ export default function Contact() {
                   * Champs obligatoires. Vos données ne seront utilisées que pour répondre à votre demande.
                 </p>
 
-                <button onClick={handleSubmit} className="btn-primary">
-                  Envoyer le message
-                </button>
+                <button onClick={handleSubmit} className="btn-primary" disabled={envoiEnCours}>
+  {envoiEnCours ? 'Envoi en cours...' : 'Envoyer le message'}
+</button>
+{erreur && (
+  <p style={{ fontSize: '0.82rem', color: 'var(--rose-profond)', textAlign: 'center' }}>
+    Une erreur est survenue. Réessayez, ou contactez-nous au 27.33.76.
+  </p>
+)}
               </div>
             )}
           </div>
