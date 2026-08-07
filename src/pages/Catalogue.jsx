@@ -244,8 +244,7 @@ export default function Catalogue() {
   const triPrix         = searchParams.get('tri') || 'popularite'
   const prixMin         = parseInt(searchParams.get('pmin') || '0', 10)
   const prixMax         = parseInt(searchParams.get('pmax') || String(PRIX_MAX_TOTAL), 10)
-  const avecPhoto       = searchParams.get('photo') === '1'
-
+const avecPhoto       = searchParams.get('photo') !== '0'
   const setRecherche = val => {
     const p = new URLSearchParams(searchParams)
     val ? p.set('q', val) : p.delete('q')
@@ -283,10 +282,10 @@ export default function Catalogue() {
   }
 
   const setAvecPhoto = val => {
-    const p = new URLSearchParams(searchParams)
-    val ? p.set('photo', '1') : p.delete('photo')
-    setSearchParams(p, { replace: true })
-  }
+  const p = new URLSearchParams(searchParams)
+  val ? p.delete('photo') : p.set('photo', '0')
+  setSearchParams(p, { replace: true })
+}
 
   const reinitialiserFiltres = () => {
     const p = new URLSearchParams(searchParams)
