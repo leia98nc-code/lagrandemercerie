@@ -181,12 +181,12 @@ export default function About() {
         </div>
 
         {/* CTA */}
-        <div style={{ textAlign: 'center' }}>
-          <Link to="/catalogue" className="btn-primary" style={{ marginRight: '1rem' }}>
-            Découvrir le catalogue
-          </Link>
-          <Link to="/contact" className="btn-outline">Nous contacter</Link>
-        </div>
+<div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '1rem' }}>
+  <Link to="/catalogue" className="btn-primary">
+    Découvrir le catalogue
+  </Link>
+  <Link to="/contact" className="btn-outline">Nous contacter</Link>
+</div>
 
       </div>
     </main>

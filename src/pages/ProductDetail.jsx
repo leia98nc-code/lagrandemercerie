@@ -140,18 +140,30 @@ useEffect(() => {
   setExtensionIndex(0)
 }, [gammeActive])
   useEffect(() => {
-    const LARGEUR_CARTE = 200
-    const GAP = 20
-    const calculer = () => {
-      if (!similairesRef.current) return
-      const largeurDispo = similairesRef.current.offsetWidth
-      const n = Math.max(1, Math.floor((largeurDispo + GAP) / (LARGEUR_CARTE + GAP)))
+  const LARGEUR_CARTE = 200
+  const GAP = 20
+  const calculer = () => {
+    const largeurEcran = window.innerWidth
+
+    if (largeurEcran < 768) {
+      setNombreVisibleSimilaires(3)
+      return
+    }
+
+    if (!similairesRef.current) return
+    const largeurDispo = similairesRef.current.offsetWidth
+    const n = Math.max(1, Math.floor((largeurDispo + GAP) / (LARGEUR_CARTE + GAP)))
+
+    if (largeurEcran < 1100) {
+      setNombreVisibleSimilaires(Math.min(3, n))
+    } else {
       setNombreVisibleSimilaires(n)
     }
-    calculer()
-    window.addEventListener('resize', calculer)
-    return () => window.removeEventListener('resize', calculer)
-  }, [])
+  }
+  calculer()
+  window.addEventListener('resize', calculer)
+  return () => window.removeEventListener('resize', calculer)
+}, [])
 
   useEffect(() => { setZoomOuvert(false) }, [id])
   useEffect(() => { setZoomOuvert(false); setGammeCarrouselIndex(0) }, [id])
@@ -210,7 +222,7 @@ useEffect(() => {
   .slice(0, 10)
 
   return (
-    <main className="page" style={{ paddingTop: '9rem', paddingBottom: '4rem', background: 'var(--blush)' }}>
+    <main className="page page-produit" style={{ paddingTop: '9rem', paddingBottom: '4rem', background: 'var(--blush)' }}>
       <div className="container">
 
         {/* Fil d'Ariane */}
@@ -588,47 +600,53 @@ useEffect(() => {
   {Array.from({ length: nombreVisibleSimilaires }).map((_, offset) => {
     const p = similaires[(similairesIndex + offset) % similaires.length]
           return (
-            <Link key={`${p.id}-${offset}`} to={`/produit/${p.id}`} style={{ textDecoration: 'none' }}>
-              <div
-                style={{
-                  background: 'var(--blanc)', borderRadius: 'var(--radius)',
-                  overflow: 'hidden', boxShadow: 'var(--shadow-card)', transition: 'transform 0.2s',
-                }}
-                onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-4px)'}
-                onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}
-              >
-                <div style={{
-                  width: '100%',
-                  aspectRatio: '1 / 1',
-                  background: 'var(--blanc)',
-                  position: 'relative',
-                  overflow: 'hidden',
-                  backgroundImage: 'url(/logo.jpg)',
-                  backgroundRepeat: 'no-repeat',
-                  backgroundPosition: 'center',
-                  backgroundSize: '25%',
-                }}>
-                  {p.image && (
-                    <img
-                      src={`/images/products/${p.image}`}
-                      alt=""
-                      style={{
-                        position: 'absolute',
-                        top: '50%', left: '50%',
-                        transform: 'translate(-50%, -50%)',
-                        width: '84%', height: '84%',
-                        objectFit: 'contain', objectPosition: 'center',
-                      }}
-                      onError={e => { e.target.style.display = 'none' }}
-                    />
-                  )}
-                </div>
-                <div style={{ padding: '1rem' }}>
-                  <p style={{ fontFamily: 'var(--font-titre)', fontSize: '0.95rem', marginBottom: '0.4rem', color: 'var(--noir)' }}>{p.nom}</p>
-                  <p style={{ color: 'var(--rose-profond)', fontWeight: 700 }}>{p.prix.toLocaleString('fr-FR')} F</p>
-                </div>
-              </div>
-            </Link>
+            <Link key={`${p.id}-${offset}`} to={`/produit/${p.id}`} style={{ textDecoration: 'none', display: 'block', height: '100%' }}>
+  <div
+    style={{
+      background: 'var(--blanc)', borderRadius: 'var(--radius)',
+      overflow: 'hidden', boxShadow: 'var(--shadow-card)', transition: 'transform 0.2s',
+      display: 'flex', flexDirection: 'column', height: '100%',
+    }}
+    onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-4px)'}
+    onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}
+  >
+    <div style={{
+      width: '100%',
+      aspectRatio: '1 / 1',
+      background: 'var(--blanc)',
+      position: 'relative',
+      overflow: 'hidden',
+      backgroundImage: 'url(/logo.jpg)',
+      backgroundRepeat: 'no-repeat',
+      backgroundPosition: 'center',
+      backgroundSize: '25%',
+    }}>
+      {p.image && (
+        <img
+          src={`/images/products/${p.image}`}
+          alt=""
+          style={{
+            position: 'absolute',
+            top: '50%', left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: '84%', height: '84%',
+            objectFit: 'contain', objectPosition: 'center',
+          }}
+          onError={e => { e.target.style.display = 'none' }}
+        />
+      )}
+    </div>
+    <div style={{ padding: '1rem', display: 'flex', flexDirection: 'column', flex: 1 }}>
+      <p style={{
+        fontFamily: 'var(--font-titre)', fontSize: '0.95rem', marginBottom: '0.4rem', color: 'var(--noir)',
+        overflow: 'hidden', textOverflow: 'ellipsis', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical',
+      }}>
+        {p.nom}
+      </p>
+      <p style={{ color: 'var(--rose-profond)', fontWeight: 700, marginTop: 'auto' }}>{p.prix.toLocaleString('fr-FR')} F</p>
+    </div>
+  </div>
+</Link>
           )
         })}
       </div>
@@ -663,8 +681,11 @@ useEffect(() => {
       <style>{`
   @media (max-width: 900px) {
     .fiche-grid { grid-template-columns: 1fr !important; }
-    .photo-produit { position: static !important; top: auto !important; }
+    .photo-produit { position: relative !important; top: auto !important; }
   }
+    @media (max-width: 768px) {
+  .page-produit { padding-top: 6.5rem !important; }
+}
 `}</style>
     </main>
   )

@@ -41,6 +41,8 @@ const PROMOS_HERO = [
 
 export default function Home() {
   const { products, loading } = useProducts()
+  const fbFrameRef = useRef(null)
+
 
   // ── États : carrousel "Vos préférés du moment" ──
   const [carrouselIndex, setCarrouselIndex] = useState(0)
@@ -96,18 +98,22 @@ export default function Home() {
 
   // ── Effets : nombre de cartes visibles dans le carrousel produits ──
   useEffect(() => {
-    const LARGEUR_CARTE = 220
-    const GAP = 20
-    const calculer = () => {
-      if (!carrouselRef.current) return
-      const largeurDispo = carrouselRef.current.offsetWidth
-      const n = Math.max(1, Math.floor((largeurDispo + GAP) / (LARGEUR_CARTE + GAP)))
-      setNombreVisible(n)
+  const LARGEUR_CARTE = 220
+  const GAP = 20
+  const calculer = () => {
+    if (window.innerWidth < 768) {
+      setNombreVisible(2)
+      return
     }
-    calculer()
-    window.addEventListener('resize', calculer)
-    return () => window.removeEventListener('resize', calculer)
-  }, [])
+    if (!carrouselRef.current) return
+    const largeurDispo = carrouselRef.current.offsetWidth
+    const n = Math.max(2, Math.floor((largeurDispo + GAP) / (LARGEUR_CARTE + GAP)))
+    setNombreVisible(n)
+  }
+  calculer()
+  window.addEventListener('resize', calculer)
+  return () => window.removeEventListener('resize', calculer)
+}, [])
 
   // ── Effets : défilement auto du carrousel produits ──
   useEffect(() => {
@@ -117,6 +123,29 @@ export default function Home() {
     }, 4000)
     return () => clearInterval(intervalle)
   }, [carrouselEnPause, nombreVisible, top20.length])
+
+    // ── Effets : adaptation frame fb ──
+  useEffect(() => {
+  const ajuster = () => {
+    if (!fbFrameRef.current) return
+    const iframe = fbFrameRef.current.querySelector('iframe')
+    if (!iframe) return
+    const disponible = fbFrameRef.current.parentElement.offsetWidth
+    const cible = window.innerWidth < 768 ? disponible * 0.85 : Math.min(disponible, 500)
+    const facteur = Math.min(1, cible / 500)
+
+    iframe.style.transform = `scale(${facteur})`
+    iframe.style.transformOrigin = 'top left'
+    iframe.style.marginTop = `${-80 * facteur}px`
+    fbFrameRef.current.style.width = `${500 * facteur}px`
+    fbFrameRef.current.style.height = `${590 * facteur}px`
+    fbFrameRef.current.style.marginLeft = 'auto'
+    fbFrameRef.current.style.marginRight = 'auto'
+  }
+  ajuster()
+  window.addEventListener('resize', ajuster)
+  return () => window.removeEventListener('resize', ajuster)
+}, [])
 
   return (
     <main className="page">
@@ -162,8 +191,7 @@ export default function Home() {
       </div>
 
 {/* Colonne droite — carrousel simple */}
-<div style={{ position: 'relative', aspectRatio: '4 / 3.1', overflow: 'hidden', borderRadius: 'var(--radius-lg)', boxShadow: '0 12px 40px rgba(200,107,138,0.18)', marginTop: '2rem' }}>
-  {PHOTOS_HERO.map((photo, i) => (
+<div className="hero-photo-droite" style={{ position: 'relative', aspectRatio: '4 / 3.1', overflow: 'hidden', borderRadius: 'var(--radius-lg)', boxShadow: '0 12px 40px rgba(200,107,138,0.18)', marginTop: '2rem' }}>  {PHOTOS_HERO.map((photo, i) => (
     <img
       key={photo}
       src={photo}
@@ -261,7 +289,7 @@ export default function Home() {
               {'Tout voir →'}
             </Link>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)', gap: '1rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(90px, 1fr))', gap: '1rem' }}>
             {UNIVERS.map(({ nom, lien, photo }) => (
               <Link key={nom} to={lien} style={{ textDecoration: 'none', color: 'var(--noir)', display: 'block' }}>
                 <div
@@ -285,8 +313,8 @@ export default function Home() {
       
 
       {/* ── Reassurance crantee ── */}
-      <section style={{ background: 'var(--rose-profond)', color: 'white', padding: '3rem 0 4rem', clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 93.75% 92%, 87.5% 100%, 81.25% 92%, 75% 100%, 68.75% 92%, 62.5% 100%, 56.25% 92%, 50% 100%, 43.75% 92%, 37.5% 100%, 31.25% 92%, 25% 100%, 18.75% 92%, 12.5% 100%, 6.25% 92%, 0% 100%)' }}>
-        <div className="container">
+<section className="reassurance-section" style={{ background: 'var(--rose-profond)', color: 'white', padding: '3rem 0 4rem', clipPath: '...' }}>
+          <div className="container">
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '1.6rem' }}>
   {[
   { titre: '+4 000 références',     texte: 'Fils, laines, tissus, boutons et accessoires' },
@@ -295,9 +323,9 @@ export default function Home() {
   { titre: 'À Nouméa, en vrai',      texte: 'Une boutique physique, du lundi au samedi, avec des personnes disponibles' },
 ].map(({ titre, texte }) => (
     <div key={titre} style={{ textAlign: 'center' }}>
-      <p style={{ fontFamily: 'var(--font-corps)', fontWeight: 700, fontSize: '1rem', margin: '0 0 0.4rem', color: 'white' }}>{titre}</p>
-      <p style={{ fontFamily: 'var(--font-corps)', fontSize: '0.88rem', lineHeight: 1.6, opacity: 0.85, margin: 0 }}>{texte}</p>
-    </div>
+  <p className="reassurance-titre" style={{ fontFamily: 'var(--font-corps)', fontWeight: 700, fontSize: '1rem', margin: '0 0 0.4rem', color: 'white' }}>{titre}</p>
+  <p className="reassurance-texte" style={{ fontFamily: 'var(--font-corps)', fontSize: '0.88rem', lineHeight: 1.6, opacity: 0.85, margin: 0 }}>{texte}</p>
+</div>
   ))}
 </div>
         </div>
@@ -339,7 +367,7 @@ export default function Home() {
               </div>
 
               {/* Google Maps — prend tout l'espace restant */}
-<div style={{ overflow: 'hidden', borderRadius: 'var(--radius-lg)', boxShadow: '0 12px 40px rgba(200,107,138,0.18)', marginTop: '2rem', height: '450px' }}>
+<div className="maps-frame" style={{ overflow: 'hidden', borderRadius: 'var(--radius-lg)', boxShadow: '0 12px 40px rgba(200,107,138,0.18)', marginTop: '2rem', height: '450px' }}>
                   <iframe
                   title="Localisation La Grande Mercerie"
                   src="https://maps.google.com/maps?q=-22.276753,166.447583&z=15&t=m&output=embed&hl=fr"
@@ -361,12 +389,12 @@ export default function Home() {
               </p>
 
               {/* Facebook — taille naturelle, centré dans l'espace disponible */}
-<div style={{ overflow: 'hidden', borderRadius: 'var(--radius-lg)', boxShadow: '0 12px 40px rgba(200,107,138,0.18)', position: 'relative', height: '590px', display: 'flex', justifyContent: 'center' }}>  <iframe
+<div ref={fbFrameRef} className="facebook-frame" style={{ overflow: 'hidden', borderRadius: 'var(--radius-lg)', boxShadow: '0 12px 40px rgba(200,107,138,0.18)', position: 'relative' }}>  <iframe
     title="Page Facebook La Grande Mercerie"
     src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FLagrandeMercerieNoumea&tabs=timeline&width=500&height=1000&small_header=true&hide_cover=false&show_facepile=false"
     width="500"
     height="1000"
-    style={{ border: 'none', overflow: 'hidden', marginTop: '-80px', display: 'block', flexShrink: 0 }}
+    style={{ border: 'none', overflow: 'hidden', display: 'block' }}
     scrolling="no"
     frameBorder="0"
     allowFullScreen={true}
@@ -455,6 +483,18 @@ export default function Home() {
   @media (max-width: 900px) {
     .hero-grid { grid-template-columns: 1fr !important; }
   }
+  @media (max-width: 768px) {
+    .hero-photo-droite { display: none !important; }
+  }
+    @media (max-width: 768px) {
+  .reassurance-section { padding: 2rem 0 3rem !important; }
+  .reassurance-titre { font-size: 0.85rem !important; }
+  .reassurance-texte { font-size: 0.76rem !important; }
+}
+  @media (max-width: 768px) {
+  .maps-frame { max-width: 85%; margin-left: auto; margin-right: auto; height: 180px; }
+}
+ 
 `}</style>
     </main>
   )

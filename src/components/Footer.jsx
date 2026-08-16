@@ -29,7 +29,7 @@ export default function Footer() {
               La Grande Mercerie
             </div>
             <p style={{ fontSize: '0.85rem', color: '#aaa', lineHeight: 1.7, fontWeight: 300 }}>
-              Votre boutique d'accessoires crochet, tricot et couture.
+              Votre boutique d'accessoires crochet, tricot, broderie et couture.
             </p>
           </div>
 

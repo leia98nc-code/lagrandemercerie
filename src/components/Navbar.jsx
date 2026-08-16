@@ -33,27 +33,26 @@ export default function Navbar() {
 >
 
       {/* ── Bandeau supérieur ── */}
-      <div style={{
-        background: '#FFFCF8',
-        borderBottom: '1px solid rgba(23,17,15,0.14)',
-        paddingLeft: '2rem',
-        paddingRight: '2rem',
-        fontSize: '0.68rem',
-        letterSpacing: '0.06em',
-        color: '#7A6B66',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        flexWrap: 'wrap',
-        gap: '0.4rem',
-        maxHeight: compact ? '0' : '2.2rem',
-        overflow: 'hidden',
-        opacity: compact ? 0 : 1,
-        transition: 'max-height 0.35s ease, opacity 0.25s ease',
-      }}>
-        <span>{'NOUMÉA · QUARTIER LATIN'}</span>
-        <span>{'LUN–VEN 8H–17H30 · SAM 8H–12H'}</span>
-      </div>
+<div style={{
+  background: '#FFFCF8',
+  borderBottom: '1px solid rgba(23,17,15,0.14)',
+  paddingLeft: 'clamp(0.75rem, 3vw, 2rem)',
+  paddingRight: 'clamp(0.75rem, 3vw, 2rem)',
+  fontSize: 'clamp(0.52rem, 2vw, 0.68rem)',
+  letterSpacing: '0.03em',
+  color: '#7A6B66',
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  gap: '0.5rem',
+  maxHeight: compact ? '0' : '2.4rem',
+  overflow: 'hidden',
+  opacity: compact ? 0 : 1,
+  transition: 'max-height 0.35s ease, opacity 0.25s ease',
+}}>
+  <span style={{ whiteSpace: 'nowrap' }}>{'NOUMÉA · QUARTIER LATIN'}</span>
+  <span style={{ whiteSpace: 'nowrap' }}>{'LUN–VEN 8H–17H30 · SAM 8H–12H'}</span>
+</div>
 
       {/* ── Barre principale ── */}
       <div style={{
