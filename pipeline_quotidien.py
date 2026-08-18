@@ -338,12 +338,16 @@ def lancer_commande(commande, logger):
     return resultat.returncode, sortie
 
 
-def signaler_dashboard(logger, succes, nb_articles=None, message=""):
-    """Envoie le statut de la synchro au back-office (tableau de bord)."""
+def signaler_dashboard(logger, succes, nb_articles=None, message="",
+                        nouvelles_references=None, nouvelles_gammes=None):
+    """Envoie le statut de la synchro au back-office (tableau de bord), avec
+    éventuellement le détail des nouvelles références/gammes détectées."""
     donnees = json.dumps({
         "succes": succes,
         "nb_articles": nb_articles,
         "message": message,
+        "nouvelles_references": nouvelles_references or [],
+        "nouvelles_gammes": nouvelles_gammes or [],
     }).encode("utf-8")
 
     identifiants = base64.b64encode(
@@ -550,6 +554,43 @@ if __name__ == "__main__":
         else:
             logger.info(f"   ℹ️  Aucun fichier noms_manuels.csv trouvé — normal si jamais utilisé côté back-office.")
 
+        # Détection des nouveautés (avant d'écraser l'ancien fichier) : nouvelles
+        # références et nouvelles gammes apparues depuis la dernière synchro,
+        # pour alimenter la section "Nouveautés" du tableau de bord.
+        nouvelles_references = []
+        nouvelles_gammes = []
+        if os.path.exists(FICHIER_CSV_SORTIE):
+            try:
+                ancien = pd.read_csv(FICHIER_CSV_SORTIE, dtype={'id': str})
+                anciennes_refs = set(ancien['id'].astype(str))
+                ancien_gammes_par_ref = dict(zip(
+                    ancien['id'].astype(str),
+                    ancien['gammes'].fillna('').astype(str)
+                ))
+
+                nouvelles = csv[~csv['id'].astype(str).isin(anciennes_refs)]
+                nouvelles_references = [
+                    {"id": row['id'], "nom": row['nom']}
+                    for _, row in nouvelles.head(50).iterrows()
+                ]
+
+                for _, row in csv.iterrows():
+                    ref = str(row['id'])
+                    if ref not in ancien_gammes_par_ref:
+                        continue  # référence nouvelle, déjà comptée ci-dessus
+                    anciennes_gammes = {g.strip() for g in ancien_gammes_par_ref[ref].split('|') if g.strip()}
+                    nouvelles_gammes_ref = {g.strip() for g in str(row['gammes']).split('|') if g.strip()} - anciennes_gammes
+                    if nouvelles_gammes_ref:
+                        nouvelles_gammes.append({"id": ref, "nom": row['nom'], "gammes": sorted(nouvelles_gammes_ref)})
+                nouvelles_gammes = nouvelles_gammes[:50]
+
+                logger.info(f"   {len(nouvelles_references)} nouvelle(s) référence(s), "
+                            f"{len(nouvelles_gammes)} référence(s) avec nouvelle(s) gamme(s).")
+            except Exception as e:
+                logger.info(f"   ⚠️  Impossible de calculer les nouveautés : {e}")
+        else:
+            logger.info("   ℹ️  Premier passage, pas d'ancien catalogue pour comparer les nouveautés.")
+
         # Écriture DIRECTE dans public/ du site : plus de copie manuelle
         csv.to_csv(FICHIER_CSV_SORTIE, index=False, encoding='utf-8')
 
@@ -564,7 +605,10 @@ if __name__ == "__main__":
 
         # Publication automatique
         publier_sur_git(logger)
-        signaler_dashboard(logger, succes=True, nb_articles=len(csv), message="Synchro OK")
+        signaler_dashboard(
+            logger, succes=True, nb_articles=len(csv), message="Synchro OK",
+            nouvelles_references=nouvelles_references, nouvelles_gammes=nouvelles_gammes,
+        )
 
         logger.info("")
         logger.info(f"📄 Journal complet : {chemin_log}")
