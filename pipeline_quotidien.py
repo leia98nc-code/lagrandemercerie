@@ -54,7 +54,7 @@ DOSSIER_LOGS         = os.path.join(DOSSIER_REPO, "logs")
 # Back-office (tableau de bord) — mêmes identifiants que le Basic Auth du Caddyfile
 DASHBOARD_URL          = "https://app.zenkai.nc/lagrandemercerie/site-internet/api/sync-status"
 DASHBOARD_UTILISATEUR  = "astrid"
-DASHBOARD_MOT_DE_PASSE = "LMG@98"  # ⚠️ remplacer par le vrai mot de passe du Caddyfile avant utilisation
+DASHBOARD_MOT_DE_PASSE = "LGM@98"  # ⚠️ remplacer par le vrai mot de passe du Caddyfile avant utilisation
 
 RENOMMER_FAMILLES = {
     "PTMERCERIE":  "Petite mercerie",
