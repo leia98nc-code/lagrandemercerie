@@ -44,7 +44,6 @@ from datetime import datetime
 # Chemin vers le dossier du dépôt Git cloné SUR CE PC (le PC boutique)
 DOSSIER_REPO = r"C:\site-internet\la-grande-mercerie"
 
-FICHIER_CA           = "CA_mensuel_par_article.xlsx"        # optionnel, toujours manuel pour l'instant
 FICHIER_DESCRIPTIONS = "descriptions_manuelles.csv"
 FICHIER_NOMS         = "noms_manuels.csv"
 FICHIER_CSV_SORTIE   = os.path.join(DOSSIER_REPO, "public", "products.csv")
@@ -191,6 +190,41 @@ def recuperer_donnees_sage(logger):
     connexion.close()
     logger.info(f"   {len(df)} références lues directement depuis Sage.")
     return df
+
+
+def recuperer_ca_sage(logger):
+    """Calcule le CA total par référence depuis les factures Sage de l'année en
+    cours (DO_Type=6 = factures, validé sur données réelles). Remplace l'ancien
+    export Excel manuel : plus de fichier intermédiaire à tenir à jour à la main."""
+    connexion = pyodbc.connect(
+        "DRIVER={ODBC Driver 18 for SQL Server};"
+        r"SERVER=DESKTOP-EIOV9CB\SAGE100;"
+        "DATABASE=GRANDE_MERCERIE;"
+        "Trusted_Connection=yes;"
+        "TrustServerCertificate=yes;"
+    )
+
+    requete = """
+    SELECT
+        L.AR_Ref                    AS reference,
+        SUM(L.DL_MontantHT)         AS ca_ht_total
+    FROM F_DOCLIGNE L
+    JOIN F_DOCENTETE E
+        ON L.DO_Piece = E.DO_Piece
+        AND L.DO_Domaine = E.DO_Domaine
+        AND L.DO_Type = E.DO_Type
+    WHERE E.DO_Domaine = 0
+      AND E.DO_Type = 6
+      AND E.DO_Date >= DATEFROMPARTS(YEAR(GETDATE()), 1, 1)
+      AND L.AR_Ref != ''
+    GROUP BY L.AR_Ref
+    ORDER BY ca_ht_total DESC
+    """
+
+    df_ca = pd.read_sql(requete, connexion)
+    connexion.close()
+    logger.info(f"   CA calculé pour {len(df_ca)} références (factures depuis le 1er janvier).")
+    return df_ca
 
 
 # ─────────────────────────────────────────────
@@ -426,20 +460,17 @@ if __name__ == "__main__":
             lambda row: detecter_marque(row['reference'], row['nom']), axis=1
         )
 
-        chemin_ca = os.path.join(DOSSIER_REPO, FICHIER_CA)
-        if os.path.exists(chemin_ca):
-            df_ca = pd.read_excel(chemin_ca, sheet_name='CA annuel par article', engine='openpyxl')
+        try:
+            df_ca = recuperer_ca_sage(logger)
             df_ca['reference'] = df_ca['reference'].astype(str).str.strip().str.replace('/', '_', regex=False)
-            col_ca = [c for c in df_ca.columns if 'ca' in c.lower() or 'ht' in c.lower()][0]
-            df_ca_agg = df_ca.groupby('reference', as_index=False)[col_ca].sum()
-            df_ca_agg = df_ca_agg.sort_values(col_ca, ascending=False).reset_index(drop=True)
-            df_ca_agg['popularite'] = df_ca_agg.index + 1
-            pop_map = df_ca_agg.set_index('reference')['popularite'].to_dict()
+            df_ca = df_ca.sort_values('ca_ht_total', ascending=False).reset_index(drop=True)
+            df_ca['popularite'] = df_ca.index + 1
+            pop_map = df_ca.set_index('reference')['popularite'].to_dict()
             df['popularite'] = df['reference'].map(pop_map).fillna(99999).astype(int)
             logger.info(f"   {df['popularite'].ne(99999).sum()} articles avec score de popularité.")
-        else:
+        except Exception as e:
             df['popularite'] = 99999
-            logger.info(f"   ⚠️  Fichier CA introuvable — popularité non calculée (toujours manuel).")
+            logger.info(f"   ⚠️  Impossible de calculer la popularité depuis Sage : {e}")
 
         df[['gammes_filtrees', 'stocks_gammes_site']] = df.apply(
             lambda row: pd.Series(fusionner_stocks_gammes(row['gammes'], row['stocks_gammes'])),
