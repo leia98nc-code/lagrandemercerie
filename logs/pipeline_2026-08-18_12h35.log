@@ -1,0 +1,12 @@
+12:35:41  ════════════════════════════════════════════════════════════
+12:35:41    PIPELINE QUOTIDIEN — 18/08/2026 12:35
+12:35:41  ════════════════════════════════════════════════════════════
+12:35:41  
+12:35:41  ════════════════════════════════════════════════════════════
+12:35:41    ÉTAPE 1 — Connexion à Sage 100
+12:35:41  ════════════════════════════════════════════════════════════
+12:35:41  
+12:35:41  ❌ ERREUR PENDANT LE PIPELINE :
+12:35:41     InterfaceError : ('IM002', '[IM002] [Microsoft][Gestionnaire de pilotes ODBC] Source de données introuvable et nom de pilote non spécifié (0) (SQLDriverConnect)')
+12:35:41     Voir le détail dans : C:\site-internet\la-grande-mercerie\logs\pipeline_2026-08-18_12h35.log
+12:35:42     ✅ Statut envoyé au tableau de bord.
