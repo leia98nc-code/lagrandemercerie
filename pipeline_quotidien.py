@@ -49,6 +49,7 @@ FICHIER_NOMS         = "noms_manuels.csv"
 FICHIER_CSV_SORTIE   = os.path.join(DOSSIER_REPO, "public", "products.csv")
 DOSSIER_IMAGES       = os.path.join(DOSSIER_REPO, "public", "images", "products")
 DOSSIER_LOGS         = os.path.join(DOSSIER_REPO, "logs")
+CHEMIN_VERROU        = os.path.join(DOSSIER_REPO, "pipeline.lock")
 
 # Back-office (tableau de bord) — mêmes identifiants que le Basic Auth du Caddyfile
 DASHBOARD_URL          = "https://app.zenkai.nc/lagrandemercerie/site-internet/api/sync-status"
@@ -372,18 +373,16 @@ def signaler_dashboard(logger, succes, nb_articles=None, message="",
 
 
 def publier_sur_git(logger):
+    """Retourne True si le catalogue a bien été publié sur GitHub, False sinon
+    (échec de push, ou rien à publier). Le dashboard ne doit être notifié en
+    succès que si cette fonction retourne True."""
     logger.info("")
     logger.info("═" * 60)
     logger.info("  ÉTAPE 6 — Publication Git")
     logger.info("═" * 60)
 
-    lancer_commande("git fetch", logger)
-    code, statut = lancer_commande("git status", logger)
-
-    if "Your branch is behind" in statut or "have diverged" in statut:
-        logger.info("   ⚠️  Le dépôt local n'est pas à jour, tentative de pull avant push...")
-        lancer_commande("git pull", logger)
-
+    # Toujours committer AVANT de tenter un pull — sinon Git refuse de fusionner
+    # (« local changes would be overwritten by merge »), erreur déjà rencontrée.
     lancer_commande("git add .", logger)
 
     date_du_jour = datetime.now().strftime("%d/%m/%Y")
@@ -392,13 +391,53 @@ def publier_sur_git(logger):
 
     if "nothing to commit" in sortie_commit:
         logger.info("   ℹ️  Aucun changement détecté dans le catalogue aujourd'hui — pas de commit.")
-        return
+        return True  # rien à publier n'est pas un échec
 
     code_push, sortie_push = lancer_commande("git push", logger)
     if code_push == 0:
         logger.info("   ✅ Catalogue publié sur GitHub, Netlify va reconstruire le site.")
+        return True
+
+    # Le push a été rejeté : quelqu'un d'autre (back-office, autre poste) a
+    # publié entre-temps. Une seule tentative de rattrapage : on récupère les
+    # derniers changements, puis on repousse.
+    logger.info("   ⚠️  Push rejeté (quelqu'un a publié entre-temps) — tentative de rattrapage...")
+    code_pull, sortie_pull = lancer_commande("git pull --no-edit", logger)
+
+    if "CONFLICT" in sortie_pull:
+        # products.csv est entièrement régénéré à chaque passage : en cas de
+        # conflit, on garde sans hésiter la version fraîchement générée par CE
+        # passage (elle contient déjà les dernières données Sage + les derniers
+        # fichiers manuels), plutôt que de laisser un conflit bloquer le script.
+        logger.info("   ⚠️  Conflit sur le catalogue — on conserve la version générée par ce passage.")
+        lancer_commande("git checkout --ours public/products.csv", logger)
+        lancer_commande("git add public/products.csv", logger)
+        lancer_commande("git commit --no-edit", logger)
+
+    code_push2, sortie_push2 = lancer_commande("git push", logger)
+    if code_push2 == 0:
+        logger.info("   ✅ Catalogue publié sur GitHub (après rattrapage), Netlify va reconstruire le site.")
+        return True
     else:
         logger.info("   ❌ ÉCHEC DU PUSH — à vérifier manuellement ! Voir détail ci-dessus.")
+        return False
+
+
+def synchroniser_avant_generation(logger):
+    """Récupère les derniers changements GitHub AVANT de générer le catalogue,
+    pour que le scan d'images et les fichiers manuels (descriptions, noms)
+    reflètent bien tout ce qui a été fait depuis le back-office entre-temps."""
+    logger.info("")
+    logger.info("═" * 60)
+    logger.info("  ÉTAPE 0 — Synchronisation avec GitHub")
+    logger.info("═" * 60)
+    lancer_commande("git fetch", logger)
+    code_pull, sortie_pull = lancer_commande("git pull --no-edit", logger)
+    if "CONFLICT" in sortie_pull:
+        # Ne devrait normalement jamais arriver ici (rien n'a encore été modifié
+        # localement à ce stade) — filet de sécurité au cas où.
+        logger.info("   ⚠️  Conflit inattendu en tout début de script — annulation, on repart proprement.")
+        lancer_commande("git merge --abort", logger)
 
 
 # ─────────────────────────────────────────────
@@ -407,12 +446,26 @@ def publier_sur_git(logger):
 
 if __name__ == "__main__":
 
+    # Verrou anti-double-exécution : évite que la tâche planifiée quotidienne
+    # et un déclenchement manuel (depuis le back-office) ne tournent en même
+    # temps, ce qui créerait un conflit lors du commit/push Git.
+    if os.path.exists(CHEMIN_VERROU):
+        print("Une exécution du pipeline semble déjà en cours (fichier pipeline.lock présent) — arrêt.")
+        print("Si aucune exécution n'est réellement en cours, supprime ce fichier manuellement puis relance.")
+        sys.exit(0)
+
+    os.makedirs(DOSSIER_REPO, exist_ok=True)
+    with open(CHEMIN_VERROU, "w", encoding="utf-8") as f:
+        f.write(datetime.now().isoformat())
+
     logger, chemin_log = preparer_logger()
 
     try:
         logger.info("═" * 60)
         logger.info(f"  PIPELINE QUOTIDIEN — {datetime.now().strftime('%d/%m/%Y %H:%M')}")
         logger.info("═" * 60)
+
+        synchroniser_avant_generation(logger)
 
         logger.info("")
         logger.info("═" * 60)
@@ -604,9 +657,12 @@ if __name__ == "__main__":
         logger.info(f"   {nb_noms} avec nom corrigé manuellement")
 
         # Publication automatique
-        publier_sur_git(logger)
+        publication_ok = publier_sur_git(logger)
         signaler_dashboard(
-            logger, succes=True, nb_articles=len(csv), message="Synchro OK",
+            logger,
+            succes=publication_ok,
+            nb_articles=len(csv),
+            message="Synchro OK" if publication_ok else "Catalogue généré, mais échec de la publication sur GitHub (voir le log local sur le PC boutique)",
             nouvelles_references=nouvelles_references, nouvelles_gammes=nouvelles_gammes,
         )
 
@@ -620,3 +676,6 @@ if __name__ == "__main__":
         logger.info(f"   Voir le détail dans : {chemin_log}")
         signaler_dashboard(logger, succes=False, message=f"{type(e).__name__} : {e}")
         sys.exit(1)
+    finally:
+        if os.path.exists(CHEMIN_VERROU):
+            os.remove(CHEMIN_VERROU)
