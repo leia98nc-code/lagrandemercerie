@@ -11,7 +11,7 @@ const UNIVERS = [
   { nom: 'Laine',                 lien: '/catalogue?cat=Laine',                       photo: '/images/products/8143ASS.jpg' },
   { nom: 'Aiguilles & épingles',  lien: '/catalogue?cat=Aiguilles+%26+%C3%A9pingles', photo: '/images/products/18099.jpeg' },
 ]
-const PHOTOS_HERO = [
+const PHOTOS_HERO_DEFAUT = [
   '/images/shop/Tissus_tous2.jpg',
   '/images/shop/X_Bobine2.jpg',
   '/images/shop/X_Pelote_(4).jpg',
@@ -56,6 +56,21 @@ export default function Home() {
   const colonneTexteRef = useRef(null)
   const [hauteurColonne, setHauteurColonne] = useState(null)
   const [photoHeroIndex, setPhotoHeroIndex] = useState(0)
+  const [photosHero, setPhotosHero] = useState(PHOTOS_HERO_DEFAUT)
+
+  // Charge la config d'accueil (photos du hero) modifiable depuis le back-office.
+  // Si le fichier n'existe pas encore ou qu'il y a un souci réseau, on garde
+  // simplement le tableau par défaut ci-dessus — le site continue de fonctionner.
+  useEffect(() => {
+    fetch('/home-config.json')
+      .then(r => (r.ok ? r.json() : null))
+      .then(config => {
+        if (config && Array.isArray(config.heroPhotos) && config.heroPhotos.length > 0) {
+          setPhotosHero(config.heroPhotos)
+        }
+      })
+      .catch(() => {})
+  }, [])
 
 
   // ── Données dérivées ──
@@ -91,10 +106,10 @@ export default function Home() {
 
   useEffect(() => {
   const intervalle = setInterval(() => {
-    setPhotoHeroIndex(i => (i + 1) % PHOTOS_HERO.length)
+    setPhotoHeroIndex(i => (i + 1) % photosHero.length)
   }, 4000)
   return () => clearInterval(intervalle)
-}, [])
+}, [photosHero])
 
   // ── Effets : nombre de cartes visibles dans le carrousel produits ──
   useEffect(() => {
@@ -191,7 +206,7 @@ export default function Home() {
       </div>
 
 {/* Colonne droite — carrousel simple */}
-<div className="hero-photo-droite" style={{ position: 'relative', aspectRatio: '4 / 3.1', overflow: 'hidden', borderRadius: 'var(--radius-lg)', boxShadow: '0 12px 40px rgba(200,107,138,0.18)', marginTop: '2rem' }}>  {PHOTOS_HERO.map((photo, i) => (
+<div className="hero-photo-droite" style={{ position: 'relative', aspectRatio: '4 / 3.1', overflow: 'hidden', borderRadius: 'var(--radius-lg)', boxShadow: '0 12px 40px rgba(200,107,138,0.18)', marginTop: '2rem' }}>  {photosHero.map((photo, i) => (
     <img
       key={photo}
       src={photo}
