@@ -83,7 +83,7 @@ export default function Navbar() {
   height: '38px', width: '38px',
   borderRadius: '50%',
   overflow: 'hidden',
-  border: '2px solid var(--rose-poudre)',
+  border: '2px solid var(--rose-profond)',
   boxSizing: 'border-box',
   flexShrink: 0,
   display: 'flex',
