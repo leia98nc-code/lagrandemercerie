@@ -497,14 +497,14 @@ ART_1939_30,Ruban Satin - 30 Mm,Biais,200,,,,non,,50,true,,99999
 120725,Bouton,Boutons,100,,,,non,,143,true,,99999
 120181,Bouton,Boutons,120,,,,non,,137,true,,99999
 120435,Bouton,Boutons,100,,,,non,,150,true,,99999
+120541,Bouton,Boutons,135,,,,non,,125,true,,99999
 120668,Bouton,Boutons,40,,,,non,,133,true,,99999
 120190,Bouton,Boutons,130,,,,non,,124,true,,99999
-120541,Bouton,Boutons,135,,,,non,,125,true,,99999
 120481,Bouton,Boutons,85,,,,non,,111,true,,2402
 120510,Bouton,Boutons,60,,,,non,,114,true,,99999
 120147,Bouton,Boutons,260,,,,non,,109,true,,2340
-120289,Bouton,Boutons,180,,,,non,,101,true,,568
 120482,Bouton,Boutons,90,,,,non,,102,true,,1977
+120289,Bouton,Boutons,180,,,,non,,101,true,,568
 120062,Bouton,Boutons,180,,,,non,,104,true,,99999
 120042,Bouton,Boutons,350,,,,non,,94,true,,2400
 120066,Bouton,Boutons,200,,,,non,,94,true,,1860
@@ -515,13 +515,13 @@ ART_1939_30,Ruban Satin - 30 Mm,Biais,200,,,,non,,50,true,,99999
 120351,Bouton,Boutons,70,,,,non,,98,true,,99999
 120731,Bouton,Boutons,100,,,,non,,98,true,,2447
 120009,Bouton,Boutons,120,,,,non,,213,true,,1023
+120638,Bouton,Boutons,85,,,,non,,252,true,,2342
+120659,Bouton,Boutons,85,,,,non,,187,true,,99999
 120007,Bouton,Boutons,120,,,,non,,197,true,,1543
 120425,Bouton,Boutons,80,,,,non,,198,true,,1967
-120638,Bouton,Boutons,85,,,,non,,252,true,,2342
-120434,Bouton,Boutons,30,,,,non,,157,true,,99999
-120728,Bouton,Boutons,30,,,,non,,173,true,,99999
 120120,Bouton,Boutons,120,,,,non,,172,true,,726
-120659,Bouton,Boutons,85,,,,non,,187,true,,99999
+120728,Bouton,Boutons,30,,,,non,,173,true,,99999
+120434,Bouton,Boutons,30,,,,non,,157,true,,99999
 120053,Bouton,Boutons,300,,,,non,,48,true,,99999
 120169,Bouton,Boutons,140,,,,non,,48,true,,99999
 120298,Bouton,Boutons,30,,,,non,,48,true,,99999
@@ -1590,8 +1590,8 @@ Z325.25,Fermeture Glissiere Metal Non Separable - 25Cm N°5,Fermetures,600,,,,no
 Z325.30,Fermeture Glissiere Metal Non Separable - 30 Cm,Fermetures,660,,,,non,,7,true,,99999
 Z200_2540,Fermeture Grosses Mailles - 25Cm A 40Cm,Fermetures,650,,,,non,,92,true,,839
 Z54_2540,Fermeture Grosses Mailles - 25Cm A 40Cm,Fermetures,650,,,,non,,150,true,,197
-Z54_4565,Fermeture Grosses Mailles - 45Cm A 65Cm,Fermetures,850,,,,non,,992,true,,57
 Z200_4565,Fermeture Grosses Mailles - 45Cm A 65Cm,Fermetures,850,,,,non,,87,true,,210
+Z54_4565,Fermeture Grosses Mailles - 45Cm A 65Cm,Fermetures,850,,,,non,,992,true,,57
 Z200_70140,Fermeture Grosses Mailles - 70Cm A 140Cm,Fermetures,1000,,,,non,,66,true,,183
 Z54_70140,Fermeture Grosses Mailles - 70Cm A 140Cm,Fermetures,1000,,,,non,,96,true,,125
 Z200,Fermeture Injecte Non Separable N°5 - 10 A 20Cm,Fermetures,350,,,,non,,42,true,,1450
@@ -3874,7 +3874,14 @@ ERF.275970,Pastilles Scratch Adhesive Ø20Mm - X8 - Blanc,Velcros,780,,,,non,,10
 460002,Velcro A Coudre - 25Mm,Velcros,860,,,,non,,76,true,460002.jpg,45
 460003,Velcro A Coudre - 38 Mm,Velcros,920,,,,non,,88,true,460003.jpg,265
 460004,Velcro A Coudre - 50Mm,Velcros,1000,,,,non,,42,true,460004.webp,41
+VELCRO_25_C,Velcro A Coudre - Alfatex - 25Mm - Hook & Loop,Velcros,400,,,BLACK  - 3C0 | WHITE - 014,non,BLACK  - 3C0:100|WHITE - 014:100,200,true,,99999
+VELCRO_50_C,Velcro A Coudre - Alfatex - 50 Mm - Hook & Loop,Velcros,700,,,BLACK - 3C0 | WHITE  - 014,non,BLACK - 3C0:100|WHITE  - 014:100,200,true,,99999
+VELCRO_20_A,Velcro Adhesif - 20 Mm - Hook & Loop,Velcros,600,,,BLACK  - 3C0 | WHITE - 014,non,BLACK  - 3C0:100|WHITE - 014:200,300,true,,99999
+VELCRO_25_A,Velcro Adhesif - 25 Mm - Hook & Loop,Velcros,650,,,BLACK 3C0 | WHITE  - 014,non,BLACK 3C0:200|WHITE  - 014:200,400,true,,99999
 460008,Velcro Adhesif - 50Mm,Velcros,2000,,,,non,,75,true,460008.jpg,14
+VECLRO_50_A,Velcro Adhesif - 50Mm - Hook & Loop,Velcros,1000,,,,non,,100,true,,99999
+460009,Velcro Dos A Dos,Velcros,600,,,,non,,175,true,,1714
+VELCRO_25_ELA,Velcro Elastique Woven - 25Mm - Hook & Loop,Velcros,1250,,,BLACK - 3C0,non,BLACK - 3C0:100,100,true,,99999
 S2146,Bande Elastique Reflechissante Jaune/Orange - 50Mm - S&M,Élastiques,420,,,,non,,50,true,,99999
 B.FI,Bobine Fil Elastique - 0.6Mm - 25 M - Passion Ruban,Élastiques,850,,,,non,,14,true,,563
 F4706.1.5.02,Cordon Elastique - 1.5Mm - Blanc,Élastiques,50,,,,non,,100,true,,99999
