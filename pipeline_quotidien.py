@@ -51,6 +51,7 @@ DOSSIER_IMAGES       = os.path.join(DOSSIER_REPO, "public", "images", "products"
 DOSSIER_LOGS         = os.path.join(DOSSIER_REPO, "logs")
 CHEMIN_VERROU        = os.path.join(DOSSIER_REPO, "pipeline.lock")
 FICHIER_DATES_AJOUT = os.path.join(DOSSIER_REPO, "dates_ajout.csv")
+SEUIL_JOURS_NOUVEAUTE = 30  # nombre de jours pendant lesquels un produit reste marqué "nouveau"
 
 # Back-office (tableau de bord) — mêmes identifiants que le Basic Auth du Caddyfile
 DASHBOARD_URL          = "https://app.zenkai.nc/lagrandemercerie/site-internet/api/sync-status"
@@ -360,6 +361,30 @@ def mettre_a_jour_dates_ajout(logger, csv_final):
     logger.info(f"   {len(nouvelles_refs)} nouvelle(s) référence(s) ajoutée(s) à dates_ajout.csv "
                 f"({len(dates_existantes)} au total).")
 
+    return dates_existantes
+
+def calculer_colonne_nouveau(logger, csv_final, dates_par_ref, seuil_jours=SEUIL_JOURS_NOUVEAUTE):
+    """Ajoute une colonne booléenne 'nouveau' à csv_final, à partir des dates
+    d'apparition connues et du seuil de jours défini. Une référence absente de
+    dates_par_ref (cas anormal, ne devrait pas arriver) est considérée non-nouvelle
+    par sécurité plutôt que de faire planter le calcul."""
+    aujourd_hui = datetime.now().date()
+
+    def est_nouveau(ref):
+        date_str = dates_par_ref.get(str(ref))
+        if not date_str:
+            return False
+        try:
+            date_apparition = datetime.strptime(date_str, "%Y-%m-%d").date()
+        except ValueError:
+            return False
+        return (aujourd_hui - date_apparition).days <= seuil_jours
+
+    csv_final['nouveau'] = csv_final['id'].astype(str).apply(est_nouveau)
+    nb_nouveaux = int(csv_final['nouveau'].sum())
+    logger.info(f"   {nb_nouveaux} produit(s) marqué(s) comme nouveauté (seuil {seuil_jours} jours).")
+    return csv_final
+    
 # ─────────────────────────────────────────────
 # GIT — add / commit / push automatique
 # ─────────────────────────────────────────────
@@ -681,11 +706,12 @@ if __name__ == "__main__":
             logger.info("   ℹ️  Premier passage, pas d'ancien catalogue pour comparer les nouveautés.")
 
         try:
-            mettre_a_jour_dates_ajout(logger, csv)
+            dates_par_ref = mettre_a_jour_dates_ajout(logger, csv)
+            csv = calculer_colonne_nouveau(logger, csv, dates_par_ref)
         except Exception as e:
             # Ne doit jamais bloquer la génération du catalogue lui-même
-            logger.info(f"   ⚠️  Impossible de mettre à jour dates_ajout.csv : {e}")
-
+            logger.info(f"   ⚠️  Impossible de calculer les nouveautés : {e}")
+            csv['nouveau'] = False  # valeur de repli sûre : colonne présente, tout à False
 
         # Écriture DIRECTE dans public/ du site : plus de copie manuelle
         csv.to_csv(FICHIER_CSV_SORTIE, index=False, encoding='utf-8')
