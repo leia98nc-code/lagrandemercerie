@@ -50,6 +50,7 @@ FICHIER_CSV_SORTIE   = os.path.join(DOSSIER_REPO, "public", "products.csv")
 DOSSIER_IMAGES       = os.path.join(DOSSIER_REPO, "public", "images", "products")
 DOSSIER_LOGS         = os.path.join(DOSSIER_REPO, "logs")
 CHEMIN_VERROU        = os.path.join(DOSSIER_REPO, "pipeline.lock")
+FICHIER_DATES_AJOUT = os.path.join(DOSSIER_REPO, "dates_ajout.csv")
 
 # Back-office (tableau de bord) — mêmes identifiants que le Basic Auth du Caddyfile
 DASHBOARD_URL          = "https://app.zenkai.nc/lagrandemercerie/site-internet/api/sync-status"
@@ -323,6 +324,41 @@ def gammes_ont_photos(ref, gammes_filtrees, images_dispo, seuil_proportion=0.5, 
     proportion = trouvees / len(liste)
     return trouvees >= minimum and proportion >= seuil_proportion
 
+# ─────────────────────────────────────────────
+# NOUVEAUTÉS PERSISTANTES — dates_ajout.csv
+# ─────────────────────────────────────────────
+
+def mettre_a_jour_dates_ajout(logger, csv_final):
+    """Met à jour dates_ajout.csv : ajoute la date du jour UNIQUEMENT pour les
+    références absentes de ce fichier (donc de vraies nouveautés jamais vues).
+    Une référence déjà présente dans le fichier n'est JAMAIS modifiée, même si
+    elle disparaît puis réapparaît du catalogue — sa date d'origine est figée.
+    Ce fichier grandit au fil du temps, il n'est jamais écrasé entièrement."""
+
+    date_du_jour = datetime.now().strftime("%Y-%m-%d")
+
+    if os.path.exists(FICHIER_DATES_AJOUT):
+        df_dates = pd.read_csv(FICHIER_DATES_AJOUT, dtype={'ref': str})
+        dates_existantes = dict(zip(df_dates['ref'].astype(str), df_dates['date_premiere_apparition']))
+        sources_existantes = dict(zip(df_dates['ref'].astype(str), df_dates['source']))
+    else:
+        dates_existantes = {}
+        sources_existantes = {}
+
+    refs_actuelles = set(csv_final['id'].astype(str))
+    nouvelles_refs = refs_actuelles - dates_existantes.keys()
+
+    for ref in nouvelles_refs:
+        dates_existantes[ref] = date_du_jour
+        sources_existantes[ref] = "pipeline_auto"
+
+    df_sortie = pd.DataFrame({'ref': sorted(dates_existantes.keys())})
+    df_sortie['date_premiere_apparition'] = df_sortie['ref'].map(dates_existantes)
+    df_sortie['source'] = df_sortie['ref'].map(sources_existantes)
+    df_sortie.to_csv(FICHIER_DATES_AJOUT, index=False, encoding='utf-8')
+
+    logger.info(f"   {len(nouvelles_refs)} nouvelle(s) référence(s) ajoutée(s) à dates_ajout.csv "
+                f"({len(dates_existantes)} au total).")
 
 # ─────────────────────────────────────────────
 # GIT — add / commit / push automatique
@@ -643,6 +679,13 @@ if __name__ == "__main__":
                 logger.info(f"   ⚠️  Impossible de calculer les nouveautés : {e}")
         else:
             logger.info("   ℹ️  Premier passage, pas d'ancien catalogue pour comparer les nouveautés.")
+
+        try:
+            mettre_a_jour_dates_ajout(logger, csv)
+        except Exception as e:
+            # Ne doit jamais bloquer la génération du catalogue lui-même
+            logger.info(f"   ⚠️  Impossible de mettre à jour dates_ajout.csv : {e}")
+
 
         # Écriture DIRECTE dans public/ du site : plus de copie manuelle
         csv.to_csv(FICHIER_CSV_SORTIE, index=False, encoding='utf-8')
