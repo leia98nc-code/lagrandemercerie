@@ -203,7 +203,7 @@ useEffect(() => {
     </main>
   )
 
-  const { nom, categorie, prix, description, dispo, image } = product
+  const { nom, categorie, prix, description, dispo, image, nouveau } = product
 
   const suffixGamme = gammeActive
     ? gammeActive.trim()
@@ -265,6 +265,25 @@ useEffect(() => {
   backgroundPosition: 'center',
   backgroundSize: '30%',
 }}>
+            {nouveau && (
+              <span style={{
+                position: 'absolute',
+                top: '1rem',
+                left: '1rem',
+                zIndex: 2,
+                background: 'var(--rose-poudre)',
+                color: 'var(--noir)',
+                fontSize: '0.75rem',
+                fontWeight: 700,
+                padding: '0.3rem 0.75rem',
+                borderRadius: '50px',
+                letterSpacing: '0.05em',
+                textTransform: 'uppercase',
+              }}>
+                Nouveau
+              </span>
+            )}
+
             {imageAffichee && !imagePrincipaleCachee && (
   <img
     key={imageAffichee}
