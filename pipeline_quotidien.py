@@ -46,6 +46,7 @@ DOSSIER_REPO = r"C:\site-internet\la-grande-mercerie"
 
 FICHIER_DESCRIPTIONS = "descriptions_manuelles.csv"
 FICHIER_NOMS         = "noms_manuels.csv"
+FICHIER_NOUVEAUTE_FORCEE = "nouveaute_forcee.csv"
 FICHIER_CSV_SORTIE   = os.path.join(DOSSIER_REPO, "public", "products.csv")
 DOSSIER_IMAGES       = os.path.join(DOSSIER_REPO, "public", "images", "products")
 DOSSIER_LOGS         = os.path.join(DOSSIER_REPO, "logs")
@@ -384,7 +385,92 @@ def calculer_colonne_nouveau(logger, csv_final, dates_par_ref, seuil_jours=SEUIL
     nb_nouveaux = int(csv_final['nouveau'].sum())
     logger.info(f"   {nb_nouveaux} produit(s) marqué(s) comme nouveauté (seuil {seuil_jours} jours).")
     return csv_final
-    
+
+def fusionner_promotions(logger, csv_final):
+    """Applique les promotions actives définies manuellement depuis le back-office
+    (promotions.csv : id, pourcentage, date_fin). Recalcule le prix réduit à
+    partir du prix Sage ACTUEL (pas d'un prix figé), pour rester cohérent si le
+    prix change entre-temps. Une promo dont la date de fin est dépassée n'est
+    pas appliquée ici — mais l'arrêt réel et instantané sur le site est fait
+    côté React (voir useProducts.js), ce filtrage n'est qu'un filet de sécurité
+    qui nettoie products.csv au passage suivant."""
+    csv_final['prix_promo'] = ''
+    csv_final['promo_pourcentage'] = ''
+    csv_final['promo_fin'] = ''
+
+    chemin_promos = os.path.join(DOSSIER_REPO, "promotions.csv")
+    if not os.path.exists(chemin_promos):
+        logger.info("   ℹ️  Aucun fichier promotions.csv trouvé — normal si jamais utilisé côté back-office.")
+        return csv_final
+
+    df_promos = pd.read_csv(chemin_promos, dtype={'id': str})
+    df_promos['id'] = df_promos['id'].astype(str).str.strip()
+    aujourd_hui = datetime.now().date()
+
+    prix_par_id = dict(zip(csv_final['id'].astype(str), csv_final['prix']))
+    promo_prix, promo_pourcentage, promo_fin = {}, {}, {}
+    nb_actives = 0
+
+    for _, row in df_promos.iterrows():
+        ref = str(row['id']).strip()
+        try:
+            date_fin = datetime.strptime(str(row['date_fin']).strip(), "%Y-%m-%d").date()
+        except (ValueError, TypeError):
+            logger.info(f"   ⚠️  Date de fin invalide pour la promo {ref} — ignorée.")
+            continue
+        if date_fin < aujourd_hui:
+            continue  # promo expirée
+        if ref not in prix_par_id:
+            continue  # produit plus au catalogue
+
+        try:
+            pourcentage = float(row['pourcentage'])
+        except (ValueError, TypeError):
+            logger.info(f"   ⚠️  Pourcentage invalide pour la promo {ref} — ignorée.")
+            continue
+
+        promo_prix[ref] = round(prix_par_id[ref] * (1 - pourcentage / 100))
+        promo_pourcentage[ref] = int(pourcentage) if pourcentage == int(pourcentage) else pourcentage
+        promo_fin[ref] = row['date_fin']
+        nb_actives += 1
+
+    csv_final['prix_promo'] = csv_final['id'].astype(str).map(promo_prix).fillna('')
+    csv_final['promo_pourcentage'] = csv_final['id'].astype(str).map(promo_pourcentage).fillna('')
+    csv_final['promo_fin'] = csv_final['id'].astype(str).map(promo_fin).fillna('')
+
+    logger.info(f"   {nb_actives} promotion(s) active(s) appliquée(s).")
+    return csv_final
+
+def fusionner_nouveaute_forcee(logger, csv_final):
+    """Applique les forçages manuels faits depuis le back-office
+    (nouveaute_forcee.csv, colonne 'force' valant le texte 'true' ou 'false'),
+    en écrasant la valeur calculée automatiquement pour les références
+    concernées. Une référence absente du fichier reste au calcul automatique
+    (fonctionnement à 3 états : pas de ligne = auto, ligne = forcé).
+    Cette fusion doit TOUJOURS avoir lieu après calculer_colonne_nouveau,
+    jamais avant, sinon le forçage serait aussitôt écrasé."""
+    chemin_force = os.path.join(DOSSIER_REPO, FICHIER_NOUVEAUTE_FORCEE)
+    if not os.path.exists(chemin_force):
+        logger.info("   ℹ️  Aucun fichier nouveaute_forcee.csv trouvé — normal si jamais utilisé côté back-office.")
+        return csv_final
+
+    df_force = pd.read_csv(chemin_force, dtype={'id': str})
+    df_force['id'] = df_force['id'].astype(str).str.strip()
+    mapping_force = dict(zip(df_force['id'], df_force['force']))
+
+    csv_final['id'] = csv_final['id'].astype(str)
+
+    def appliquer_force(row):
+        valeur = mapping_force.get(row['id'])
+        if valeur is None:
+            return row['nouveau']  # pas de forçage pour ce produit → on garde le calcul auto
+        return str(valeur).strip().lower() == 'true'
+
+    csv_final['nouveau'] = csv_final.apply(appliquer_force, axis=1)
+    nb_forces = csv_final['id'].isin(mapping_force.keys()).sum()
+    logger.info(f"   {nb_forces} forçage(s) manuel(s) de nouveauté appliqué(s).")
+    return csv_final
+
 # ─────────────────────────────────────────────
 # GIT — add / commit / push automatique
 # ─────────────────────────────────────────────
@@ -712,6 +798,17 @@ if __name__ == "__main__":
             # Ne doit jamais bloquer la génération du catalogue lui-même
             logger.info(f"   ⚠️  Impossible de calculer les nouveautés : {e}")
             csv['nouveau'] = False  # valeur de repli sûre : colonne présente, tout à False
+
+        try:
+            csv = fusionner_nouveaute_forcee(logger, csv)
+        except Exception as e:
+            # Un souci ici ne doit pas écraser le calcul automatique déjà fait juste au-dessus
+            logger.info(f"   ⚠️  Impossible d'appliquer les forçages nouveauté : {e}")
+
+        try:
+            csv = fusionner_promotions(logger, csv)
+        except Exception as e:
+            logger.info(f"   ⚠️  Impossible d'appliquer les promotions : {e}")
 
         # Écriture DIRECTE dans public/ du site : plus de copie manuelle
         csv.to_csv(FICHIER_CSV_SORTIE, index=False, encoding='utf-8')

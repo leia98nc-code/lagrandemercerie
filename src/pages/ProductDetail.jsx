@@ -203,7 +203,7 @@ useEffect(() => {
     </main>
   )
 
-  const { nom, categorie, prix, description, dispo, image, nouveau } = product
+  const { nom, categorie, prix, description, dispo, image, nouveau, prix_promo, promo_pourcentage, enPromo } = product
 
   const suffixGamme = gammeActive
     ? gammeActive.trim()
@@ -265,23 +265,46 @@ useEffect(() => {
   backgroundPosition: 'center',
   backgroundSize: '30%',
 }}>
-            {nouveau && (
-              <span style={{
+            {(nouveau || enPromo) && (
+              <div style={{
                 position: 'absolute',
                 top: '1rem',
                 left: '1rem',
                 zIndex: 2,
-                background: 'var(--rose-poudre)',
-                color: 'var(--noir)',
-                fontSize: '0.75rem',
-                fontWeight: 700,
-                padding: '0.3rem 0.75rem',
-                borderRadius: '50px',
-                letterSpacing: '0.05em',
-                textTransform: 'uppercase',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '0.4rem',
+                alignItems: 'flex-start',
               }}>
-                Nouveau
-              </span>
+                {enPromo && (
+                  <span style={{
+                    background: 'var(--rose-profond)',
+                    color: 'white',
+                    fontSize: '0.75rem',
+                    fontWeight: 700,
+                    padding: '0.3rem 0.75rem',
+                    borderRadius: '50px',
+                    letterSpacing: '0.05em',
+                    textTransform: 'uppercase',
+                  }}>
+                    {`-${promo_pourcentage}%`}
+                  </span>
+                )}
+                {nouveau && (
+                  <span style={{
+                    background: 'var(--rose-poudre)',
+                    color: 'var(--noir)',
+                    fontSize: '0.75rem',
+                    fontWeight: 700,
+                    padding: '0.3rem 0.75rem',
+                    borderRadius: '50px',
+                    letterSpacing: '0.05em',
+                    textTransform: 'uppercase',
+                  }}>
+                    Nouveau
+                  </span>
+                )}
+              </div>
             )}
 
             {imageAffichee && !imagePrincipaleCachee && (
@@ -330,12 +353,36 @@ useEffect(() => {
               {nom}
             </h1>
 
-            <div style={{
-              fontFamily: 'var(--font-titre)',
-              fontSize: '2rem', fontWeight: 700, color: 'var(--rose-prix)',
-            }}>
-              {prix > 0 ? `${prix.toLocaleString('fr-FR')} F` : 'Prix sur demande'}
-            </div>
+            {enPromo ? (
+              <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.85rem', flexWrap: 'wrap' }}>
+                <span style={{
+                  fontFamily: 'var(--font-titre)',
+                  fontSize: '2rem', fontWeight: 700, color: 'var(--rose-profond)',
+                }}>
+                  {`${prix_promo.toLocaleString('fr-FR')} F`}
+                </span>
+                <span style={{
+                  fontSize: '1.1rem', color: 'var(--gris-texte)',
+                  textDecoration: 'line-through',
+                }}>
+                  {`${prix.toLocaleString('fr-FR')} F`}
+                </span>
+                <span style={{
+                  fontSize: '0.75rem', fontWeight: 700, color: 'white',
+                  background: 'var(--rose-profond)', padding: '0.2rem 0.6rem',
+                  borderRadius: '50px', textTransform: 'uppercase', letterSpacing: '0.05em',
+                }}>
+                  {`-${promo_pourcentage}%`}
+                </span>
+              </div>
+            ) : (
+              <div style={{
+                fontFamily: 'var(--font-titre)',
+                fontSize: '2rem', fontWeight: 700, color: 'var(--rose-prix)',
+              }}>
+                {prix > 0 ? `${prix.toLocaleString('fr-FR')} F` : 'Prix sur demande'}
+              </div>
+            )}
 
             {/* Disponibilité */}
             <div style={{

@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 
 export default function ProductCard({ product }) {
-  const { id, nom, categorie, prix, description, dispo, image, marque, nouveau } = product
+  const { id, nom, categorie, prix, description, dispo, image, marque, nouveau, prix_promo, promo_pourcentage, enPromo } = product
 
   return (
     <Link to={`/produit/${id}`} style={{ textDecoration: 'none' }}>
@@ -59,25 +59,48 @@ export default function ProductCard({ product }) {
             />
           )}
 
-          {/* Badge nouveauté */}
-          {nouveau && (
-            <span style={{
+                    {/* Badges nouveauté / promo (empilés en haut à gauche) */}
+          {(nouveau || enPromo) && (
+            <div style={{
               position: 'absolute',
               top: '0.75rem',
               left: '0.75rem',
-              background: 'var(--rose-poudre)',
-              color: 'var(--noir)',
-              fontSize: '0.7rem',
-              fontWeight: 700,
-              padding: '0.25rem 0.6rem',
-              borderRadius: '50px',
-              letterSpacing: '0.05em',
-              textTransform: 'uppercase',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '0.35rem',
+              alignItems: 'flex-start',
             }}>
-              Nouveau
-            </span>
+              {enPromo && (
+                <span style={{
+                  background: 'var(--rose-profond)',
+                  color: 'white',
+                  fontSize: '0.7rem',
+                  fontWeight: 700,
+                  padding: '0.25rem 0.6rem',
+                  borderRadius: '50px',
+                  letterSpacing: '0.05em',
+                  textTransform: 'uppercase',
+                }}>
+                  {`-${promo_pourcentage}%`}
+                </span>
+              )}
+              {nouveau && (
+                <span style={{
+                  background: 'var(--rose-poudre)',
+                  color: 'var(--noir)',
+                  fontSize: '0.7rem',
+                  fontWeight: 700,
+                  padding: '0.25rem 0.6rem',
+                  borderRadius: '50px',
+                  letterSpacing: '0.05em',
+                  textTransform: 'uppercase',
+                }}>
+                  Nouveau
+                </span>
+              )}
+            </div>
           )}
-          
+
           {/* Badge dispo */}
           <span style={{
             position: 'absolute',

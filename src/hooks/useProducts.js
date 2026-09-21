@@ -20,6 +20,11 @@ export function useProducts() {
           transform: v => v.trim(),
         })
 
+        // Comparaison de dates en texte "YYYY-MM-DD" : ça fonctionne car ce
+        // format se compare correctement caractère par caractère, sans avoir
+        // besoin de construire de vrais objets Date.
+        const aujourdHui = new Date().toISOString().slice(0, 10)
+
         const data = result.data.map(p => {
           // Parser stocks_gammes en objet { "ANIS - 65": 23, ... }
           const stocks_gammes = {}
@@ -34,13 +39,23 @@ export function useProducts() {
             })
           }
 
-                    return {
+                    const prixPromo = parseFloat(p.prix_promo) || null
+          const promoFin = p.promo_fin || null
+
+          return {
   ...p,
-  prix:          parseFloat(p.prix) || 0,
-  stock:         parseInt(p.stock) || 0,
-  dispo:         p.dispo?.toLowerCase() === 'true' || p.dispo === '1',
-  nouveau:       p.nouveau?.toLowerCase() === 'true',
-  popularite:    parseInt(p.popularite) || 99999,
+  prix:              parseFloat(p.prix) || 0,
+  stock:             parseInt(p.stock) || 0,
+  dispo:             p.dispo?.toLowerCase() === 'true' || p.dispo === '1',
+  nouveau:           p.nouveau?.toLowerCase() === 'true',
+  popularite:        parseInt(p.popularite) || 99999,
+  prix_promo:        prixPromo,
+  promo_pourcentage: p.promo_pourcentage ? parseFloat(p.promo_pourcentage) : null,
+  promo_fin:         promoFin,
+  // true seulement si une promo existe ET que sa date de fin n'est pas
+  // dépassée aujourd'hui — c'est ce qui fait disparaître la promo pile à
+  // minuit, sans attendre le prochain passage du pipeline.
+  enPromo:           !!(prixPromo && promoFin && promoFin >= aujourdHui),
   stocks_gammes,
 }
         })
