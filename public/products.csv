@@ -38,7 +38,7 @@ SC001687,"Aiguille Machine Universel Twin - Assortiment 1.6, 2, 3 Mm - Schmetz",
 12320,Aiguille Matelas Droites A74 N°8 - Unite,Aiguilles & épingles,300,"Aiguille matelas droite A74 BOHIN : aiguille droite robuste, pour capitonnage, ameublement et rembourrage",Bohin,,non,,35,true,12320.jpg,2401,False
 DMC1764.1,Aiguille Perle N10-13 X4,Aiguilles & épingles,550,,,,non,,24,true,DMC1764.1.webp,919,False
 98823,Aiguille Punch Needle,Aiguilles & épingles,1400,,,,non,,10,true,98823.jpg,99999,False
-15406,Aiguille Smyrne S/Pointe A44 Nø1 -Bohin,Aiguilles & épingles,200,"Aiguille Smyrne sans pointe A44 BOHIN : grand chas, pour le point noué Smyrne sur canevas",Bohin,,non,,13,true,15406.webp,1993,False
+15406,Aiguille Smyrne Sans Pointe A44 Nø1 -Bohin,Aiguilles & épingles,200,"Aiguille Smyrne sans pointe A44 BOHIN : grand chas, pour le point noué Smyrne sur canevas",Bohin,,non,,13,true,15406.webp,1993,False
 98288,Aiguille Speciale Frivolite 13Cm X1Mm,Aiguilles & épingles,540,,,,non,,5,true,98288.jpg,99999,False
 98410,Aiguille Surjeteuse 75 X5 - Bohin,Aiguilles & épingles,1200,Aiguille pour surjeteuse BOHIN : système adapté aux machines surjeteuses,Bohin,,non,,19,true,98410.jpg,1667,False
 98412,Aiguille Surjeteuse 80 X5,Aiguilles & épingles,1200,Aiguille pour surjeteuse BOHIN : système adapté aux machines surjeteuses,Bohin,,non,,14,true,98412.webp,428,False
@@ -463,6 +463,7 @@ ART_1939_30,Ruban Satin - 30 Mm,Biais,200,,,,non,,50,true,,99999,False
 120298,Bouton,Boutons,30,,,,non,,48,true,,99999,False
 120471,Bouton,Boutons,100,,,,non,,48,true,,2402,False
 120548,Bouton,Boutons,100,,,,non,,48,true,,99999,False
+120098,Bouton,Boutons,190,,,,non,,44,true,,99999,False
 120330,Bouton,Boutons,235,,,,non,,47,true,,1858,False
 120379,Bouton,Boutons,460,,,,non,,47,true,,99999,False
 120429,Bouton,Boutons,30,,,,non,,47,true,,99999,False
@@ -471,7 +472,6 @@ ART_1939_30,Ruban Satin - 30 Mm,Biais,200,,,,non,,50,true,,99999,False
 120378,Bouton,Boutons,550,,,,non,,45,true,,2445,False
 120550,Bouton,Boutons,90,,,,non,,45,true,,99999,False
 120599,Bouton,Boutons,70,,,,non,,45,true,,99999,False
-120098,Bouton,Boutons,190,,,,non,,44,true,,99999,False
 120060,Bouton,Boutons,265,,,,non,,41,true,,99999,False
 120648,Bouton,Boutons,70,,,,non,,41,true,,99999,False
 120709,Bouton,Boutons,60,,,,non,,41,true,,99999,False
@@ -527,11 +527,11 @@ ART_1939_30,Ruban Satin - 30 Mm,Biais,200,,,,non,,50,true,,99999,False
 120663,Bouton,Boutons,120,,,,non,,27,true,,1387,False
 120670,Bouton,Boutons,100,,,,non,,27,true,,99999,False
 120690,Bouton,Boutons,60,,,,non,,27,true,,99999,False
-120082,Bouton,Boutons,140,,,,non,,26,true,,99999,False
 120249,Bouton,Boutons,240,,,,non,,26,true,,99999,False
 120348,Bouton,Boutons,395,,,,non,,26,true,,99999,False
 120474,Bouton,Boutons,70,,,,non,,26,true,,99999,False
 120530,Bouton,Boutons,65,,,,non,,26,true,,99999,False
+120082,Bouton,Boutons,140,,,,non,,26,true,,99999,False
 120040,Bouton,Boutons,400,,,,non,,28,true,,99999,False
 120144,Bouton,Boutons,390,,,,non,,28,true,,2349,False
 120597,Bouton,Boutons,100,,,,non,,28,true,,1669,False
@@ -539,6 +539,7 @@ ART_1939_30,Ruban Satin - 30 Mm,Biais,200,,,,non,,50,true,,99999,False
 120618,Bouton,Boutons,70,,,,non,,28,true,,1948,False
 120619,Bouton,Boutons,105,,,,non,,28,true,,99999,False
 120695,Bouton,Boutons,85,,,,non,,28,true,,99999,False
+120072,Bouton,Boutons,100,,,,non,,29,true,,2409,False
 120443,Bouton,Boutons,350,,,,non,,29,true,,1757,False
 120473,Bouton,Boutons,40,,,,non,,29,true,,99999,False
 120479,Bouton,Boutons,250,,,,non,,29,true,,99999,False
@@ -546,7 +547,6 @@ ART_1939_30,Ruban Satin - 30 Mm,Biais,200,,,,non,,50,true,,99999,False
 120532,Bouton,Boutons,60,,,,non,,29,true,,2575,False
 120561,Bouton,Boutons,100,,,,non,,29,true,,2497,False
 120573,Bouton,Boutons,135,,,,non,,29,true,,99999,False
-120072,Bouton,Boutons,100,,,,non,,29,true,,2409,False
 120048,Bouton,Boutons,70,,,,non,,25,true,,2535,False
 120070,Bouton,Boutons,340,,,,non,,25,true,,99999,False
 120178,Bouton,Boutons,340,,,,non,,25,true,,2063,False
@@ -568,7 +568,6 @@ ART_1939_30,Ruban Satin - 30 Mm,Biais,200,,,,non,,50,true,,99999,False
 120483,Bouton,Boutons,150,,,,non,,23,true,,99999,False
 120518,Bouton,Boutons,100,,,,non,,23,true,,99999,False
 120607,Bouton,Boutons,100,,,,non,,23,true,,2494,False
-120032,Bouton,Boutons,560,,,,non,,22,true,,99999,False
 120162,Bouton,Boutons,115,,,,non,,22,true,,99999,False
 120234,Bouton,Boutons,460,,,,non,,22,true,,99999,False
 120334,Bouton,Boutons,250,,,,non,,22,true,,2114,False
@@ -577,6 +576,7 @@ ART_1939_30,Ruban Satin - 30 Mm,Biais,200,,,,non,,50,true,,99999,False
 120596,Bouton,Boutons,120,,,,non,,22,true,,99999,False
 120612,Bouton,Boutons,175,,,,non,,22,true,,99999,False
 120657,Bouton,Boutons,65,,,,non,,22,true,,99999,False
+120032,Bouton,Boutons,560,,,,non,,22,true,,99999,False
 120037,Bouton,Boutons,70,,,,non,,17,true,,99999,False
 120063,Bouton,Boutons,280,,,,non,,17,true,,99999,False
 120151,Bouton,Boutons,190,,,,non,,17,true,,2006,False
@@ -690,15 +690,9 @@ ART_1939_30,Ruban Satin - 30 Mm,Biais,200,,,,non,,50,true,,99999,False
 120182,Bouton,Boutons,240,,,,non,,57,true,,99999,False
 120428,Bouton,Boutons,30,,,,non,,57,true,,99999,False
 120493,Bouton,Boutons,70,,,,non,,57,true,,99999,False
-120306,Bouton,Boutons,210,,,,non,,60,true,,99999,False
 120044,Bouton,Boutons,265,,,,non,,59,true,,2450,False
 120077,Bouton,Boutons,180,,,,non,,59,true,,99999,False
-120436,Bouton,Boutons,40,,,,non,,72,true,,2467,False
-120043,Bouton,Boutons,310,,,,non,,75,true,,99999,False
-120549,Bouton,Boutons,75,,,,non,,68,true,,99999,False
-120660,Bouton,Boutons,60,,,,non,,68,true,,99999,False
-120433,Bouton,Boutons,80,,,,non,,67,true,,99999,False
-120430,Bouton,Boutons,45,,,,non,,70,true,,2293,False
+120306,Bouton,Boutons,210,,,,non,,60,true,,99999,False
 120526,Bouton,Boutons,115,,,,non,,81,true,,99999,False
 120547,Bouton,Boutons,80,,,,non,,81,true,,1829,False
 120179,Bouton,Boutons,270,,,,non,,86,true,,99999,False
@@ -710,18 +704,24 @@ ART_1939_30,Ruban Satin - 30 Mm,Biais,200,,,,non,,50,true,,99999,False
 120167,Bouton,Boutons,200,,,,non,,98,true,,99999,False
 120351,Bouton,Boutons,70,,,,non,,98,true,,99999,False
 120731,Bouton,Boutons,100,,,,non,,98,true,,2564,False
+120433,Bouton,Boutons,80,,,,non,,67,true,,99999,False
+120549,Bouton,Boutons,75,,,,non,,68,true,,99999,False
+120660,Bouton,Boutons,60,,,,non,,68,true,,99999,False
+120430,Bouton,Boutons,45,,,,non,,70,true,,2293,False
+120436,Bouton,Boutons,40,,,,non,,72,true,,2467,False
+120043,Bouton,Boutons,310,,,,non,,75,true,,99999,False
 120727,Bouton,Boutons,40,,,,non,,141,true,,99999,False
 120181,Bouton,Boutons,120,,,,non,,137,true,,99999,False
 120668,Bouton,Boutons,40,,,,non,,133,true,,99999,False
 120664,Bouton,Boutons,90,,,,non,,142,true,,99999,False
 120725,Bouton,Boutons,100,,,,non,,143,true,,99999,False
 120728,Bouton,Boutons,30,,,,non,,173,true,,99999,False
-120434,Bouton,Boutons,30,,,,non,,157,true,,99999,False
 120120,Bouton,Boutons,120,,,,non,,160,true,,636,False
+120434,Bouton,Boutons,30,,,,non,,157,true,,99999,False
 120435,Bouton,Boutons,100,,,,non,,150,true,,99999,False
 120541,Bouton,Boutons,135,,,,non,,125,true,,99999,False
-120510,Bouton,Boutons,60,,,,non,,114,true,,99999,False
 120190,Bouton,Boutons,130,,,,non,,124,true,,99999,False
+120510,Bouton,Boutons,60,,,,non,,114,true,,99999,False
 120147,Bouton,Boutons,260,,,,non,,109,true,,2454,False
 120481,Bouton,Boutons,85,,,,non,,111,true,,2514,False
 120482,Bouton,Boutons,90,,,,non,,102,true,,2104,False
@@ -861,10 +861,10 @@ CC3008.18,Bouton Magnetique A Coudre - X3 - Care&Create,Boutons,860,,,ARGENT - N
 120069,Bouton Metal,Boutons,50,,,,non,,18,true,,99999,False
 120155,Bouton Metal,Boutons,200,,,,non,,22,true,,99999,False
 120161,Bouton Metal,Boutons,210,,,,non,,22,true,,99999,False
-120157,Bouton Metal,Boutons,170,,,,non,,50,true,,2380,False
 120164,Bouton Metal,Boutons,280,,,,non,,45,true,,2436,False
 120156,Bouton Metal,Boutons,180,,,,non,,42,true,,99999,False
 120081,Bouton Metal,Boutons,260,,,,non,,32,true,,99999,False
+120157,Bouton Metal,Boutons,170,,,,non,,50,true,,2380,False
 120750,Bouton Metal 20Mm,Boutons,280,,,,non,,4,true,,1949,False
 BD.175,Bouton Metal 4 Trous - Ø22Mm,Boutons,210,,,,non,,7,true,,1631,False
 BD.174,Bouton Metal 4 Trous Ø18Mm,Boutons,150,,,,non,,29,true,,99999,False
@@ -1019,8 +1019,8 @@ BRO_15,Bande Toile Aida,Broderie,800,,,,non,,38,true,,2324,False
 BRO_16,Bande Toile Aida,Broderie,600,,,,non,,39,true,,99999,False
 BRO_13,Bande Toile Aida,Broderie,600,,,,non,,44,true,,99999,False
 BRO_20,Bande Toile Aida,Broderie,990,,,,non,,14,true,,1682,False
-BRO_14,Bande Toile Aida,Broderie,500,,,,non,,15,true,,99999,False
 BRO_18,Bande Toile Aida,Broderie,1800,,,,non,,15,true,,99999,False
+BRO_14,Bande Toile Aida,Broderie,500,,,,non,,15,true,,99999,False
 BRO_12,Bande Toile Aida,Broderie,650,,,,non,,20,true,,99999,False
 BRO_10,Bande Toile Aida,Broderie,1800,,,,non,,21,true,,840,False
 LB_203,Bavoir A Broder - 33X25 Cm,Broderie,950,,,101 - BLANC | 105 - CORAIL | 110 - ROSE | 130 -VERT | 140 - CIEL | 147 - MARINE | 154 - ECRU,non,101 - BLANC:2|105 - CORAIL:1|110 - ROSE:1|130 -VERT:1|140 - CIEL:1|147 - MARINE:1|154 - ECRU:1,8,true,,1844,False
@@ -1033,7 +1033,7 @@ U2365,Cadre Bois Aimante Pour Broderie - 30Cm - Dmc,Broderie,1850,,DMC,,non,,1,t
 100211,Cadre Carre Bois Deco - Broderie 11X11 Cm,Broderie,1520,,,,non,,4,true,100211.jpg,1501,False
 100212,Cadre Carre Bois Deco - Broderie 14.5X14.5 Cm,Broderie,1710,,,,non,,2,true,100212.jpg,99999,False
 100210,Cadre Carre Bois Deco - Broderie 7X7Cm,Broderie,1200,,,,non,,2,true,100210.jpg,99999,False
-133.3598,Caenvas - A L'Oree Du Bois - Margot,Broderie,8500,,,,non,,1,true,133.3598.jpg,99999,False
+133.3598,Caenvas - A L'Oree Du Bois - 50X65Cm - Ed.Margot,Broderie,8500,,,,non,,1,true,133.3598.jpg,99999,False
 OR2183D,Caneva 15 X 15 - Maison Et Pont - Orchide,Broderie,1000,,,,non,,1,true,,99999,False
 SE928.376,Caneva Chirurgien Bleu - 30 X 40 Cm - Seg,Broderie,4800,,,,non,,1,true,,99999,False
 C2311,Caneva Toile - Hellebores - 30X35Cm - Dmc,Broderie,6200,,DMC,,non,,1,true,,99999,False
@@ -1041,10 +1041,10 @@ C2209,Caneva Toile - Phare 40X50 Cm - Dmc,Broderie,4250,,DMC,,non,,1,true,,99999
 C2212,Caneva Toile - Toscane - 40X50Cm - Dmc,Broderie,4250,,DMC,,non,,1,true,,99999,False
 C2303,Caneva Toile - Vase Abstrait 21X30Cm - Dmc,Broderie,3580,,DMC,,non,,1,true,,99999,False
 MRC1531441,Canevas - 40X50 Cm - Des Dessins Du Tigre,Broderie,6900,,,,non,,1,true,MRC1531441.webp,99999,False
-134.5183,Canevas - Au Bout Du Monde - Margot,Broderie,9000,,,,non,,1,true,134.5183.jpg,99999,False
+134.5183,Canevas - Au Bout Du Monde - 60X70 - Ed.Margot,Broderie,9000,,,,non,,1,true,134.5183.jpg,99999,False
 153.1452,Canevas - Canotier - Margot - 40X50Cm,Broderie,7300,,,,non,,1,true,153.1452.jpg,99999,False
 153.1450,Canevas - Haut De Forme - Margot - 40X50Cm,Broderie,7300,,,,non,,1,true,153.1450.jpg,99999,False
-153.1478,Canevas - Multicolor Paon - Margot,Broderie,6900,,,,non,,1,true,153.1478.jpg,99999,False
+153.1478,Canevas - Multicolor Paon - 40X50Cm - Ed.Margot,Broderie,6900,,,,non,,1,true,153.1478.jpg,99999,False
 C2502,Canevas Carpe Koï - 16X22 Cm - Dmc,Broderie,2750,"Canevas DMC ""Carpe Koï"", 16x22cm - Toile imprimée prête à broder",DMC,,non,,2,true,,99999,False
 622.75,Canevas Chat - 25X60Cm - Margot,Broderie,5100,,,,non,,1,true,,99999,False
 SE928.392,Canevas Colibri -N21 - 30X40Cm - Seg,Broderie,4800,,,,non,,1,true,,99999,False
@@ -1052,7 +1052,7 @@ C2503,Canevas Lepoard - 24X30 Cm - Ss Fils - Dmc,Broderie,2850,"Canevas DMC ""L�
 C2205,Canevas New York - Ss Fils - 30 X 42Cm - Dmc,Broderie,5420,"Canevas DMC ""New York"", 30x42cm, sans fils - Toile imprimée prête à broder (fils non inclus)",DMC,,non,,1,true,,99999,False
 C2508,Canevas Paris - Ss Fils - 30X 41.3 Cm - Dmc,Broderie,5420,"Canevas DMC ""Paris"", 30x41,3cm, sans fils - Toile imprimée prête à broder (fils non inclus)",DMC,,non,,2,true,,99999,False
 C2501,Canevas Perroquet - 16 X 21.5Cm - Dmc,Broderie,2750,"Canevas DMC ""Perroquet"", 16x21,5cm - Toile imprimée prête à broder",DMC,,non,,1,true,,1074,False
-133.3592,Canevas Pop Dog - Margot,Broderie,8500,,,,non,,1,true,133.3592.jpg,99999,False
+133.3592,Canevas Pop Dog - 50X650Cm - Ed.Margot,Broderie,8500,,,,non,,1,true,133.3592.jpg,99999,False
 C2208,Canevas Rio - Ss Fils - 30 X 42 Cm - Dmc,Broderie,5420,"Canevas DMC ""Rio"", 30x42cm, sans fils - Toile imprimée prête à broder (fils non inclus)",DMC,,non,,1,true,,99999,False
 SE929.570,Canevas Silouhette De Klimt - 45 X60 Cm - Seg,Broderie,8500,,,,non,,1,true,SE929.570.jpg,99999,False
 6101_12,Cartonettes Pour Fils A Broder X56 - Dmc,Broderie,550,Lot de 56 cartonnettes DMC pour ranger et identifier les fils à broder par numéro de coloris,DMC,,non,,12,true,,99999,False
@@ -1363,8 +1363,8 @@ S31003,Chaine Maillon Au Metre - 1 Cm - S&M,Cordons,500,,,,non,,6,true,,1671,Fal
 P.282.10,Chaine Plate Inoxydable - 1 Cm - 100% Alu - Distrifil,Cordons,720,,,ARGENT  - 102 | NOIR - 01 | OR - 101,oui,ARGENT  - 102:1|NOIR - 01:4|OR - 101:5,12,true,P.282.10.jpg,329,False
 25280.03,Cordo De Bourrage 3Mm,Cordons,60,,,,non,,80,true,,1706,False
 320010,Cordon,Cordons,100,,,,non,,72,true,,1786,False
-320036,Cordon,Cordons,120,,,,non,,348,true,,1277,False
 320029,Cordon,Cordons,250,,,,non,,411,true,,955,False
+320036,Cordon,Cordons,120,,,,non,,348,true,,1277,False
 320028,Cordon,Cordons,150,,,,non,,16,true,,1385,False
 320026,Cordon - 4 Mm,Cordons,120,,,,non,,2347,true,,171,False
 25281.04,Cordon Anorak,Cordons,120,,,,non,,75,true,,1207,False
@@ -1497,10 +1497,10 @@ D1017,Dentelle Metalisee 25Mm,Dentelles,380,,,,non,,31,true,,978,False
 560117,Dentelle Nylon,Dentelles,100,,,,non,,45,true,,99999,False
 560114,Dentelle Nylon,Dentelles,100,,,,non,,29,true,,99999,False
 560109,Dentelle Nylon,Dentelles,350,,,,non,,24,true,,99999,False
-560138,Dentelle Nylon,Dentelles,100,,,,non,,22,true,,99999,False
 480043,Dentelle Nylon,Dentelles,220,,,,non,,21,true,,99999,False
-560112,Dentelle Nylon,Dentelles,100,,,,non,,16,true,,99999,False
+560138,Dentelle Nylon,Dentelles,100,,,,non,,22,true,,99999,False
 480042,Dentelle Nylon,Dentelles,250,,,,non,,16,true,,2463,False
+560112,Dentelle Nylon,Dentelles,100,,,,non,,16,true,,99999,False
 560139,Dentelle Nylon,Dentelles,70,,,,non,,15,true,,99999,False
 480031,Dentelle Nylon,Dentelles,120,,,,non,,14,true,,99999,False
 560131,Dentelle Nylon,Dentelles,50,,,,non,,14,true,,99999,False
@@ -1508,8 +1508,8 @@ D1017,Dentelle Metalisee 25Mm,Dentelles,380,,,,non,,31,true,,978,False
 560141,Dentelle Nylon,Dentelles,70,,,,non,,146,true,,2441,False
 560135,Dentelle Nylon,Dentelles,60,,,,non,,146,true,,99999,False
 460268,Dentelle Nylon,Dentelles,70,,,,non,,107,true,,99999,False
-560120,Dentelle Nylon,Dentelles,200,,,,non,,108,true,,99999,False
 560140,Dentelle Nylon,Dentelles,70,,,,non,,100,true,,2539,False
+560120,Dentelle Nylon,Dentelles,200,,,,non,,108,true,,99999,False
 560125,Dentelle Nylon,Dentelles,70,,,,non,,250,true,,99999,False
 560124,Dentelle Nylon,Dentelles,20,,,,non,,226,true,,99999,False
 560118,Dentelle Nylon,Dentelles,50,,,,non,,86,true,,99999,False
@@ -1569,8 +1569,8 @@ M1127,Curseur Spirale N°6 - S&M,Fermetures,250,,,,non,,16,true,,732,False
 M.1935_22,Femeture Dentelle 22Cm - S&M,Fermetures,530,,,501 - blanc | 512 - rose | 580 - noir,non,501 - blanc:7|512 - rose:9|580 - noir:5,21,true,,99999,False
 421,Fermeture Au Metre Fantaisie - Spirale N°5 - Argent Ou Or,Fermetures,730,,,,non,,7,true,,1569,False
 405,Fermeture Au Metre Spirale,Fermetures,540,,,,non,,274,true,,108,False
-Z19,Fermeture Blouson Cuir,Fermetures,2100,,,,non,,41,true,,359,False
 Z19_6575,Fermeture Blouson Cuir - Metal - 65 A 75 Cm,Fermetures,2300,,,,non,,20,true,,99999,False
+Z19,Fermeture Blouson Cuir - Separable Metal,Fermetures,2100,,,,non,,41,true,,359,False
 Z17,Fermeture Bouche A Bouche,Fermetures,950,,,,non,,79,true,,1841,False
 PRY418412,Fermeture Dentelle - 40 Cm,Fermetures,1200,,,,non,,1,true,,99999,False
 PRY418400,Fermeture Dentelle - 40 Cm,Fermetures,1200,,,,non,,2,true,,99999,False
@@ -1580,12 +1580,6 @@ PRY418213,Fermeture Dentelle 20Cm,Fermetures,900,,,,non,,2,true,,99999,False
 410,Fermeture Glissiere Au Metre Injectee N°5 - Sans Curseur,Fermetures,600,,,,non,,43,true,,836,False
 Z325.25,Fermeture Glissiere Metal Non Separable - 25Cm N°5,Fermetures,600,,,,non,,2,true,,2120,False
 Z325.30,Fermeture Glissiere Metal Non Separable - 30 Cm,Fermetures,660,,,,non,,7,true,,99999,False
-Z200_2540,Fermeture Grosses Mailles - 25Cm A 40Cm,Fermetures,650,,,,non,,89,true,,603,False
-Z54_2540,Fermeture Grosses Mailles - 25Cm A 40Cm,Fermetures,650,,,,non,,150,true,,224,False
-Z54_4565,Fermeture Grosses Mailles - 45Cm A 65Cm,Fermetures,850,,,,non,,986,true,,57,False
-Z200_4565,Fermeture Grosses Mailles - 45Cm A 65Cm,Fermetures,850,,,,non,,83,true,,192,False
-Z54_70140,Fermeture Grosses Mailles - 70Cm A 140Cm,Fermetures,1000,,,,non,,96,true,,144,False
-Z200_70140,Fermeture Grosses Mailles - 70Cm A 140Cm,Fermetures,1000,,,,non,,63,true,,177,False
 Z200,Fermeture Injecte Non Separable N°5 - 10 A 20Cm,Fermetures,350,,,,non,,42,true,,1564,False
 Z220_100,Fermeture Injecte Separable N°10 - Plast - 100Cm,Fermetures,1980,,,101 - BLANC | 172 - NOIR,non,101 - BLANC:1|172 - NOIR:1,2,true,,99999,False
 Z220_150,Fermeture Injecte Separable N°10 - Plast - 150 Cm,Fermetures,2160,,,101 - BLANC. | 172 - NOIR,non,101 - BLANC.:1|172 - NOIR:1,2,true,,99999,False
@@ -1604,10 +1598,6 @@ Z320_0520,Fermeture Jean - Metal - De 5 À 20Cm,Fermetures,350,,,,non,,323,true,
 M1907_0818,Fermeture Jean Metal - De 8 À 18 Cm - Super Jean,Fermetures,350,,,,non,,124,true,,1172,False
 Z14,Fermeture Jeans,Fermetures,350,,,,non,,42,true,,145,False
 Z14_2060,Fermeture Jeans Non Separable - De 20 A 60Cm - S&M,Fermetures,920,,,,non,,30,true,,1363,False
-Z51_1020,Fermeture Jupes Robes - 10Cm A 20Cm,Fermetures,170,,,,non,,427,true,,149,False
-Z51_2540,Fermeture Jupes Robes - 25Cm A 40Cm,Fermetures,290,,,,non,,161,true,,188,False
-Z51_4560,Fermeture Jupes Robes - 45Cm A 60Cm,Fermetures,380,,,,non,,531,true,,270,False
-Z58,Fermeture Mailles Fines - 20Cm A 65Cm,Fermetures,650,,,,non,,381,true,,121,False
 Z105_2065,Fermeture Mailles Fines - 20Cm A 65Cm,Fermetures,650,,,,non,,112,true,,277,False
 Z105_70100,Fermeture Mailles Fines - 70Cm A 100 Cm,Fermetures,1150,,,,non,,55,true,,99999,False
 FER_1,Fermeture Metal,Fermetures,50,,,,non,,400,true,,181,False
@@ -1629,13 +1619,23 @@ M1903_4560,Fermeture Metal Separable N°5 - De 45 À 60Cm - S&M,Fermetures,1300,
 M1903_6570,Fermeture Metal Separable N°5 - De 65 À 70Cm - S&M,Fermetures,1450,,,,non,,4,true,,99999,False
 M1903_75,Fermeture Metal Separable N°5 - De 75 Cm À ... - S&M,Fermetures,1630,,,,non,,3,true,,99999,False
 Z13,Fermeture Pantalons,Fermetures,300,,,,non,,180,true,,557,False
-Z305,Fermeture Pantalons,Fermetures,300,,,,non,,162,true,,848,False
+Z305,Fermeture Pantalons Metal,Fermetures,300,,,,non,,162,true,,848,False
+Z200_2540,Fermeture Separable - Injecte - 25Cm A 40Cm,Fermetures,650,,,,non,,89,true,,603,False
+Z200_4565,Fermeture Separable - Injecte - 45Cm A 65Cm,Fermetures,850,,,,non,,83,true,,192,False
+Z200_70140,Fermeture Separable - Injecte - 70Cm A 140Cm,Fermetures,1000,,,,non,,63,true,,177,False
+Z54_2540,Fermeture Separable - Injecte - Grosses Mailles - 25Cm A 40Cm,Fermetures,650,,,,non,,150,true,,224,False
+Z54_4565,Fermeture Separable - Injecte - Grosses Mailles - 45Cm A 65Cm,Fermetures,850,,,,non,,986,true,,57,False
+Z54_70140,Fermeture Separable - Injecte - Grosses Mailles - 70Cm A 140Cm,Fermetures,1000,,,,non,,96,true,,144,False
+Z58,Fermeture Separable - Spirale - Mailles Fines - 20Cm A 65Cm,Fermetures,650,,,,non,,381,true,,121,False
 Z215_45_60,Fermeture Separable Injecte Bouche A Bouche - Plastique - 45 À 60 Cm,Fermetures,1020,,,,non,,5,true,,1787,False
 Z215_70,Fermeture Separable Injecte Bouche A Bouche - Plastique -70 Cm,Fermetures,1120,,,,non,,1,true,,1715,False
 M1903_30,Fermeture Separable Metal 30 Cm S&M,Fermetures,930,,,,non,,2,true,,99999,False
 M1996,Fermeture Spirale Au Metre - Arc En Ciel /Noir - N°7 - S&M,Fermetures,950,,,,non,,38,true,,1498,False
 M1993,Fermeture Spirale Au Metre - N°7 - Doree,Fermetures,900,,,573 - BEIGE / OR | 580 - NOIR / OR | 814 - IVROIR  - OR,non,573 - BEIGE / OR:19|580 - NOIR / OR:16|814 - IVROIR  - OR:19,55,true,,777,False
 420,Fermeture Spirale Au Metre N°5 Fantaisie - Noir Ou Blanc,Fermetures,620,,,,non,,30,true,,2283,False
+Z51_1020,Fermeture Spirale Nylon - Jupes/ Robes - 10Cm A 20Cm,Fermetures,170,,,,non,,427,true,,149,False
+Z51_2540,Fermeture Spirale Nylon - Jupes/ Robes - 25Cm A 40Cm,Fermetures,290,,,,non,,161,true,,188,False
+Z51_4560,Fermeture Spirale Nylon - Jupes/ Robes - 45Cm A 60Cm,Fermetures,380,,,,non,,531,true,,270,False
 Z100_25_40,Fermeture Spirale N°2 - 25 À 40 Cm,Fermetures,290,,,,non,,869,true,,216,False
 Z100_45_60,Fermeture Spirale N°2 - 45 À 60Cm,Fermetures,380,,,,non,,606,true,,415,False
 Z100_10_20,Fermeture Spirale N°2 - Nylon,Fermetures,170,,,,non,,1062,true,,189,False
@@ -2191,8 +2191,8 @@ CAT_193,Catalogue Layette/ Enfants - Ete N°193 - Plassard,Laine,1900,"Catalogue
 15577_1,Catalogue Natura Lin,Laine,500,,,,non,,14,true,,2217,False
 CAT_178,Catalogue Plassard N 178,Laine,1500,Catalogue papier Plassard N°178 : modèles tricot/crochet de la saison,,,non,,3,true,,904,False
 CAT_184,Catalogue Special Crochet - Femme - N°184 - Plassard,Laine,1500,"Catalogue papier Plassard ""Spécial Crochet Femme"" N°184",,,non,,4,true,,1465,False
+15569L_1,Catalogue Spécial Woolly - 5 Modèles - Dmc,Laine,0,,DMC,,non,,2,true,,99999,False
 15570_1,Catalogue Tricot,Laine,560,,,,non,,4,true,,99999,False
-15569L_1,Catalogue X5 Woolly,Laine,0,,,,non,,2,true,,99999,False
 KP47430,"Coffret 9 Crochets - ""Zing"" - Knit Pro",Laine,6600,,,,non,,1,true,,473,False
 8143ASS,Coffret Happy Chenille 25 Pelotes -Dmc,Laine,6400,"Coffret DMC ""Happy Chenille"", 25 pelotes assorties de fil chenille pour tricot/crochet",DMC,,non,,3,true,8143ASS.jpg,122,False
 KP10860,"Compte Rang ""Clicky"" - Knit Pro",Laine,1300,,,,non,,1,true,,1119,False
@@ -2561,7 +2561,7 @@ G0102304,Book - Amigurumis Reversibles - 12 Modeles - Ed Eyrolles,Livres,3780,,,
 34.4378.1,Book - Broderie Feminin Sacre - Ed Dessain & Tolar,Livres,2360,,,,non,,1,true,34.4378.1.jpg,99999,False
 BLOG086,Book - Broderie Inspiration Japon,Livres,3860,,,,non,,2,true,BLOG086.webp,99999,False
 004587,Book - Broderie Sur Canevas,Livres,4300,,,,non,,2,true,004587.jpg,99999,False
-15426_1,Book - Catal Printemps/ Ete N°4 - Natura Lin - 12 Modeles - Dmc,Livres,800,"Livret DMC ""Catalogue Printemps/Été N°4 - Natura Lin"" : 12 modèles tricot/crochet avec le fil Natura Linen",DMC,,non,,3,true,,99999,False
+15426_1,Book - Catalogue Printemps/ Ete N°4 - Natura Lin - 12 Modeles - Dmc,Livres,800,"Livret DMC ""Catalogue Printemps/Été N°4 - Natura Lin"" : 12 modèles tricot/crochet avec le fil Natura Linen",DMC,,non,,3,true,,99999,False
 G0102100,Book - Coffret 50 Granny Fleurs - Mix & Match,Livres,3280,,,,non,,10,true,G0102100.jpg,152,False
 MC362,Book - Coudre Pour La Plage - Ed Marie Claire,Livres,4250,,,,non,,2,true,,99999,False
 901011.02.00,"Book - Crochet ""Sous La Mer"" - Rico",Livres,1050,,,,non,,3,true,,99999,False
@@ -2916,7 +2916,7 @@ CL349,Bague Guide Fil - Grande Taille - Clover,Petite mercerie,800,,,,non,,5,tru
 98761,Bijou A Coudre Abeille Gris N6 -Bohin,Petite mercerie,900,"Bijou à coudre Bohin motif abeille, coloris gris, pour customiser un vêtement",Bohin,,non,,4,true,98761.webp,99999,False
 98766,Bijou A Coudre Abeille Or N11 -Bohin,Petite mercerie,1040,"Bijou à coudre Bohin motif abeille, coloris or, pour customiser un vêtement",Bohin,,non,,3,true,98766.webp,99999,False
 K7560,Bloquer A Granny - Katia 23 X 23 Cm,Petite mercerie,3120,,Katia,,non,,14,true,K7560.webp,232,False
-15348_B,Bobinette A Laine - Ute,Petite mercerie,600,,,,non,,17,true,,99999,False
+15348_B,Bobinette A Laine X6,Petite mercerie,600,,,,non,,17,true,,99999,False
 4919,Bobineur Electrique - Pour Canette - Distrifil,Petite mercerie,4450,,,,non,,4,true,,99999,False
 9154625,Boite A Canettes - 50 P -12 X 11 X 4.7Cm - Milward,Petite mercerie,1080,"Boîte à canettes Milward, 50 places, 12x11x4,7cm",,,non,,4,true,,1741,False
 98780,"Boite A Couture ""Cadeau"" (Remplie)",Petite mercerie,4900,,,,non,,6,true,,159,False
@@ -3464,7 +3464,7 @@ S4785,Galon Jacquard Eventail - 33Mm -S&M,Rubans,400,,,,non,,18,true,,1986,False
 S4783,Galon Jacquard Fleur - 10Cm - S&M,Rubans,890,,,,non,,10,true,,99999,False
 S.7866,Galon Jacquard Fleurs Boheme- 55Mm- S&M,Rubans,580,,,NOIR - 014 | VERT - 064 | BLANC - 001,non,NOIR - 014:15|VERT - 064:16|BLANC - 001:18,49,true,S.7866.jpg,1326,False
 1356,Galon Juliette,Rubans,170,,,,non,,29,true,,99999,False
-1328,Galon Marco Po,Rubans,200,,,,non,,17,true,,99999,False
+1328,Galon Marco Polo,Rubans,200,,,,non,,17,true,,99999,False
 1952,Galon Marlen,Rubans,360,,,,non,,103,true,,987,False
 P_266,Galon Mini Pompon 10Mm - Ruban Passion,Rubans,290,,,01 - NOIR | 02 - BLANC | 14 - ROUGE | 15 - MARINE | 20 - FUCHSIA | 52 - ROSE | 56 - BEURRE | 78 - vert,non,01 - NOIR:10|02 - BLANC:10|14 - ROUGE:8|15 - MARINE:10|20 - FUCHSIA:10|52 - ROSE:10|56 - BEURRE:10|78 - vert:4,73,true,,2308,False
 G154107,Galon Officier 10Mm,Rubans,480,,,,non,,14,true,,99999,False
