@@ -34,11 +34,12 @@ export function useProducts() {
             })
           }
 
-          return {
+                    return {
   ...p,
   prix:          parseFloat(p.prix) || 0,
   stock:         parseInt(p.stock) || 0,
   dispo:         p.dispo?.toLowerCase() === 'true' || p.dispo === '1',
+  nouveau:       p.nouveau?.toLowerCase() === 'true',
   popularite:    parseInt(p.popularite) || 99999,
   stocks_gammes,
 }
