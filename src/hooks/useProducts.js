@@ -50,7 +50,8 @@ export function useProducts() {
   nouveau:           p.nouveau?.toLowerCase() === 'true',
   popularite:        parseInt(p.popularite) || 99999,
   prix_promo:        prixPromo,
-  promo_pourcentage: p.promo_pourcentage ? parseFloat(p.promo_pourcentage) : null,
+  promo_type:        p.promo_type || null,
+  promo_valeur:      p.promo_valeur ? parseFloat(p.promo_valeur) : null,
   promo_fin:         promoFin,
   // true seulement si une promo existe ET que sa date de fin n'est pas
   // dépassée aujourd'hui — c'est ce qui fait disparaître la promo pile à

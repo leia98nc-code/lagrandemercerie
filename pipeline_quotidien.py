@@ -388,14 +388,19 @@ def calculer_colonne_nouveau(logger, csv_final, dates_par_ref, seuil_jours=SEUIL
 
 def fusionner_promotions(logger, csv_final):
     """Applique les promotions actives définies manuellement depuis le back-office
-    (promotions.csv : id, pourcentage, date_fin). Recalcule le prix réduit à
-    partir du prix Sage ACTUEL (pas d'un prix figé), pour rester cohérent si le
-    prix change entre-temps. Une promo dont la date de fin est dépassée n'est
-    pas appliquée ici — mais l'arrêt réel et instantané sur le site est fait
-    côté React (voir useProducts.js), ce filtrage n'est qu'un filet de sécurité
-    qui nettoie products.csv au passage suivant."""
+    (promotions.csv : id, type, valeur, date_fin). Le type peut être 'pourcentage'
+    (réduction en %) ou 'montant' (réduction fixe en F CFP) — les deux formes sont
+    utilisées selon les cas commerciaux. Recalcule le prix réduit à partir du prix
+    Sage ACTUEL (pas d'un prix figé), pour rester cohérent si le prix change
+    entre-temps. Une promo dont la date de fin est dépassée n'est pas appliquée
+    ici — mais l'arrêt réel et instantané sur le site est fait côté React (voir
+    useProducts.js), ce filtrage n'est qu'un filet de sécurité qui nettoie
+    products.csv au passage suivant. Chaque ligne est traitée indépendamment :
+    une ligne mal formée (ancien format, valeur manquante...) est ignorée avec
+    un avertissement, sans bloquer les autres promotions valides."""
     csv_final['prix_promo'] = ''
-    csv_final['promo_pourcentage'] = ''
+    csv_final['promo_type'] = ''
+    csv_final['promo_valeur'] = ''
     csv_final['promo_fin'] = ''
 
     chemin_promos = os.path.join(DOSSIER_REPO, "promotions.csv")
@@ -408,34 +413,44 @@ def fusionner_promotions(logger, csv_final):
     aujourd_hui = datetime.now().date()
 
     prix_par_id = dict(zip(csv_final['id'].astype(str), csv_final['prix']))
-    promo_prix, promo_pourcentage, promo_fin = {}, {}, {}
+    promo_prix, promo_type, promo_valeur, promo_fin = {}, {}, {}, {}
     nb_actives = 0
 
     for _, row in df_promos.iterrows():
         ref = str(row['id']).strip()
         try:
             date_fin = datetime.strptime(str(row['date_fin']).strip(), "%Y-%m-%d").date()
-        except (ValueError, TypeError):
-            logger.info(f"   ⚠️  Date de fin invalide pour la promo {ref} — ignorée.")
-            continue
-        if date_fin < aujourd_hui:
-            continue  # promo expirée
-        if ref not in prix_par_id:
-            continue  # produit plus au catalogue
+            if date_fin < aujourd_hui:
+                continue  # promo expirée
+            if ref not in prix_par_id:
+                continue  # produit plus au catalogue
 
-        try:
-            pourcentage = float(row['pourcentage'])
-        except (ValueError, TypeError):
-            logger.info(f"   ⚠️  Pourcentage invalide pour la promo {ref} — ignorée.")
-            continue
+            type_promo = str(row.get('type', 'pourcentage') or 'pourcentage').strip().lower()
+            if type_promo not in ('pourcentage', 'montant'):
+                raise ValueError(f"type '{type_promo}' inconnu")
 
-        promo_prix[ref] = round(prix_par_id[ref] * (1 - pourcentage / 100))
-        promo_pourcentage[ref] = int(pourcentage) if pourcentage == int(pourcentage) else pourcentage
-        promo_fin[ref] = row['date_fin']
-        nb_actives += 1
+            valeur = float(row['valeur'])
+
+            prix_actuel = prix_par_id[ref]
+            if type_promo == 'pourcentage':
+                nouveau_prix = prix_actuel * (1 - valeur / 100)
+            else:  # montant
+                nouveau_prix = prix_actuel - valeur
+            # Sécurité : jamais de prix négatif ou nul, quelle que soit l'erreur de saisie
+            nouveau_prix = max(0, round(nouveau_prix))
+
+            promo_prix[ref] = nouveau_prix
+            promo_type[ref] = type_promo
+            promo_valeur[ref] = int(valeur) if valeur == int(valeur) else valeur
+            promo_fin[ref] = row['date_fin']
+            nb_actives += 1
+        except Exception as e:
+            logger.info(f"   ⚠️  Promo ignorée pour {ref} : {e}")
+            continue
 
     csv_final['prix_promo'] = csv_final['id'].astype(str).map(promo_prix).fillna('')
-    csv_final['promo_pourcentage'] = csv_final['id'].astype(str).map(promo_pourcentage).fillna('')
+    csv_final['promo_type'] = csv_final['id'].astype(str).map(promo_type).fillna('')
+    csv_final['promo_valeur'] = csv_final['id'].astype(str).map(promo_valeur).fillna('')
     csv_final['promo_fin'] = csv_final['id'].astype(str).map(promo_fin).fillna('')
 
     logger.info(f"   {nb_actives} promotion(s) active(s) appliquée(s).")

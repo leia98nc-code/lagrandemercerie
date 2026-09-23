@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 
 export default function ProductCard({ product }) {
-  const { id, nom, categorie, prix, description, dispo, image, marque, nouveau, prix_promo, promo_pourcentage, enPromo } = product
+  const { id, nom, categorie, prix, description, dispo, image, marque, nouveau, prix_promo, promo_type, promo_valeur, enPromo } = product
 
   return (
     <Link to={`/produit/${id}`} style={{ textDecoration: 'none' }}>
@@ -81,7 +81,7 @@ export default function ProductCard({ product }) {
                   letterSpacing: '0.05em',
                   textTransform: 'uppercase',
                 }}>
-                  {`-${promo_pourcentage}%`}
+                  {promo_type === 'montant' ? `-${promo_valeur} F` : `-${promo_valeur}%`}
                 </span>
               )}
               {nouveau && (

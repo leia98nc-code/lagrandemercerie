@@ -203,7 +203,7 @@ useEffect(() => {
     </main>
   )
 
-  const { nom, categorie, prix, description, dispo, image, nouveau, prix_promo, promo_pourcentage, enPromo } = product
+  const { nom, categorie, prix, description, dispo, image, nouveau, prix_promo, promo_type, promo_valeur, enPromo } = product
 
   const suffixGamme = gammeActive
     ? gammeActive.trim()
@@ -287,7 +287,7 @@ useEffect(() => {
                     letterSpacing: '0.05em',
                     textTransform: 'uppercase',
                   }}>
-                    {`-${promo_pourcentage}%`}
+                    {promo_type === 'montant' ? `-${promo_valeur} F` : `-${promo_valeur}%`}
                   </span>
                 )}
                 {nouveau && (
@@ -372,7 +372,7 @@ useEffect(() => {
                   background: 'var(--rose-profond)', padding: '0.2rem 0.6rem',
                   borderRadius: '50px', textTransform: 'uppercase', letterSpacing: '0.05em',
                 }}>
-                  {`-${promo_pourcentage}%`}
+                  {promo_type === 'montant' ? `-${promo_valeur} F` : `-${promo_valeur}%`}
                 </span>
               </div>
             ) : (
