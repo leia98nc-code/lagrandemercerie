@@ -84,7 +84,7 @@ function Pagination({ pageActive, totalPages, onChange }) {
   )
 }
 
-function Sidebar({ categories, marques, categorieActive, setCategorieActive, marqueActive, setMarqueActive, prixMin, prixMax, setPrixMin, setPrixMax, avecPhoto, setAvecPhoto, nouveauteActive, setNouveauteActive, totalResultats, reinitialiserFiltres }) {
+function Sidebar({ categories, marques, categorieActive, setCategorieActive, marqueActive, setMarqueActive, prixMin, prixMax, setPrixMin, setPrixMax, avecPhoto, setAvecPhoto, nouveauteActive, setNouveauteActive, promoActive, setPromoActive, totalResultats, reinitialiserFiltres }) {
   const [catOuverte, setCatOuverte] = useState(false)
   const [marqueOuverte, setMarqueOuverte] = useState(false)
   const [prixOuvert, setPrixOuvert] = useState(false)
@@ -103,7 +103,7 @@ function Sidebar({ categories, marques, categorieActive, setCategorieActive, mar
     flexShrink: 0, transition: 'all 0.15s',
   })
 
-  const filtreActif = categorieActive !== 'Tous' || marqueActive !== 'Toutes' || prixMin > 0 || prixMax < PRIX_MAX_TOTAL || avecPhoto || nouveauteActive
+  const filtreActif = categorieActive !== 'Tous' || marqueActive !== 'Toutes' || prixMin > 0 || prixMax < PRIX_MAX_TOTAL || avecPhoto || nouveauteActive || promoActive
 
   return (
     <aside style={{
@@ -208,6 +208,18 @@ function Sidebar({ categories, marques, categorieActive, setCategorieActive, mar
         </div>
       </div>
 
+      {/* Promotions */}
+      <div style={{ borderBottom: '1px solid var(--rose-poudre)', paddingBottom: '1rem', marginBottom: '1rem' }}>
+        <div onClick={() => setPromoActive(!promoActive)} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer' }}>
+          <span style={{ fontSize: '0.72rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: promoActive ? 'var(--rose-profond)' : 'var(--noir)' }}>
+            Promotions
+          </span>
+          <div style={{ width: '36px', height: '20px', borderRadius: '20px', flexShrink: 0, background: promoActive ? 'var(--rose-profond)' : '#ddd', position: 'relative', transition: 'background 0.2s' }}>
+            <div style={{ position: 'absolute', top: '3px', left: promoActive ? '19px' : '3px', width: '14px', height: '14px', borderRadius: '50%', background: 'white', transition: 'left 0.2s', boxShadow: '0 1px 3px rgba(0,0,0,0.2)' }} />
+          </div>
+        </div>
+      </div>
+
       {/* Avec photo */}
       <div style={{ borderBottom: '1px solid var(--rose-poudre)', paddingBottom: '1rem', marginBottom: '1rem' }}>
         <div onClick={() => setAvecPhoto(!avecPhoto)} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer' }}>
@@ -258,6 +270,7 @@ export default function Catalogue() {
   const prixMax         = parseInt(searchParams.get('pmax') || String(PRIX_MAX_TOTAL), 10)
 const avecPhoto       = searchParams.get('photo') !== '0'
 const nouveauteActive = searchParams.get('nouveau') === '1'
+const promoActive     = searchParams.get('promo') === '1'
   const setRecherche = val => {
     const p = new URLSearchParams(searchParams)
     val ? p.set('q', val) : p.delete('q')
@@ -305,6 +318,12 @@ const setNouveauteActive = val => {
   val ? p.set('nouveau', '1') : p.delete('nouveau')
   setSearchParams(p, { replace: true })
 }
+
+const setPromoActive = val => {
+  const p = new URLSearchParams(searchParams)
+  val ? p.set('promo', '1') : p.delete('promo')
+  setSearchParams(p, { replace: true })
+}
   const reinitialiserFiltres = () => {
     const p = new URLSearchParams(searchParams)
     p.delete('cat')
@@ -313,6 +332,7 @@ const setNouveauteActive = val => {
     p.delete('pmax')
     p.delete('photo')
     p.delete('nouveau')
+    p.delete('promo')
     p.delete('page')
     setSearchParams(p, { replace: true })
   }
@@ -392,11 +412,12 @@ const ELEMENTS_PAR_PAGE = nombreColonnes * LIGNES_PAR_PAGE
     liste = liste.filter(p => p.prix >= prixMin && p.prix <= prixMax)
     if (avecPhoto) liste = liste.filter(p => p.image && p.image.trim() !== '')
           if (nouveauteActive) liste = liste.filter(p => p.nouveau === true)
+    if (promoActive) liste = liste.filter(p => p.enPromo === true)
     if (triPrix === 'asc')        liste.sort((a, b) => a.prix - b.prix)
     if (triPrix === 'desc')       liste.sort((a, b) => b.prix - a.prix)
     if (triPrix === 'popularite') liste.sort((a, b) => (a.popularite || 99999) - (b.popularite || 99999))
     return liste
-    }, [products, categorieActive, marqueActive, recherche, triPrix, prixMin, prixMax, avecPhoto, nouveauteActive])
+    }, [products, categorieActive, marqueActive, recherche, triPrix, prixMin, prixMax, avecPhoto, nouveauteActive, promoActive])
 
   const elementsAffiches = useMemo(() => {
     if (recherche.trim()) {
@@ -447,6 +468,7 @@ const ELEMENTS_PAR_PAGE = nombreColonnes * LIGNES_PAR_PAGE
     prixMin, prixMax, setPrixMin, setPrixMax,
     avecPhoto, setAvecPhoto,
     nouveauteActive, setNouveauteActive,
+    promoActive, setPromoActive,
     totalResultats, reinitialiserFiltres,
   }
 
