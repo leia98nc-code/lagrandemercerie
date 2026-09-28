@@ -52,7 +52,7 @@ DOSSIER_IMAGES       = os.path.join(DOSSIER_REPO, "public", "images", "products"
 DOSSIER_LOGS         = os.path.join(DOSSIER_REPO, "logs")
 CHEMIN_VERROU        = os.path.join(DOSSIER_REPO, "pipeline.lock")
 FICHIER_DATES_AJOUT = os.path.join(DOSSIER_REPO, "dates_ajout.csv")
-SEUIL_JOURS_NOUVEAUTE = 30  # nombre de jours pendant lesquels un produit reste marqué "nouveau"
+SEUIL_JOURS_NOUVEAUTE = 60  # nombre de jours pendant lesquels un produit reste marqué "nouveau"
 
 # Back-office (tableau de bord) — mêmes identifiants que le Basic Auth du Caddyfile
 DASHBOARD_URL          = "https://app.zenkai.nc/lagrandemercerie/site-internet/api/sync-status"
