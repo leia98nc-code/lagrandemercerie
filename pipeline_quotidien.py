@@ -197,9 +197,11 @@ def recuperer_donnees_sage(logger):
 
 
 def recuperer_ca_sage(logger):
-    """Calcule le CA total par référence depuis les factures Sage de l'année en
-    cours (DO_Type=6 = factures, validé sur données réelles). Remplace l'ancien
-    export Excel manuel : plus de fichier intermédiaire à tenir à jour à la main."""
+    """Calcule le CA total par référence sur une fenêtre glissante des 3
+    derniers mois (DO_Type=6 = factures, validé sur données réelles), plutôt
+    que sur l'année civile — pour éviter une remise à zéro brutale du
+    classement popularité chaque 1er janvier. Remplace l'ancien export Excel
+    manuel : plus de fichier intermédiaire à tenir à jour à la main."""
     connexion = pyodbc.connect(
         "DRIVER={ODBC Driver 18 for SQL Server};"
         r"SERVER=DESKTOP-EIOV9CB\SAGE100;"
@@ -219,7 +221,7 @@ def recuperer_ca_sage(logger):
         AND L.DO_Type = E.DO_Type
     WHERE E.DO_Domaine = 0
       AND E.DO_Type = 6
-      AND E.DO_Date >= DATEFROMPARTS(YEAR(GETDATE()), 1, 1)
+      AND E.DO_Date >= DATEADD(MONTH, -3, GETDATE())
       AND L.AR_Ref != ''
     GROUP BY L.AR_Ref
     ORDER BY ca_ht_total DESC
@@ -227,7 +229,7 @@ def recuperer_ca_sage(logger):
 
     df_ca = pd.read_sql(requete, connexion)
     connexion.close()
-    logger.info(f"   CA calculé pour {len(df_ca)} références (factures depuis le 1er janvier).")
+    logger.info(f"   CA calculé pour {len(df_ca)} références (factures des 3 derniers mois).")
     return df_ca
 
 
@@ -401,6 +403,7 @@ def fusionner_promotions(logger, csv_final):
     csv_final['prix_promo'] = ''
     csv_final['promo_type'] = ''
     csv_final['promo_valeur'] = ''
+    csv_final['promo_debut'] = ''
     csv_final['promo_fin'] = ''
 
     chemin_promos = os.path.join(DOSSIER_REPO, "promotions.csv")
@@ -454,6 +457,111 @@ def fusionner_promotions(logger, csv_final):
     csv_final['promo_fin'] = csv_final['id'].astype(str).map(promo_fin).fillna('')
 
     logger.info(f"   {nb_actives} promotion(s) active(s) appliquée(s).")
+    return csv_final
+
+
+def recuperer_promotions_sage(logger):
+    """Lit dans Sage les promotions (tarifs F_TARIF) en cours ou à venir, avec
+    les articles concernés (F_TARIFSELECT, TS_Interes = 1 : sélection par
+    article). Type de remise : 1 = pourcentage, 2 = montant en F.
+    Seule la première remise (Remise01) est lue."""
+    connexion = pyodbc.connect(
+        "DRIVER={ODBC Driver 18 for SQL Server};"
+        r"SERVER=DESKTOP-EIOV9CB\SAGE100;"
+        "DATABASE=GRANDE_MERCERIE;"
+        "Trusted_Connection=yes;"
+        "TrustServerCertificate=yes;"
+    )
+    requete = """
+    SELECT
+        S.TS_Ref                    AS reference,
+        T.TF_No                     AS no_tarif,
+        T.TF_Intitule               AS intitule,
+        T.TF_Debut                  AS debut,
+        T.TF_Fin                    AS fin,
+        T.TF_Remise01REM_Type       AS type_remise,
+        T.TF_Remise01REM_Valeur     AS valeur
+    FROM F_TARIF T
+    JOIN F_TARIFSELECT S ON T.TF_No = S.TF_No
+    WHERE S.TS_Interes = 1
+      AND T.TF_Remise01REM_Valeur > 0
+      AND (T.TF_Fin < '1900-01-01' OR T.TF_Fin >= CAST(GETDATE() AS DATE))
+    """
+    df = pd.read_sql(requete, connexion)
+    connexion.close()
+    logger.info(f"   {len(df)} ligne(s) de promotion lues dans Sage "
+                f"({df['no_tarif'].nunique()} promotion(s) en cours ou à venir).")
+    return df
+
+
+def fusionner_promotions_sage(logger, csv_final):
+    """Applique les promotions saisies dans Sage. À appeler APRÈS
+    fusionner_promotions (promos manuelles du back-office) : un produit déjà
+    en promo manuelle n'est pas touché, la saisie manuelle prime."""
+    for col in ('prix_promo', 'promo_type', 'promo_valeur', 'promo_debut', 'promo_fin'):
+        if col not in csv_final.columns:
+            csv_final[col] = ''
+
+    df_sage = recuperer_promotions_sage(logger)
+    if df_sage.empty:
+        logger.info("   ℹ️  Aucune promotion Sage en cours ou à venir.")
+        return csv_final
+
+    def date_sage(valeur):
+        # Sage écrit 1753-01-01 quand une date n'est pas renseignée
+        if valeur is None or pd.isna(valeur):
+            return ''
+        d = pd.to_datetime(valeur)
+        return '' if d.year < 1900 else d.strftime('%Y-%m-%d')
+
+    aujourd_hui = datetime.now().strftime('%Y-%m-%d')
+    prix_par_id = dict(zip(csv_final['id'].astype(str), csv_final['prix']))
+    refs_deja_en_promo = set(
+        csv_final.loc[csv_final['prix_promo'].astype(str) != '', 'id'].astype(str)
+    )
+
+    meilleures = {}
+    for _, row in df_sage.iterrows():
+        ref = str(row['reference']).strip().replace('/', '_')
+        if ref not in prix_par_id or ref in refs_deja_en_promo:
+            continue
+        try:
+            code = int(row['type_remise'])
+            if code not in (1, 2):
+                continue
+            valeur = float(row['valeur'])
+            prix = prix_par_id[ref]
+            nouveau = prix * (1 - valeur / 100) if code == 1 else prix - valeur
+            nouveau = max(0, round(nouveau))
+            if nouveau >= prix:
+                continue
+            debut = date_sage(row['debut'])
+            fin = date_sage(row['fin'])
+        except Exception as e:
+            logger.info(f"   ⚠️  Promo Sage ignorée pour {ref} : {e}")
+            continue
+
+        # On préfère une promo déjà démarrée à une promo à venir, puis la moins chère
+        deja_demarree = (debut == '' or debut <= aujourd_hui)
+        cle = (0 if deja_demarree else 1, nouveau)
+        if ref not in meilleures or cle < meilleures[ref]['cle']:
+            meilleures[ref] = {
+                'cle': cle, 'prix_promo': nouveau,
+                'type': 'montant' if code == 2 else 'pourcentage',
+                'valeur': int(valeur) if valeur == int(valeur) else valeur,
+                'debut': debut, 'fin': fin,
+            }
+
+    for ref, m in meilleures.items():
+        masque = csv_final['id'].astype(str) == ref
+        csv_final.loc[masque, 'prix_promo'] = m['prix_promo']
+        csv_final.loc[masque, 'promo_type'] = m['type']
+        csv_final.loc[masque, 'promo_valeur'] = m['valeur']
+        csv_final.loc[masque, 'promo_debut'] = m['debut']
+        csv_final.loc[masque, 'promo_fin'] = m['fin']
+
+    nb_a_venir = sum(1 for m in meilleures.values() if m['cle'][0] == 1)
+    logger.info(f"   {len(meilleures)} produit(s) en promotion Sage appliqués ({nb_a_venir} à venir).")
     return csv_final
 
 def fusionner_nouveaute_forcee(logger, csv_final):
@@ -824,6 +932,12 @@ if __name__ == "__main__":
             csv = fusionner_promotions(logger, csv)
         except Exception as e:
             logger.info(f"   ⚠️  Impossible d'appliquer les promotions : {e}")
+
+        try:
+            csv = fusionner_promotions_sage(logger, csv)
+        except Exception as e:
+            # Un souci avec Sage ne doit jamais bloquer le catalogue
+            logger.info(f"   ⚠️  Impossible de lire les promotions Sage : {e}")
 
         # Écriture DIRECTE dans public/ du site : plus de copie manuelle
         csv.to_csv(FICHIER_CSV_SORTIE, index=False, encoding='utf-8')

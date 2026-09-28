@@ -23,9 +23,11 @@ export function useProducts() {
         // Comparaison de dates en texte "YYYY-MM-DD" : ça fonctionne car ce
         // format se compare correctement caractère par caractère, sans avoir
         // besoin de construire de vrais objets Date.
-        const aujourdHui = new Date().toISOString().slice(0, 10)
-
+        // Date locale du visiteur (pas UTC : Nouméa a 11h d'avance sur UTC)
+                const d = new Date()
+        const aujourdHui = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
         const data = result.data.map(p => {
+          
           // Parser stocks_gammes en objet { "ANIS - 65": 23, ... }
           const stocks_gammes = {}
           if (p.stocks_gammes) {
@@ -52,17 +54,21 @@ export function useProducts() {
   prix_promo:        prixPromo,
   promo_type:        p.promo_type || null,
   promo_valeur:      p.promo_valeur ? parseFloat(p.promo_valeur) : null,
+  promo_debut:       p.promo_debut || null,
   promo_fin:         promoFin,
-  // true seulement si une promo existe ET que sa date de fin n'est pas
-  // dépassée aujourd'hui — c'est ce qui fait disparaître la promo pile à
-  // minuit, sans attendre le prochain passage du pipeline.
-  enPromo:           !!(prixPromo && promoFin && promoFin >= aujourdHui),
+  // true seulement si une promo existe, qu'elle a démarré (pas de date de
+  // début = déjà démarrée) et que sa date de fin n'est pas dépassée (pas de
+  // date de fin = sans limite). La promo disparaît ainsi pile à minuit,
+  // sans attendre le prochain passage du pipeline.
+  enPromo:           !!(prixPromo
+                        && (!p.promo_debut || p.promo_debut <= aujourdHui)
+                        && (!promoFin || promoFin >= aujourdHui)),
   stocks_gammes,
 }
         })
         setProducts(data)
       })
-      .catch(err => setError(err.message))
+      .catch(err => { console.error('Erreur useProducts :', err); setError(err.message) })
       .finally(() => setLoading(false))
   }, [])
 
