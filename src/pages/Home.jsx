@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useProducts } from '../hooks/useProducts'
-import ProductCard from '../components/ProductCard'
+import CarrouselProduits from '../components/CarrouselProduits'
 import { useMemo, useState, useRef, useEffect } from 'react'
 
 const UNIVERS = [
@@ -11,6 +11,11 @@ const UNIVERS = [
   { nom: 'Laine',                 lien: '/catalogue?cat=Laine',                       photo: '/images/products/8143ASS.jpg' },
   { nom: 'Aiguilles & épingles',  lien: '/catalogue?cat=Aiguilles+%26+%C3%A9pingles', photo: '/images/products/18099.jpeg' },
 ]
+// Nombre maximum de produits dans le carrousel "Les têtes de gondole"
+const MAX_TETES_DE_GONDOLE = 20
+// Maximum de produits d'une même catégorie dans la partie automatique
+const MAX_PAR_CATEGORIE = 4
+
 const PHOTOS_HERO_DEFAUT = [
   '/images/shop/Tissus_tous2.jpg',
   '/images/shop/X_Bobine2.jpg',
@@ -44,11 +49,8 @@ export default function Home() {
   const fbFrameRef = useRef(null)
 
 
-  // ── États : carrousel "Vos préférés du moment" ──
-  const [carrouselIndex, setCarrouselIndex] = useState(0)
-  const [carrouselEnPause, setCarrouselEnPause] = useState(false)
-  const [nombreVisible, setNombreVisible] = useState(4)
-  const carrouselRef = useRef(null)
+  // ── État : sélection manuelle "Les têtes de gondole" (back-office → home-config.json) ──
+  const [selectionManuelle, setSelectionManuelle] = useState([])
 
   // ── États : carrousel promo du hero ──
   const [promoIndex, setPromoIndex] = useState(0)
@@ -68,6 +70,13 @@ export default function Home() {
         if (config && Array.isArray(config.heroPhotos) && config.heroPhotos.length > 0) {
           setPhotosHero(config.heroPhotos)
         }
+        // Sélection "Les têtes de gondole" faite par Astrid dans le back-office.
+        // On accepte une liste d'ids ("BAMBI_K") ou d'objets ({ id: "BAMBI_K" }).
+        if (config && Array.isArray(config.carrousel)) {
+          setSelectionManuelle(
+            config.carrousel.map(x => String(typeof x === 'object' && x !== null ? x.id : x))
+          )
+        }
       })
       .catch(() => {})
   }, [])
@@ -78,9 +87,46 @@ export default function Home() {
     if (products.length === 0) return []
     return [...products]
       .filter(p => p.popularite && p.popularite < 99999)
+      .filter(p => p.image)   // uniquement les produits avec photo
       .sort((a, b) => a.popularite - b.popularite)
       .slice(0, 20)
   }, [products])
+
+  // "Les têtes de gondole" : uniquement des produits AVEC photo.
+  //   1. D'abord la sélection manuelle d'Astrid (back-office), dans l'ordre choisi.
+  //   2. Puis complétée automatiquement en alternant une promo / une nouveauté
+  //      (chaque liste triée par popularité, meilleures ventes d'abord).
+  //      Pour garder de la variété, la partie automatique prend au maximum
+  //      MAX_PAR_CATEGORIE produits d'une même catégorie (sinon les 47 aiguilles
+  //      Bohin arrivées en même temps occuperaient tout le carrousel).
+  // Un produit n'apparaît jamais deux fois, et on s'arrête à MAX_TETES_DE_GONDOLE.
+  const tetesDeGondole = useMemo(() => {
+    if (products.length === 0) return []
+    const parId = new Map(products.map(p => [String(p.id), p]))
+    const choisis = []
+    const dejaPris = new Set()
+    const parCategorie = {}
+    const ajouter = (p, limiterCategorie) => {
+      if (!p || !p.image || dejaPris.has(p.id) || choisis.length >= MAX_TETES_DE_GONDOLE) return
+      if (limiterCategorie && (parCategorie[p.categorie] || 0) >= MAX_PAR_CATEGORIE) return
+      choisis.push(p)
+      dejaPris.add(p.id)
+      parCategorie[p.categorie] = (parCategorie[p.categorie] || 0) + 1
+    }
+
+    // 1. Sélection manuelle : prioritaire, sans limite par catégorie
+    selectionManuelle.forEach(id => ajouter(parId.get(id), false))
+
+    // 2. Complément automatique : promo, nouveauté, promo, nouveauté...
+    const parPopularite = (a, b) => a.popularite - b.popularite
+    const promos = products.filter(p => p.enPromo && p.image).sort(parPopularite)
+    const nouveautes = products.filter(p => p.nouveau && p.image).sort(parPopularite)
+    for (let i = 0; i < Math.max(promos.length, nouveautes.length); i++) {
+      ajouter(promos[i], true)
+      ajouter(nouveautes[i], true)
+    }
+    return choisis
+  }, [products, selectionManuelle])
 
   
   // ── Effets : mesure de la hauteur de la colonne gauche du hero ──
@@ -110,34 +156,6 @@ export default function Home() {
   }, 4000)
   return () => clearInterval(intervalle)
 }, [photosHero])
-
-  // ── Effets : nombre de cartes visibles dans le carrousel produits ──
-  useEffect(() => {
-  const LARGEUR_CARTE = 220
-  const GAP = 20
-  const calculer = () => {
-    if (window.innerWidth < 768) {
-      setNombreVisible(2)
-      return
-    }
-    if (!carrouselRef.current) return
-    const largeurDispo = carrouselRef.current.offsetWidth
-    const n = Math.max(2, Math.floor((largeurDispo + GAP) / (LARGEUR_CARTE + GAP)))
-    setNombreVisible(n)
-  }
-  calculer()
-  window.addEventListener('resize', calculer)
-  return () => window.removeEventListener('resize', calculer)
-}, [])
-
-  // ── Effets : défilement auto du carrousel produits ──
-  useEffect(() => {
-    if (carrouselEnPause || top20.length <= nombreVisible) return
-    const intervalle = setInterval(() => {
-      setCarrouselIndex(i => (i + nombreVisible) % top20.length)
-    }, 4000)
-    return () => clearInterval(intervalle)
-  }, [carrouselEnPause, nombreVisible, top20.length])
 
     // ── Effets : adaptation frame fb ──
   useEffect(() => {
@@ -227,72 +245,21 @@ export default function Home() {
 </section>
 
 
-{/* ── Coups de coeur ── */}
-      {!loading && top20.length > 0 && (
-        <section style={{ padding: '4rem 0', background: 'var(--blush)' }}>
-          <div className="container">
-            <div style={{ marginBottom: '2.2rem' }}>
-              <p style={{ fontSize: '0.72rem', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--rose-profond)', fontWeight: 600, marginBottom: '0.3rem' }}>{'Les usual suspects'}</p>
-              <h2 style={{ fontFamily: 'var(--font-titre)', fontWeight: 600, fontSize: 'clamp(1.6rem, 2.8vw, 2.3rem)', margin: 0 }}>
-                {'Vos préférés du moment'}
-              </h2>
-            </div>
-            <div
-  style={{ position: 'relative' }}
-  onMouseEnter={() => setCarrouselEnPause(true)}
-  onMouseLeave={() => setCarrouselEnPause(false)}
->
-              <button
-                onClick={() => setCarrouselIndex(i => (i + nombreVisible) % top20.length)}
-                style={{ position: 'absolute', left: '-1.25rem', top: '50%', transform: 'translateY(-50%)', zIndex: 10, width: '40px', height: '40px', borderRadius: '50%', background: 'var(--blanc)', color: 'var(--rose-profond)', border: '1.5px solid var(--rose-poudre)', cursor: 'pointer', fontSize: '1.4rem', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 2px 8px rgba(0,0,0,0.08)', transition: 'all 0.2s' }}
-                onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--rose-profond)' }}
-                onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--rose-poudre)' }}
-              >
-                {'‹'}
-              </button>
-              <div ref={carrouselRef} style={{
-  display: 'grid',
-  gridTemplateColumns: `repeat(${nombreVisible}, 1fr)`,
-  gap: '1.25rem',
-}}>
-  {Array.from({ length: nombreVisible }).map((_, offset) => {
-    const p = top20[(carrouselIndex + offset) % top20.length]
-    return <ProductCard key={`${p.id}-${offset}`} product={p} />
-  })}
-</div>
-              <button
-                onClick={() => setCarrouselIndex(i => (i + 4) % top20.length)}
-                style={{ position: 'absolute', right: '-1.25rem', top: '50%', transform: 'translateY(-50%)', zIndex: 10, width: '40px', height: '40px', borderRadius: '50%', background: 'var(--blanc)', color: 'var(--rose-profond)', border: '1.5px solid var(--rose-poudre)', cursor: 'pointer', fontSize: '1.4rem', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 2px 8px rgba(0,0,0,0.08)', transition: 'all 0.2s' }}
-                onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--rose-profond)' }}
-                onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--rose-poudre)' }}
-              >
-                {'›'}
-              </button>
-            </div>
-            <div style={{ display: 'flex', justifyContent: 'center', gap: '0.4rem', marginTop: '1.5rem' }}>
-              {Array.from({ length: 5 }).map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => setCarrouselIndex(i * 4)}
-                  style={{ width: carrouselIndex >= i * 4 && carrouselIndex < (i + 1) * 4 ? '20px' : '7px', height: '7px', borderRadius: '50px', border: 'none', cursor: 'pointer', background: carrouselIndex >= i * 4 && carrouselIndex < (i + 1) * 4 ? 'var(--rose-profond)' : 'var(--rose-poudre)', transition: 'all 0.3s ease', padding: 0 }}
-                />
-              ))}
-            </div>
-            <div style={{ textAlign: 'center', marginTop: '2rem' }}>
-              <Link
-                to="/catalogue"
-                style={{ textDecoration: 'none', color: 'var(--noir)', fontSize: '0.9rem', borderBottom: '1.5px solid rgba(26,26,26,0.3)', paddingBottom: '3px', transition: 'border-color 0.15s' }}
-                onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--rose-profond)' }}
-                onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(26,26,26,0.3)' }}
-              >
-                {'Voir tous les produits'}
-              </Link>
-            </div>
-          </div>
-        </section>
+{/* ── Les têtes de gondole (fond crème) ── */}
+      {!loading && (
+        <CarrouselProduits
+          produits={tetesDeGondole}
+          surtitre="Les têtes de gondole"
+          titre="Quoi de neuf en boutique ?"
+          fond="var(--blush)"
+          liens={[
+            { texte: 'Toutes les nouveautés', vers: '/catalogue?nouveau=1' },
+            { texte: 'Toutes les promos', vers: '/catalogue?promo=1' },
+          ]}
+        />
       )}
-      
-      {/* ── Nos univers ── */}
+
+      {/* ── Nos univers (fond blanc) ── */}
       <section style={{ padding: '4rem 0', background: 'var(--blanc)' }}>
         <div className="container">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '2rem', flexWrap: 'wrap', gap: '1rem' }}>
@@ -326,6 +293,17 @@ export default function Home() {
       </section>
 
       
+
+      {/* ── Vos préférés du moment (fond crème) ── */}
+      {!loading && (
+        <CarrouselProduits
+          produits={top20}
+          surtitre="Les usual suspects"
+          titre="Vos préférés du moment"
+          fond="var(--blush)"
+          liens={[{ texte: 'Voir tous les produits', vers: '/catalogue' }]}
+        />
+      )}
 
       {/* ── Reassurance crantee ── */}
 <section className="reassurance-section" style={{ background: 'var(--rose-profond)', color: 'white', padding: '3rem 0 4rem', clipPath: '...' }}>
@@ -397,7 +375,7 @@ export default function Home() {
 
             {/* Colonne droite — Facebook */}
             <div style={{ display: 'flex', flexDirection: 'column' }}>
-              <p style={{ fontSize: '0.72rem', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--rose-profond)', fontWeight: 600, marginBottom: '0.4rem' }}>{'Actualités'}</p>
+              <p style={{ fontSize: '0.72rem', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--rose-profond)', fontWeight: 600, marginBottom: '0.4rem' }}>{'Réseaux sociaux'}</p>
               <h2 style={{ fontFamily: 'var(--font-titre)', fontWeight: 600, fontSize: 'clamp(1.3rem, 2.2vw, 1.6rem)', margin: '0 0 1.1rem' }}>{'Suivez nous sur les réseaux'}</h2>
               <p style={{ fontSize: '0.92rem', color: 'var(--gris-texte)', maxWidth: '38ch', marginBottom: '1.25rem' }}>
                 {'Nouveautés, arrivages et inspirations — retrouvez-nous sur Facebook entre deux visites.'}

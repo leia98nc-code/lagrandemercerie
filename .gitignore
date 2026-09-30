@@ -1,2 +1,5 @@
 logs/ 
 pipeline.lock 
+node_modules/
+dist/
+__pycache__/
