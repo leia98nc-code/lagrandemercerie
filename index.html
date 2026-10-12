@@ -2,28 +2,32 @@
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.jpg" />
+    <link rel="icon" type="image/jpeg" href="/favicon.jpg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="La Grande Mercerie — Fils, pelote, tissus, boutons et accessoires couture. Boutique artisanale en ligne." />
     <title>La Grande Mercerie</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet" />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Rubik:wght@300;400;500&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Rubik:wght@300;400;500&display=swap" rel="stylesheet" />
   </head>
 
-  <form name="contact" netlify netlify-honeypot="bot-field" hidden>
-  <input type="text" name="nom" />
-  <input type="email" name="email" />
-  <input type="text" name="sujet" />
-  <textarea name="message"></textarea>
-  <input type="text" name="bot-field" />
-</form>
-
   <body>
+    <!-- Formulaire caché : permet à Netlify de détecter le formulaire de contact -->
+    <form name="contact" netlify netlify-honeypot="bot-field" hidden>
+      <input type="text" name="nom" />
+      <input type="email" name="email" />
+      <input type="text" name="sujet" />
+      <textarea name="message"></textarea>
+      <input type="text" name="bot-field" />
+    </form>
+
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+
+    <!-- Cloudflare Web Analytics -->
+    <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "5349a774beca4eb39adeb9da7a2a237f"}'></script>
+    <!-- End Cloudflare Web Analytics -->
   </body>
 </html>
