@@ -720,9 +720,14 @@ if __name__ == "__main__":
     # et un déclenchement manuel (depuis le back-office) ne tournent en même
     # temps, ce qui créerait un conflit lors du commit/push Git.
     if os.path.exists(CHEMIN_VERROU):
-        print("Une exécution du pipeline semble déjà en cours (fichier pipeline.lock présent) — arrêt.")
-        print("Si aucune exécution n'est réellement en cours, supprime ce fichier manuellement puis relance.")
-        sys.exit(0)
+        import time
+        age_minutes = (time.time() - os.path.getmtime(CHEMIN_VERROU)) / 60
+        if age_minutes < 120:
+            print(f"Une exécution du pipeline est déjà en cours (verrou posé il y a {age_minutes:.0f} min) — arrêt.")
+            sys.exit(0)
+        print(f"⚠️ Verrou périmé détecté (posé il y a {age_minutes / 60:.1f} h) : "
+              "l'exécution précédente a été interrompue. Suppression du verrou et reprise.")
+        os.remove(CHEMIN_VERROU)
 
     os.makedirs(DOSSIER_REPO, exist_ok=True)
     with open(CHEMIN_VERROU, "w", encoding="utf-8") as f:
