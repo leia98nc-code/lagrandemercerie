@@ -1,4 +1,5 @@
 import { useParams, Link, useNavigate } from 'react-router-dom'
+import { useSEO, raccourcir } from '../hooks/useSEO'
 import { useState, useEffect, useRef } from 'react'
 import { useProducts } from '../hooks/useProducts'
 
@@ -172,6 +173,21 @@ useEffect(() => {
   
 
   const product = products.find(p => p.id === id)
+
+  // Titre et description propres à CETTE fiche produit (référencement Google)
+  const marqueSEO = product?.marque && !product.nom?.toLowerCase().includes(product.marque.toLowerCase())
+    ? ` ${product.marque}` : ''
+  useSEO({
+    titre: product ? `${product.nom}${marqueSEO}` : (loading ? null : 'Produit introuvable'),
+    description: product
+      ? raccourcir(product.description
+          ? `${product.description.trim().replace(/[.!…]*$/, '.')} Disponible à La Grande Mercerie, Nouméa.`
+          : `${product.nom}${marqueSEO}${product.categorie ? ` (${product.categorie})` : ''} disponible en boutique à La Grande Mercerie, Nouméa.`)
+      : null,
+    chemin: `/produit/${encodeURIComponent(id)}`,
+    // une référence qui n'existe plus ne doit pas être référencée
+    indexer: loading || !!product,
+  })
 useEffect(() => {
   if (!mesureGammesRef.current) return
   const enfants = Array.from(mesureGammesRef.current.children)

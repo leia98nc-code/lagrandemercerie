@@ -1,3 +1,4 @@
+import { useSEO } from '../hooks/useSEO'
 import { Link } from 'react-router-dom'
 import { useProducts } from '../hooks/useProducts'
 import CarrouselProduits from '../components/CarrouselProduits'
@@ -45,6 +46,11 @@ const PROMOS_HERO = [
 ]
 
 export default function Home() {
+  useSEO({
+    titre: null,
+    description: 'La Grande Mercerie, boutique de mercerie à Nouméa : laines et pelotes, fils, tissus, boutons et accessoires de couture, tricot, crochet et broderie.',
+    chemin: '/',
+  })
   const { products, loading } = useProducts()
   const fbFrameRef = useRef(null)
 

@@ -1,3 +1,4 @@
+import { useSEO } from '../hooks/useSEO'
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
 
@@ -9,6 +10,11 @@ const PHOTOS = [
 ]
 
 export default function About() {
+  useSEO({
+    titre: 'Notre boutique',
+    description: 'Découvrez La Grande Mercerie, boutique de mercerie à Nouméa : notre histoire, notre équipe et nos conseils pour vos projets de couture, tricot, crochet et broderie.',
+    chemin: '/a-propos',
+  })
   const [photoIndex, setPhotoIndex] = useState(0)
 
   const precedent = () => setPhotoIndex(i => (i - 1 + PHOTOS.length) % PHOTOS.length)

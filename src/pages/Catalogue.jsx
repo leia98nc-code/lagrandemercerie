@@ -1,3 +1,4 @@
+import { useSEO } from '../hooks/useSEO'
 import { useState, useMemo, useEffect, useRef } from 'react'
 import { useProducts } from '../hooks/useProducts'
 import ProductCard from '../components/ProductCard'
@@ -248,6 +249,11 @@ function Sidebar({ categories, marques, categorieActive, setCategorieActive, mar
 }
 
 export default function Catalogue() {
+  useSEO({
+    titre: 'Catalogue : laines, fils, tissus et mercerie',
+    description: 'Tout le catalogue de La Grande Mercerie à Nouméa : pelotes de laine, fils à broder DMC, tissus, boutons, aiguilles et accessoires de couture. Stock mis à jour chaque jour.',
+    chemin: '/catalogue',
+  })
   const { products, loading, error } = useProducts()
   const [searchParams, setSearchParams] = useSearchParams()
   const [vueMode, setVueMode] = useState('grille')

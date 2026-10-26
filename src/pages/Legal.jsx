@@ -1,4 +1,10 @@
+import { useSEO } from '../hooks/useSEO'
 export default function Legal() {
+  useSEO({
+    titre: 'Mentions légales et confidentialité',
+    description: 'Mentions légales, protection des données personnelles et cookies du site de La Grande Mercerie, Nouméa.',
+    chemin: '/mentions-legales',
+  })
   return (
     <main className="page" style={{ padding: '3rem 0 5rem', background: 'var(--blush)', paddingTop: '6rem' }}>
 

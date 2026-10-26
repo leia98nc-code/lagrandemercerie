@@ -1,6 +1,12 @@
+import { useSEO } from '../hooks/useSEO'
 import { useState } from 'react'
 
 export default function Contact() {
+  useSEO({
+    titre: 'Contact et accès',
+    description: 'Contactez La Grande Mercerie à Nouméa : une question sur un produit, une disponibilité ou un conseil couture ? Écrivez-nous.',
+    chemin: '/contact',
+  })
   const [form, setForm] = useState({ nom: '', email: '', sujet: '', message: '' })
   const [envoye, setEnvoye] = useState(false)
 
