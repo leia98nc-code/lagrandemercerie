@@ -682,6 +682,12 @@ def publier_sur_git(logger):
     logger.info("  ÉTAPE 6 — Publication Git")
     logger.info("═" * 60)
 
+    # Garantit un commit « Mise à jour automatique du catalogue » chaque jour,
+    # même sans changement Sage : c'est ce commit qui déclenche la mise en ligne
+    # des modifications faites dans le back-office (voir netlify-ignore.sh).
+    with open(os.path.join(DOSSIER_REPO, "derniere_synchro.txt"), "w", encoding="utf-8") as f:
+        f.write(datetime.now().strftime("%d/%m/%Y %H:%M") + "\n")
+
     # Toujours committer AVANT de tenter un pull — sinon Git refuse de fusionner
     # (« local changes would be overwritten by merge »), erreur déjà rencontrée.
     lancer_commande("git add .", logger)
