@@ -36,6 +36,8 @@ import base64
 import json
 import urllib.request
 from datetime import datetime
+from urllib.parse import quote
+from xml.sax.saxutils import escape as xml_escape
 
 # ─────────────────────────────────────────────
 # CONFIGURATION — à adapter une seule fois
@@ -53,6 +55,11 @@ DOSSIER_LOGS         = os.path.join(DOSSIER_REPO, "logs")
 CHEMIN_VERROU        = os.path.join(DOSSIER_REPO, "pipeline.lock")
 FICHIER_DATES_AJOUT = os.path.join(DOSSIER_REPO, "dates_ajout.csv")
 SEUIL_JOURS_NOUVEAUTE = 60  # nombre de jours pendant lesquels un produit reste marqué "nouveau"
+
+# Référencement Google (SEO) — plan du site régénéré à chaque passage
+SITE_URL            = "https://lagrandemercerie.nc"   # adresse officielle, sans "/" final
+FICHIER_SITEMAP     = os.path.join(DOSSIER_REPO, "public", "sitemap.xml")
+PAGES_FIXES_SITEMAP = ["/", "/catalogue", "/a-propos", "/contact", "/mentions-legales"]
 
 # Back-office (tableau de bord) — mêmes identifiants que le Basic Auth du Caddyfile
 DASHBOARD_URL          = "https://app.zenkai.nc/lagrandemercerie/site-internet/api/sync-status"
@@ -595,6 +602,30 @@ def fusionner_nouveaute_forcee(logger, csv_final):
     return csv_final
 
 # ─────────────────────────────────────────────
+# SEO — plan du site (sitemap.xml) pour Google
+# ─────────────────────────────────────────────
+
+def generer_sitemap(logger, csv_final):
+    """Écrit public/sitemap.xml : la liste de toutes les pages du site que
+    Google doit connaître. Les pages fixes + une ligne par produit en stock.
+    Régénéré à chaque passage : un produit sorti du stock disparaît du plan,
+    un nouveau produit y apparaît automatiquement."""
+    pages = [f"{SITE_URL}{chemin}" for chemin in PAGES_FIXES_SITEMAP]
+    for ref in csv_final['id'].astype(str):
+        # quote() protège les caractères spéciaux éventuels dans une référence
+        pages.append(f"{SITE_URL}/produit/{quote(ref.strip(), safe='._-')}")
+
+    lignes = ['<?xml version="1.0" encoding="UTF-8"?>',
+              '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
+    for url in pages:
+        lignes.append(f"  <url><loc>{xml_escape(url)}</loc></url>")
+    lignes.append('</urlset>')
+
+    with open(FICHIER_SITEMAP, "w", encoding="utf-8") as f:
+        f.write("\n".join(lignes) + "\n")
+    logger.info(f"   🗺️  Plan du site (sitemap.xml) : {len(pages)} pages")
+
+# ─────────────────────────────────────────────
 # GIT — add / commit / push automatique
 # ─────────────────────────────────────────────
 
@@ -682,6 +713,9 @@ def publier_sur_git(logger):
         logger.info("   ⚠️  Conflit sur le catalogue — on conserve la version générée par ce passage.")
         lancer_commande("git checkout --ours public/products.csv", logger)
         lancer_commande("git add public/products.csv", logger)
+        # Même logique pour le plan du site, régénéré à chaque passage
+        lancer_commande("git checkout --ours public/sitemap.xml", logger)
+        lancer_commande("git add public/sitemap.xml", logger)
         lancer_commande("git commit --no-edit", logger)
 
     code_push2, sortie_push2 = lancer_commande("git push", logger)
@@ -720,9 +754,14 @@ if __name__ == "__main__":
     # et un déclenchement manuel (depuis le back-office) ne tournent en même
     # temps, ce qui créerait un conflit lors du commit/push Git.
     if os.path.exists(CHEMIN_VERROU):
-        print("Une exécution du pipeline semble déjà en cours (fichier pipeline.lock présent) — arrêt.")
-        print("Si aucune exécution n'est réellement en cours, supprime ce fichier manuellement puis relance.")
-        sys.exit(0)
+        import time
+        age_minutes = (time.time() - os.path.getmtime(CHEMIN_VERROU)) / 60
+        if age_minutes < 120:
+            print(f"Une exécution du pipeline est déjà en cours (verrou posé il y a {age_minutes:.0f} min) — arrêt.")
+            sys.exit(0)
+        print(f"⚠️ Verrou périmé détecté (posé il y a {age_minutes / 60:.1f} h) : "
+              "l'exécution précédente a été interrompue. Suppression du verrou et reprise.")
+        os.remove(CHEMIN_VERROU)
 
     os.makedirs(DOSSIER_REPO, exist_ok=True)
     with open(CHEMIN_VERROU, "w", encoding="utf-8") as f:
@@ -941,6 +980,12 @@ if __name__ == "__main__":
 
         # Écriture DIRECTE dans public/ du site : plus de copie manuelle
         csv.to_csv(FICHIER_CSV_SORTIE, index=False, encoding='utf-8')
+
+        try:
+            generer_sitemap(logger, csv)
+        except Exception as e:
+            # Un souci de sitemap ne doit jamais bloquer le catalogue
+            logger.info(f"   ⚠️  Impossible de générer le sitemap : {e}")
 
         logger.info("")
         logger.info("✅ Catalogue généré !")
