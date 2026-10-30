@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 
 // Adresse officielle du site (même valeur que SITE_URL dans pipeline_quotidien.py)
-const SITE_URL = 'https://lagrandemercerie.nc'
+const SITE_URL = 'https://www.lagrandemercerie.nc'
 
 const TITRE_PAR_DEFAUT = 'La Grande Mercerie — Mercerie à Nouméa'
 const DESCRIPTION_PAR_DEFAUT =

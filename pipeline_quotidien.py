@@ -57,7 +57,7 @@ FICHIER_DATES_AJOUT = os.path.join(DOSSIER_REPO, "dates_ajout.csv")
 SEUIL_JOURS_NOUVEAUTE = 60  # nombre de jours pendant lesquels un produit reste marqué "nouveau"
 
 # Référencement Google (SEO) — plan du site régénéré à chaque passage
-SITE_URL            = "https://lagrandemercerie.nc"   # adresse officielle, sans "/" final
+SITE_URL            = "https://www.lagrandemercerie.nc"   # adresse officielle, sans "/" final
 FICHIER_SITEMAP     = os.path.join(DOSSIER_REPO, "public", "sitemap.xml")
 PAGES_FIXES_SITEMAP = ["/", "/catalogue", "/a-propos", "/contact", "/mentions-legales"]
 

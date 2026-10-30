@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://lagrandemercerie.nc/sitemap.xml
+Sitemap: https://www.lagrandemercerie.nc/sitemap.xml
