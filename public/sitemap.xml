@@ -132,11 +132,11 @@
   <url><loc>https://www.lagrandemercerie.nc/produit/50410</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/50412</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/50414</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/5020_50</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/59106_50</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/ERF.289595</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/M645</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/50272D</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/50408D</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/43912</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/PRY086103</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/26661</loc></url>
@@ -147,8 +147,8 @@
   <url><loc>https://www.lagrandemercerie.nc/produit/H140</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/CL9900</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/M416</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/A5442</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/46898</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/5442_50</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/A5020</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/59106</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/A5010</loc></url>
@@ -249,12 +249,12 @@
   <url><loc>https://www.lagrandemercerie.nc/produit/2823</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/BIA219_18</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/BIA07_18</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/BIA36_18</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/BIA75_18</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/BIA36_18</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/BIA13_18</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/BIA06_18</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/BIA49_30</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/BIA108_30</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/BIA49_30</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/BIA13_30</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/BIA36_30</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/BI290</loc></url>
@@ -336,24 +336,6 @@
   <url><loc>https://www.lagrandemercerie.nc/produit/120655</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120662</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120675</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120148</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120177</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120185</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120267</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120277</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120343</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120016</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120030</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120112</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120385</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120444</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120606</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120623</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120625</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120671</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120691</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120080</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120091</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120149</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120184</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120195</loc></url>
@@ -372,6 +354,22 @@
   <url><loc>https://www.lagrandemercerie.nc/produit/120673</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120687</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120708</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120016</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120030</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120112</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120148</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120177</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120185</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120267</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120277</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120343</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120385</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120444</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120606</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120623</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120625</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120671</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120691</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120206</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120223</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120247</loc></url>
@@ -406,6 +404,8 @@
   <url><loc>https://www.lagrandemercerie.nc/produit/120497</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120538</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120676</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120080</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120091</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120136</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120193</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120197</loc></url>
@@ -451,95 +451,96 @@
   <url><loc>https://www.lagrandemercerie.nc/produit/120729</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120362</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120667</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120377</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120053</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120169</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120298</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120548</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120065</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120204</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120519</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120097</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120191</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120567</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120467</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120585</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120480</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120038</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120182</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120493</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120511</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120044</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120077</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120306</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120053</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120169</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120298</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120548</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120182</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120493</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120038</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120377</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120467</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120585</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120428</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120330</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120379</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120429</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120458</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120551</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120378</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120550</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120599</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120428</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120098</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120471</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120061</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120248</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120305</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120311</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120347</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120535</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120698</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120372</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120696</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120706</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120471</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120098</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120378</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120550</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120599</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120347</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120535</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120698</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120248</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120305</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120311</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120309</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120060</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120615</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120648</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120709</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120061</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120054</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120402</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120725</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120181</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120668</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120727</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120435</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120664</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120668</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120190</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120541</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120434</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120435</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120727</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120725</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120147</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120062</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120510</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120481</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120289</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120482</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120143</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120723</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120167</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120351</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120731</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120179</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120526</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120547</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120066</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120042</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120672</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120289</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120482</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120062</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120510</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120147</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120526</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120547</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120043</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120179</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120312</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120350</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120511</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120433</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120549</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120660</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120043</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120430</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120436</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120638</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120009</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120659</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120007</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120425</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120120</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120728</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120659</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120434</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120120</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120037</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120063</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120151</loc></url>
@@ -579,7 +580,40 @@
   <url><loc>https://www.lagrandemercerie.nc/produit/120499</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120528</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120651</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120033</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120104</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120256</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120281</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120336</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120337</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120338</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120380</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120392</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120455</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120459</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120500</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120586</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120628</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120674</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120677</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120679</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120106</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120176</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120187</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120235</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120243</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120265</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120307</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120419</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120463</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120470</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120523</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120602</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120630</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120632</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120647</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120661</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120697</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120039</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120078</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120207</loc></url>
@@ -598,39 +632,6 @@
   <url><loc>https://www.lagrandemercerie.nc/produit/120608</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120626</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120642</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120176</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120187</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120235</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120243</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120265</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120307</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120419</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120463</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120470</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120523</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120602</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120630</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120632</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120647</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120661</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120697</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120033</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120104</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120256</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120281</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120336</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120337</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120338</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120380</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120392</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120455</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120459</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120500</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120586</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120628</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120674</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120677</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120679</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120076</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120466</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120580</loc></url>
@@ -638,11 +639,12 @@
   <url><loc>https://www.lagrandemercerie.nc/produit/120650</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120670</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120690</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120082</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120249</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120348</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120474</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120530</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120082</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120072</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120443</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120473</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120479</loc></url>
@@ -651,7 +653,6 @@
   <url><loc>https://www.lagrandemercerie.nc/produit/120561</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120573</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120646</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120072</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120597</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120598</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120618</loc></url>
@@ -668,7 +669,8 @@
   <url><loc>https://www.lagrandemercerie.nc/produit/120546</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120552</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120624</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120309</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120212</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120495</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120232</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120268</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120365</loc></url>
@@ -687,8 +689,6 @@
   <url><loc>https://www.lagrandemercerie.nc/produit/120283</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120440</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120595</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120212</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120495</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120294</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120558</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120048</loc></url>
@@ -719,6 +719,10 @@
   <url><loc>https://www.lagrandemercerie.nc/produit/120596</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120612</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120657</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120285</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120536</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120688</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120718</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120282</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120302</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120410</loc></url>
@@ -736,10 +740,6 @@
   <url><loc>https://www.lagrandemercerie.nc/produit/120576</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120610</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120669</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120285</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120536</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120688</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120718</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/BD.2183.22.10</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/BD.003</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/BD.96.25</loc></url>
@@ -876,9 +876,9 @@
   <url><loc>https://www.lagrandemercerie.nc/produit/120081</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120161</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120158</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120157</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120164</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120156</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120157</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/BD.175</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/BD.174</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/M50346.15</loc></url>
@@ -894,8 +894,8 @@
   <url><loc>https://www.lagrandemercerie.nc/produit/M490.22</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/M490.13</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120000</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/120092</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/120194</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/120092</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/M60011.11</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/M60011.13</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/BD.051</loc></url>
@@ -1044,10 +1044,10 @@
   <url><loc>https://www.lagrandemercerie.nc/produit/BRO_12</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/BRO_10</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/BRO_20</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/BRO_18</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/BRO_14</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/BRO_16</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/BRO_18</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/BRO_15</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/BRO_16</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/BRO_13</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/LB_203</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/LB_205</loc></url>
@@ -1463,8 +1463,8 @@
   <url><loc>https://www.lagrandemercerie.nc/produit/236813</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/236875</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/236868</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/560099</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/236806</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/560099</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/560098</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/560096</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/560097</loc></url>
@@ -1480,16 +1480,16 @@
   <url><loc>https://www.lagrandemercerie.nc/produit/480046</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/480055</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/560142</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/480048</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/480051</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/480056</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/480048</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/560151</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/480064</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/560151</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/D900</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/560153</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/560145</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/560105</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/S3856</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/560105</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/480259</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/560100</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/560104</loc></url>
@@ -1502,8 +1502,8 @@
   <url><loc>https://www.lagrandemercerie.nc/produit/167243</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/167205</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/S9149</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/480045</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/480010</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/480045</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/560080</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/560154</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/480008</loc></url>
@@ -1532,18 +1532,18 @@
   <url><loc>https://www.lagrandemercerie.nc/produit/480042</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/560112</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/560139</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/560131</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/480031</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/560115</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/560131</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/560117</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/560141</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/560135</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/560140</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/560120</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/460268</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/560120</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/560115</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/560118</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/560125</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/560124</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/560125</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/560132</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/560113</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/560119</loc></url>
@@ -1608,8 +1608,8 @@
   <url><loc>https://www.lagrandemercerie.nc/produit/Z19_6575</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/Z19</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/Z17</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/PRY418412</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/PRY418400</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/PRY418412</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/PRY418204</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/PRY418209</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/PRY418213</loc></url>
@@ -3420,8 +3420,8 @@
   <url><loc>https://www.lagrandemercerie.nc/produit/K7807</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/7040.07.33</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/5010_50</loc></url>
-  <url><loc>https://www.lagrandemercerie.nc/produit/M.6942.40</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/M.6941.40</loc></url>
+  <url><loc>https://www.lagrandemercerie.nc/produit/M.6942.40</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/M.6936.40</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/M6956</loc></url>
   <url><loc>https://www.lagrandemercerie.nc/produit/M64</loc></url>
